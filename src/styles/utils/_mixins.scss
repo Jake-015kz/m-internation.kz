@@ -1,0 +1,698 @@
+@use './variables' as *;
+
+// ============================================
+// M-INTERNATIONAL — MIXINS v2.0
+// Premium dark theme with Liquid Glass
+// OKLCH colors, scroll-driven animations
+// ============================================
+
+// --- Media Queries ---
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+// --- Container ---
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+
+  @include respond-to(md) {
+    padding-left: $space-6;
+    padding-right: $space-6;
+  }
+
+  @include respond-to(lg) {
+    padding-left: $space-8;
+    padding-right: $space-8;
+  }
+}
+
+// --- Flexbox ---
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// --- Grid ---
+@mixin grid($columns: 1, $gap: $space-6) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin grid-auto($min-width: 280px, $gap: $space-6) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// --- Typography ---
+
+// Body text — Onest, clean and readable
+@mixin font-body {
+  font-family: $font-body;
+  font-weight: 400;
+  letter-spacing: $tracking-normal;
+}
+
+// Heading — Manrope, elegant geometric
+@mixin font-heading {
+  font-family: $font-heading;
+  font-weight: 600;  // Reduced from 700 for modern feel
+  letter-spacing: $tracking-tight;
+}
+
+// Mono — JetBrains Mono for stats and code
+@mixin font-mono {
+  font-family: $font-mono;
+  font-weight: 500;
+  letter-spacing: $tracking-normal;
+}
+
+// Heading styles — refined weights and spacing
+@mixin heading-1 {
+  @include font-heading;
+  font-size: $text-5xl;
+  line-height: $leading-tight;
+  color: $color-fg-primary;
+  letter-spacing: $tracking-tight;
+
+  @include respond-to(md) {
+    font-size: $text-6xl;
+  }
+
+  @include respond-to(lg) {
+    font-size: $text-7xl;
+  }
+
+  @include respond-to(xl) {
+    font-size: $text-8xl;
+  }
+}
+
+@mixin heading-2 {
+  @include font-heading;
+  font-size: $text-3xl;
+  line-height: $leading-snug;
+  color: $color-fg-primary;
+  letter-spacing: $tracking-slight;
+
+  @include respond-to(md) {
+    font-size: $text-4xl;
+  }
+
+  @include respond-to(lg) {
+    font-size: $text-5xl;
+  }
+}
+
+@mixin heading-3 {
+  @include font-heading;
+  font-size: $text-xl;
+  line-height: $leading-snug;
+  color: $color-fg-primary;
+  letter-spacing: $tracking-slight;
+
+  @include respond-to(md) {
+    font-size: $text-2xl;
+  }
+}
+
+@mixin heading-4 {
+  @include font-heading;
+  font-size: $text-lg;
+  line-height: $leading-snug;
+  color: $color-fg-primary;
+  letter-spacing: $tracking-slight;
+}
+
+// Body text
+@mixin text-body {
+  @include font-body;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $color-fg-secondary;
+}
+
+@mixin text-body-large {
+  @include font-body;
+  font-size: $text-lg;
+  line-height: $leading-relaxed;
+  color: $color-fg-secondary;
+}
+
+@mixin text-small {
+  @include font-body;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $color-fg-muted;
+}
+
+@mixin text-xs {
+  @include font-body;
+  font-size: $text-xs;
+  line-height: $leading-normal;
+  color: $color-fg-muted;
+}
+
+// Label — uppercase, spaced, small
+@mixin text-label {
+  @include font-body;
+  font-size: $text-xs;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: $tracking-widest;
+  color: $color-fg-muted;
+}
+
+// Mono text for stats
+@mixin text-mono {
+  @include font-mono;
+  font-size: $text-sm;
+  color: $color-lime;
+}
+
+@mixin text-mono-large {
+  @include font-mono;
+  font-size: $text-2xl;
+  font-weight: 600;
+  color: $color-lime;
+
+  @include respond-to(md) {
+    font-size: $text-3xl;
+  }
+}
+
+// --- Buttons ---
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-body;
+  font-weight: 500;
+  font-size: $text-sm;
+  padding: $space-3 $space-6;
+  border-radius: $radius-sm;
+  transition: all $transition-base;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: $tracking-wide;
+  position: relative;
+  overflow: hidden;
+
+  &:focus-visible {
+    outline: 2px solid $color-lime;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: $color-lime;
+  color: $color-bg-base;
+  font-weight: 600;
+  transition:
+    background-color $transition-base $transition-expo,
+    box-shadow $transition-base $transition-expo,
+    transform $transition-spring;
+
+  &:hover:not(:disabled) {
+    // Увеличиваем яркость (L) в oklch — кнопка становится ярче, текст остаётся стабильным
+    background-color: oklch(0.88 0.24 135);
+    color: $color-bg-base;
+    box-shadow:
+      0 0 20px oklch(0.82 0.22 135 / 0.3),
+      0 0 40px oklch(0.82 0.22 135 / 0.15);
+    transform: scale(1.02);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+    background-color: $color-lime;
+  }
+}
+
+@mixin button-outline {
+  @include button-base;
+  background-color: transparent;
+  border: 1px solid $color-border;
+  color: $color-fg-primary;
+
+  &:hover:not(:disabled) {
+    border-color: $color-lime;
+    color: $color-fg-primary;
+    background-color: oklch(0.82 0.22 135 / 0.08);
+    box-shadow: 0 0 12px oklch(0.82 0.22 135 / 0.15);
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background-color: transparent;
+  color: $color-fg-primary;
+
+  &:hover:not(:disabled) {
+    background-color: oklch(1 0 0 / 0.05);
+  }
+}
+
+// --- LIQUID GLASS — 2026 Standard Surface Treatment ---
+// OPTIMIZED: Reduced blur for performance, mobile-first approach
+// Desktop: blur(10px) | Mobile: no backdrop-filter (opaque fallback)
+
+// Base liquid glass effect — adaptive for dark/light
+@mixin liquid-glass {
+  background: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 0.08) 0%,
+    oklch(1 0 0 / 0.02) 100%
+  );
+  border: 1px solid oklch(1 0 0 / 0.10);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.15),
+    0 8px 32px oklch(0 0 0 / 0.30);
+  transition: all $transition-base $transition-expo;
+
+  // Desktop only: backdrop-filter with reduced blur for performance
+  @media (min-width: 768px) {
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    will-change: transform, opacity;
+  }
+
+  &:hover {
+    border-color: oklch(1 0 0 / 0.16);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.20),
+      0 12px 40px oklch(0 0 0 / 0.35);
+  }
+
+  // Light mode adaptation
+  [data-theme="light"] & {
+    background: linear-gradient(
+      135deg,
+      oklch(1 0 0 / 0.03) 0%,
+      oklch(1 0 0 / 0.01) 100%
+    );
+    border-color: oklch(0 0 0 / 0.08);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.10),
+      0 8px 32px oklch(0 0 0 / 0.10);
+
+    &:hover {
+      border-color: oklch(0 0 0 / 0.12);
+      box-shadow:
+        inset 0 1px 0 oklch(1 0 0 / 0.15),
+        0 12px 40px oklch(0 0 0 / 0.15);
+    }
+  }
+
+  // Mobile: disable backdrop-filter completely, use opaque background
+  @media (max-width: 767px) {
+    background: oklch(0.12 0.02 265 / 0.95);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+// Subtle liquid glass — for less prominent elements
+@mixin liquid-glass-subtle {
+  background: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 0.05) 0%,
+    oklch(1 0 0 / 0.01) 100%
+  );
+  border: 1px solid oklch(1 0 0 / 0.06);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.10),
+    0 4px 16px oklch(0 0 0 / 0.20);
+
+  @media (min-width: 768px) {
+    backdrop-filter: blur(8px) saturate(130%);
+    -webkit-backdrop-filter: blur(8px) saturate(130%);
+  }
+
+  [data-theme="light"] & {
+    background: linear-gradient(
+      135deg,
+      oklch(1 0 0 / 0.02) 0%,
+      oklch(1 0 0 / 0.005) 100%
+    );
+    border-color: oklch(0 0 0 / 0.05);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.05),
+      0 4px 16px oklch(0 0 0 / 0.08);
+  }
+
+  @media (max-width: 767px) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+// Strong liquid glass — for modals, important cards
+@mixin liquid-glass-strong {
+  background: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 0.12) 0%,
+    oklch(1 0 0 / 0.04) 100%
+  );
+  border: 1px solid oklch(1 0 0 / 0.14);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.20),
+    inset 0 -1px 0 oklch(0 0 0 / 0.10),
+    0 16px 48px oklch(0 0 0 / 0.40);
+
+  @media (min-width: 768px) {
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    will-change: transform, opacity;
+  }
+
+  [data-theme="light"] & {
+    background: linear-gradient(
+      135deg,
+      oklch(1 0 0 / 0.05) 0%,
+      oklch(1 0 0 / 0.02) 100%
+    );
+    border-color: oklch(0 0 0 / 0.10);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.10),
+      inset 0 -1px 0 oklch(0 0 0 / 0.05),
+      0 16px 48px oklch(0 0 0 / 0.15);
+  }
+
+  @media (max-width: 767px) {
+    background: oklch(0.15 0.02 265 / 0.98);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+// Premium card with hover effect — reusable across all pages
+@mixin liquid-glass-card {
+  @include liquid-glass;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  cursor: default;
+  transition:
+    transform $transition-base $transition-expo,
+    border-color $transition-base $transition-expo,
+    box-shadow $transition-base $transition-expo,
+    background $transition-base $transition-expo;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+// Legacy glass mixin (backward compatible)
+@mixin glass {
+  @include liquid-glass;
+}
+
+@mixin glass-card {
+  @include liquid-glass;
+  border-radius: $radius-lg;
+  padding: $space-6;
+}
+
+// --- Neon Glow Effects ---
+@mixin glow-lime {
+  box-shadow: 0 0 20px oklch(0.82 0.22 135 / 0.3),
+              0 0 40px oklch(0.82 0.22 135 / 0.1);
+}
+
+@mixin glow-lime-strong {
+  box-shadow: 0 0 30px oklch(0.82 0.22 135 / 0.5),
+              0 0 60px oklch(0.82 0.22 135 / 0.2),
+              0 0 90px oklch(0.82 0.22 135 / 0.1);
+}
+
+@mixin text-glow-lime {
+  text-shadow: 0 0 20px oklch(0.82 0.22 135 / 0.5),
+               0 0 40px oklch(0.82 0.22 135 / 0.2);
+}
+
+// --- Gradient Text ---
+@mixin gradient-text-lime {
+  background: linear-gradient(135deg, $color-lime 0%, $color-gold 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// --- Dividers ---
+@mixin divider {
+  border: none;
+  border-top: 1px solid $color-border-subtle;
+  margin: 0;
+}
+
+@mixin divider-vertical {
+  border: none;
+  border-left: 1px solid $color-border-subtle;
+  margin: 0;
+}
+
+// --- Utilities ---
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// --- Noise Texture Overlay ---
+@mixin noise-overlay {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// --- Animation Keyframes Placeholders ---
+@mixin animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@mixin animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+// ============================================
+// SCROLL-DRIVEN ANIMATION UTILITIES
+// Reusable across all pages and components
+// ============================================
+
+// Fade up on scroll — primary reveal
+@mixin reveal-on-scroll($range-start: 0%, $range-end: 25%) {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry $range-start cover $range-end;
+}
+
+// Scale in on scroll
+@mixin reveal-scale($range-start: 0%, $range-end: 30%) {
+  animation: scale-in linear both;
+  animation-timeline: view();
+  animation-range: entry $range-start cover $range-end;
+}
+
+// Slide from left on scroll
+@mixin reveal-left($range-start: 0%, $range-end: 30%) {
+  animation: slide-left linear both;
+  animation-timeline: view();
+  animation-range: entry $range-start cover $range-end;
+}
+
+// Slide from right on scroll
+@mixin reveal-right($range-start: 0%, $range-end: 30%) {
+  animation: slide-right linear both;
+  animation-timeline: view();
+  animation-range: entry $range-start cover $range-end;
+}
+
+// Staggered reveal for grid items
+@mixin reveal-stagger($range-start: 0%, $range-end: 25%, $delay: 80ms) {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry $range-start cover $range-end;
+  animation-delay: calc(sibling-index() * $delay);
+}
+
+// ============================================
+// NEON EFFECT UTILITIES
+// OKLCH neon glow effects
+// ============================================
+
+// Neon text glow — adaptive for light/dark
+@mixin neon-text($color: $color-lime, $intensity: 0.5) {
+  text-shadow:
+    0 0 10px oklch(from $color l c h / #{$intensity}),
+    0 0 20px oklch(from $color l c h / #{$intensity * 0.5}),
+    0 0 40px oklch(from $color l c h / #{$intensity * 0.25});
+}
+
+// Neon box glow — adaptive for light/dark
+@mixin neon-box($color: $color-lime, $intensity: 0.3) {
+  box-shadow:
+    0 0 10px oklch(from $color l c h / #{$intensity}),
+    0 0 20px oklch(from $color l c h / #{$intensity * 0.5}),
+    0 0 40px oklch(from $color l c h / #{$intensity * 0.25});
+}
+
+// Neon border glow
+@mixin neon-border($color: $color-lime, $intensity: 0.4) {
+  border-color: oklch(from $color l c h / #{$intensity});
+  box-shadow:
+    inset 0 0 10px oklch(from $color l c h / #{$intensity * 0.3}),
+    0 0 10px oklch(from $color l c h / #{$intensity * 0.5});
+}
+
+// ============================================
+// MICRO-INTERACTION UTILITIES
+// Emil Kowalski principles — subtle, purposeful
+// ============================================
+
+// Spring hover — subtle scale with spring easing
+@mixin hover-lift($distance: -4px, $scale: 1.02) {
+  transition: transform $transition-spring;
+  
+  &:hover {
+    transform: translateY($distance) scale($scale);
+  }
+}
+
+// Glow hover — subtle neon glow on hover
+@mixin hover-glow($color: $color-lime) {
+  transition: box-shadow $transition-base $transition-expo;
+  
+  &:hover {
+    box-shadow:
+      0 0 15px oklch(from $color l c h / 0.2),
+      0 0 30px oklch(from $color l c h / 0.1);
+  }
+}
+
+// Border glow hover
+@mixin hover-border-glow($color: $color-lime) {
+  transition:
+    border-color $transition-base $transition-expo,
+    box-shadow $transition-base $transition-expo;
+  
+  &:hover {
+    border-color: oklch(from $color l c h / 0.3);
+    box-shadow: 0 0 15px oklch(from $color l c h / 0.15);
+  }
+}
+
+// --- Bento Grid ---
+@mixin bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: $space-4;
+
+  @include respond-to(md) {
+    gap: $space-6;
+  }
+}
+
+// --- Scrollbar Styling ---
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-bg-base;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: $radius-full;
+
+    &:hover {
+      background: $color-fg-muted;
+    }
+  }
+}
+
+// --- Scroll-Driven Animation Helpers ---
+@mixin reveal-on-scroll($range-start: 0%, $range-end: 25%) {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry $range-start cover $range-end;
+}
+
+@mixin parallax-layer($distance: -60px) {
+  animation: parallax linear;
+  animation-timeline: scroll(root block);
+  animation-range: 0% 100%;
+
+  @keyframes parallax {
+    from { transform: translateY(0); }
+    to { transform: translateY($distance); }
+  }
+}

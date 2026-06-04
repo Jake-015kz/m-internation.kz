@@ -1,0 +1,342 @@
+@use '../../../styles/utils/variables' as *;
+@use '../../../styles/utils/mixins' as *;
+
+// ============================================
+// HERO SECTION — M-INTERNATIONAL v3.0
+// Cinematic layout, Liquid Glass, premium typography
+// Manrope + Onest, OKLCH neon accents
+// ============================================
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: $space-24;
+  padding-bottom: $space-16;
+  overflow: hidden;
+}
+
+.container {
+  @include container;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-12;
+  align-items: center;
+
+  @include respond-to(lg) {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-16;
+  }
+}
+
+.textContent {
+  text-align: left;
+}
+
+// Лейбл — Liquid Glass pill
+.label {
+  display: inline-block;
+  margin-bottom: $space-6;
+  color: $color-lime;
+  font-size: $text-sm;
+  font-family: $font-body;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: $tracking-widest;
+  
+  // Liquid Glass pill effect
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  background: linear-gradient(
+    135deg,
+    oklch(0.82 0.22 135 / 0.12) 0%,
+    oklch(0.82 0.22 135 / 0.06) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid oklch(0.82 0.22 135 / 0.20);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.10),
+    0 4px 16px oklch(0 0 0 / 0.20);
+}
+
+// ============================================
+// ЗАГОЛОВОК — Manrope Premium
+// ============================================
+.title {
+  font-family: $font-heading;
+  font-weight: 600;
+  font-size: $text-4xl;
+  line-height: $leading-tight;
+  margin-bottom: $space-6;
+  color: $color-fg-primary;
+  letter-spacing: $tracking-slight;
+
+  @include respond-to(md) {
+    font-size: $text-5xl;
+  }
+
+  @include respond-to(lg) {
+    font-size: $text-6xl;
+  }
+
+  @include respond-to(xl) {
+    font-size: $text-7xl;
+  }
+}
+
+.titleLine {
+  display: block;
+}
+
+// Градиентный акцент в заголовке
+.titleHighlight {
+  background: linear-gradient(135deg, $color-lime 0%, $color-gold 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  // Убираем text-shadow для gradient text — он не работает
+}
+
+// ============================================
+// ОПИСАНИЕ — Onest
+// ============================================
+.description {
+  font-family: $font-body;
+  font-size: $text-lg;
+  line-height: $leading-relaxed;
+  max-width: 32rem;
+  margin-bottom: $space-8;
+  color: $color-fg-secondary;
+}
+
+.descriptionBold {
+  color: $color-fg-primary;
+  font-weight: 600;
+}
+
+// Кнопки
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.buttonPrimary {
+  @include button-primary;
+  padding: $space-4 $space-8;
+  font-size: $text-base;
+  border-radius: $radius-sm;
+
+  &:hover {
+    box-shadow: 0 0 24px oklch(0.82 0.22 135 / 0.4);
+  }
+}
+
+.buttonOutline {
+  @include button-outline;
+  padding: $space-4 $space-8;
+  font-size: $text-base;
+  border-radius: $radius-sm;
+}
+
+// ============================================
+// ИЗОБРАЖЕНИЕ ПРОДУКТА
+// ============================================
+.imageContent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+
+  @include respond-to(lg) {
+    min-height: 500px;
+  }
+}
+
+.productImageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+
+  @include respond-to(lg) {
+    max-width: 450px;
+  }
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 60px oklch(0 0 0 / 0.4));
+  position: relative;
+  z-index: 2;
+}
+
+.productGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: $color-lime;
+  filter: blur(80px);
+  opacity: 0.15;
+  z-index: 1;
+}
+
+// ============================================
+// FLOATING BADGES — Liquid Glass
+// ============================================
+.floatingBadge {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  z-index: 3;
+  animation: float-badge 4s ease-in-out infinite;
+  
+  // Liquid Glass effect
+  background: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 0.10) 0%,
+    oklch(1 0 0 / 0.04) 100%
+  );
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.15),
+    0 8px 32px oklch(0 0 0 / 0.25);
+
+  @include respond-to(lg) {
+    right: 0;
+  }
+}
+
+.floatingBadgeSecond {
+  top: auto;
+  bottom: 20%;
+  right: auto;
+  left: 5%;
+  animation-delay: 1s;
+
+  @include respond-to(lg) {
+    left: 0;
+  }
+}
+
+.floatingBadgeThird {
+  top: 40%;
+  right: 0;
+  animation-delay: 2s;
+}
+
+.badgeText {
+  font-family: $font-mono;
+  font-weight: 600;
+  font-size: $text-xs;
+  color: $color-lime;
+  letter-spacing: $tracking-wider;
+}
+
+@keyframes float-badge {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// ============================================
+// СТАТИСТИКА — JetBrains Mono
+// ============================================
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-6;
+  margin-top: $space-16;
+  padding-top: $space-10;
+  border-top: 1px solid $color-border-subtle;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+}
+
+.stat {
+  position: relative;
+  padding: $space-4;
+  text-align: center;
+
+  @include respond-to(md) {
+    text-align: left;
+    padding: $space-4 $space-6;
+  }
+}
+
+// Значение — неоновый акцент
+.statValue {
+  font-family: $font-mono;
+  font-weight: 600;
+  font-size: $text-2xl;
+  color: $color-lime;
+  line-height: 1;
+  margin-bottom: $space-2;
+  text-shadow: 0 0 16px oklch(0.82 0.22 135 / 0.4);
+
+  @include respond-to(md) {
+    font-size: $text-3xl;
+  }
+}
+
+// Подпись — Onest
+.statLabel {
+  font-family: $font-body;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $color-fg-muted;
+}
+
+.statDivider {
+  display: none;
+
+  @include respond-to(md) {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 2rem;
+    background: $color-border-subtle;
+  }
+}
+
+// Фоновый градиент
+.backgroundGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at 70% 50%,
+    oklch(0.82 0.22 135 / 0.05) 0%,
+    transparent 50%
+  );
+  z-index: 1;
+  pointer-events: none;
+}

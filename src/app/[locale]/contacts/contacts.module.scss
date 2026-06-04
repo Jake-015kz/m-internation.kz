@@ -1,0 +1,78 @@
+@use '../../../styles/utils/variables' as *;
+@use '../../../styles/utils/mixins' as *;
+
+// ============================================
+// CONTACTS PAGE — SWISS INTERNATIONAL STYLE
+// Left-aligned, line separators, no icons
+// ============================================
+
+.main {
+  min-height: 100vh;
+  padding-top: 5rem;
+}
+
+.hero {
+  padding-top: $space-16;
+  padding-bottom: $space-16;
+  text-align: left;
+  border-bottom: 1px solid $color-border-subtle;
+}
+
+.container {
+  @include container;
+}
+
+.title {
+  @include heading-1;
+  margin-bottom: $space-4;
+  text-align: left;
+}
+
+.description {
+  @include text-body-large;
+  max-width: 32rem;
+  color: $color-muted;
+  text-align: left;
+}
+
+.contacts {
+  padding-top: $space-12;
+  padding-bottom: $space-20;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding: $space-6 0;
+  border-bottom: 1px solid $color-border-subtle;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity $transition-base;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.itemTitle {
+  font-family: $font-body;
+  font-weight: 700;
+  font-size: $text-base;
+  color: $color-white;
+  margin-bottom: $space-1;
+}
+
+.itemText {
+  @include text-body;
+  color: $color-muted;
+}
