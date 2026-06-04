@@ -1,0 +1,29 @@
+# Agent/AI tooling
+.agents/
+.roo/
+plans/
+output_data/
+skills-lock.json
+
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+
+# Environment
+.env*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug
+*.log
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
