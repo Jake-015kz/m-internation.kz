@@ -3,8 +3,7 @@
 
 // ============================================
 // THEME SWITCHER — Liquid Glass button
-// Sun/Moon toggle with smooth animation
-// OPTIMIZED: Mobile-first, reduced blur
+// Sun/Moon toggle with smooth GSAP animation
 // ============================================
 
 .button {
@@ -39,7 +38,6 @@
     box-shadow: 
       0 0 15px oklch(0.82 0.22 135 / 0.2),
       0 0 30px oklch(0.82 0.22 135 / 0.1);
-    transform: scale(1.05);
 
     [data-theme="light"] & {
       box-shadow: 
@@ -62,13 +60,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform $transition-spring;
-  
-  .button:hover & {
-    transform: rotate(15deg);
-  }
+  transform-origin: center center;
 }
 
 .icon {
-  transition: all $transition-base $transition-expo;
+  transition: color $transition-base $transition-expo;
 }

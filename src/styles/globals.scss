@@ -59,6 +59,14 @@
   --pineapple: #{$color-gold};
   --coconut: oklch(0.95 0.03 90);
   --radius: #{$radius-lg};
+  
+  // Social icons colors
+  --social-instagram: #E1306C;
+  --social-instagram-hover: #F77737;
+  --social-tiktok: #000000;
+  --social-tiktok-hover: #25F4EE;
+  --social-icon-bg: oklch(0.15 0.02 265);
+  --social-icon-border: oklch(0.25 0.02 265);
 }
 
 // ============================================
@@ -112,17 +120,32 @@
   --lime: #{$color-lime-light};
   --charcoal: #{$color-fg-primary-light};
   --pineapple: #{$color-gold-light};
+  
+  // Social icons colors — light theme
+  --social-instagram: #C13584;
+  --social-instagram-hover: #E1306C;
+  --social-tiktok: #000000;
+  --social-tiktok-hover: #FE2C55;
+  --social-icon-bg: oklch(0.99 0.003 90);
+  --social-icon-border: oklch(0.85 0.01 265);
 }
 
 // Global background
 html {
   background-color: var(--bg-base);
   color-scheme: dark;
+  transition: background-color 650ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              color-scheme 0s;
 
   // Light mode color scheme
   &[data-theme="light"] {
     color-scheme: light;
   }
+}
+
+// Theme transition overlay — smooth color transition
+[data-theme] {
+  transition: background-color 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 // Global link behavior
@@ -452,5 +475,39 @@ button {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+// ============================================
+// MOBILE PERFORMANCE — Disable expensive effects
+// Redmi Note 8 and similar low-end devices
+// ============================================
+
+@media (max-width: 768px) {
+  // Disable backdrop-filter on mobile (very expensive on weak GPUs)
+  .header,
+  .headerScrolled,
+  .mobileMenu,
+  .glass,
+  .glass-card,
+  [class*="glass"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  // Simplify animations on mobile
+  .reveal,
+  .reveal-scale,
+  .reveal-left,
+  .reveal-right,
+  .reveal-stagger {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  // Disable noise overlay on mobile
+  .noise-overlay {
+    display: none !important;
   }
 }

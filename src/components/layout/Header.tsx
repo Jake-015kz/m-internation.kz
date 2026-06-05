@@ -1,48 +1,29 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Phone } from 'lucide-react';
-import { SITE_CONFIG, CONTACTS } from '@/lib/constants';
-import { LanguageSwitcher } from './LanguageSwitcher';
-import { ThemeSwitcher } from './ThemeSwitcher';
-import styles from './Header.module.scss';
+import Link from "next/link";
+import { useState, useCallback } from "react";
+import { Menu, Phone, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { SITE_CONFIG, CONTACTS } from "@/lib/constants";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeSwitcher } from "./ThemeSwitcher";
+import { useScroll, useNavLinks } from "@/hooks";
+import styles from "./Header.module.scss";
 
 export function Header() {
   const locale = useLocale();
-  const t = useTranslations('nav');
+  const t = useTranslations("nav");
+  const { isScrolled } = useScroll({ threshold: 50 });
+  const navLinks = useNavLinks();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { scrollY } = useScroll();
-  const headerBg = useTransform(
-    scrollY,
-    [0, 100],
-    ['rgba(20, 20, 20, 0)', 'rgba(20, 20, 20, 0.95)']
-  );
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen((prev) => !prev);
   }, []);
 
-  const navLinks = [
-    { href: `/${locale}`, label: t('home') },
-    { href: `/${locale}/catalog`, label: t('catalog') },
-    { href: `/${locale}/about`, label: t('about') },
-    { href: `/${locale}/business`, label: t('business') },
-    { href: `/${locale}/contacts`, label: t('contacts') },
-  ];
-
   return (
-    <motion.header
-      className={`${styles.header} ${isScrolled ? styles.headerScrolled : ''}`}
-      style={{ backgroundColor: headerBg }}
+    <header
+      className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}
     >
       <div className={styles.container}>
         <Link href={`/${locale}`} className={styles.logo}>
@@ -50,38 +31,85 @@ export function Header() {
           <span className={styles.logoDot} />
         </Link>
 
-        <nav className={styles.nav} role="navigation" aria-label="Main navigation">
+        <nav
+          className={styles.nav}
+          role="navigation"
+          aria-label="Main navigation"
+        >
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={styles.navLink}
-            >
+            <Link key={link.href} href={link.href} className={styles.navLink}>
               {link.label}
             </Link>
           ))}
         </nav>
 
         <div className={styles.actions}>
-          <a href={`tel:${CONTACTS.phone}`} className={styles.phone} aria-label={CONTACTS.phone}>
+          {/* Social icons — visible on lg+ */}
+          <div className={styles.socialIcons}>
+            <a
+              href={CONTACTS.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialIcon}
+              aria-label="Instagram"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+            <a
+              href={CONTACTS.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialIcon}
+              aria-label="TikTok"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+              </svg>
+            </a>
+          </div>
+
+          <a
+            href={`tel:${CONTACTS.phone}`}
+            className={styles.phone}
+            aria-label={CONTACTS.phone}
+          >
             <Phone size={16} />
             <span>{CONTACTS.phone}</span>
           </a>
 
           <LanguageSwitcher />
-          
+
           <ThemeSwitcher />
 
           {/* Кнопка "Контакты" — скрыта на мобилке, видна на md+ */}
           <Link href={`/${locale}/contacts`} className={styles.ctaButton}>
-            {t('contacts')}
+            {t("contacts")}
           </Link>
 
           <button
             className={styles.mobileMenuButton}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={toggleMenu}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -89,13 +117,12 @@ export function Header() {
       </div>
 
       {/* Mobile Menu */}
-      <motion.div
-        className={styles.mobileMenu}
-        initial={false}
-        animate={{ height: isMenuOpen ? 'auto' : 0 }}
-        transition={{ duration: 0.3 }}
+      <div
+        id="mobile-menu"
+        className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}
+        aria-hidden={!isMenuOpen}
       >
-        <nav className={styles.mobileNav} role="navigation" aria-label="Mobile navigation">
+        <nav className={styles.mobileNav}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -106,15 +133,19 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <a
-            href={`tel:${CONTACTS.phone}`}
-            className={styles.mobilePhone}
-          >
-            <Phone size={16} />
-            {CONTACTS.phone}
+          <a href={`tel:${CONTACTS.phone}`} className={styles.mobilePhone}>
+            <Phone size={18} />
+            <span>{CONTACTS.phone}</span>
           </a>
+          <Link
+            href={`/${locale}/contacts`}
+            className={styles.mobileNavLink}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            {t("contacts")}
+          </Link>
         </nav>
-      </motion.div>
-    </motion.header>
+      </div>
+    </header>
   );
 }
