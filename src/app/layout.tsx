@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { onest, manrope, jetbrainsMono } from '@/lib/fonts';
@@ -9,8 +10,6 @@ import { ClickSpark } from '@shared/ClickSpark';
 import { LenisProvider } from '@shared/LenisProvider';
 import '@/styles/globals.scss';
 
-// Anti-flicker script: applies theme before hydration to prevent flash
-// Must be a function to be serialized by Next.js as inline script
 function getThemeScript() {
   return `
     (function() {
@@ -66,7 +65,11 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${onest.variable} ${manrope.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script
+          id="theme-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
       </head>
       <body className={`${onest.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>

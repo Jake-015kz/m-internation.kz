@@ -1,5 +1,5 @@
-@use '../../../styles/utils/variables' as *;
-@use '../../../styles/utils/mixins' as *;
+@use "../../../styles/utils/variables" as *;
+@use "../../../styles/utils/mixins" as *;
 
 // ============================================
 // PRODUCT SHOWCASE — PREMIUM SLIDER v3.0
@@ -50,7 +50,7 @@
     font-family: $font-mono;
     font-weight: 700;
     font-size: clamp(6rem, 20vw, 16rem);
-    color: $color-fg-primary;
+    color: var(--fg-primary);
     opacity: 0.03;
     letter-spacing: 0.05em;
     white-space: nowrap;
@@ -74,7 +74,7 @@
   font-weight: 600;
   font-size: $text-3xl;
   line-height: $leading-snug;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
   margin-bottom: $space-4;
 
@@ -91,7 +91,7 @@
   font-family: $font-body;
   font-size: $text-lg;
   line-height: $leading-relaxed;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
   max-width: 40rem;
   margin: 0 auto;
 }
@@ -141,7 +141,7 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 30px 60px oklch(0 0 0 / 0.4));
   position: relative;
   z-index: 2;
 }
@@ -178,7 +178,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: $tracking-widest;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
 }
 
 // Название продукта — Manrope
@@ -187,7 +187,7 @@
   font-weight: 600;
   font-size: clamp($text-4xl, 8vw, $text-6xl);
   line-height: $leading-tight;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
 }
 
@@ -196,7 +196,7 @@
   font-family: $font-body;
   font-size: $text-lg;
   line-height: $leading-relaxed;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
   margin-top: $space-2;
   max-width: 500px;
 
@@ -222,13 +222,13 @@
   display: flex;
   align-items: center;
   gap: $space-3;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   font-family: $font-body;
   font-size: $text-base;
 }
 
 .featureIcon {
-  color: $color-lime;
+  color: var(--accent-primary);
   font-weight: 700;
   font-size: $text-lg;
 }
@@ -247,10 +247,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   cursor: pointer;
   transition: all $transition-base $transition-expo;
-  
+
   // Liquid Glass
   background: linear-gradient(
     135deg,
@@ -259,10 +259,10 @@
   );
   backdrop-filter: blur(12px) saturate(150%);
   -webkit-backdrop-filter: blur(12px) saturate(150%);
-  border: 1px solid oklch(1 0 0 / 0.10);
+  border: 1px solid oklch(1 0 0 / 0.1);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.10),
-    0 4px 16px oklch(0 0 0 / 0.20);
+    inset 0 1px 0 oklch(1 0 0 / 0.1),
+    0 4px 16px oklch(0 0 0 / 0.2);
 
   &:hover {
     background: linear-gradient(
@@ -270,12 +270,34 @@
       oklch(0.82 0.22 135 / 0.12) 0%,
       oklch(1 0 0 / 0.05) 100%
     );
-    border-color: oklch(0.82 0.22 135 / 0.30);
-    color: $color-lime;
+    border-color: oklch(0.82 0.22 135 / 0.3);
+    color: var(--accent-primary);
     box-shadow:
       inset 0 1px 0 oklch(1 0 0 / 0.15),
       0 8px 24px oklch(0 0 0 / 0.25),
-      0 0 16px oklch(0.82 0.22 135 / 0.10);
+      0 0 16px oklch(0.82 0.22 135 / 0.1);
+  }
+
+  // Light theme support
+  [data-theme="light"] & {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.3),
+      0 4px 16px oklch(0 0 0 / 0.05);
+
+    &:hover {
+      background: var(--bg-elevated);
+      border-color: var(--accent-primary);
+      box-shadow:
+        inset 0 1px 0 oklch(1 0 0 / 0.4),
+        0 8px 24px oklch(0 0 0 / 0.08),
+        0 0 16px oklch(0.82 0.22 135 / 0.15);
+    }
+  }
+
+  @include respond-to(max-md) {
+    display: none;
   }
 
   @include respond-to(max-md) {
@@ -313,19 +335,19 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: $color-border;
+  background: var(--border);
   border: none;
   cursor: pointer;
   transition: all $transition-base;
   padding: 0;
 
   &:hover {
-    background: $color-fg-muted;
+    background: var(--fg-muted);
   }
 }
 
 .indicatorActive {
-  background: $color-lime;
+  background: var(--accent-primary);
   box-shadow: 0 0 12px oklch(0.82 0.22 135 / 0.5);
   transform: scale(1.2);
 }

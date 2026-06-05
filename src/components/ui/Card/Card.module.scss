@@ -19,7 +19,7 @@
 // Bordered — subtle border, no background
 .bordered {
   background-color: transparent;
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--border-subtle);
   padding: $space-6;
 }
 

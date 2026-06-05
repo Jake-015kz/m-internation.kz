@@ -23,7 +23,7 @@
 
 .description {
   @include text-small;
-  color: $color-muted;
+  color: var(--fg-muted);
 }
 
 // Product grid: responsive columns with line separators

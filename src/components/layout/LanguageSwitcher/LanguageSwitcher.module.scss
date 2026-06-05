@@ -1,26 +1,26 @@
-@use '../../../styles/utils/variables' as *;
-@use '../../../styles/utils/mixins' as *;
+@use "../../../styles/utils/variables" as *;
+@use "../../../styles/utils/mixins" as *;
 
 .switcher {
   display: flex;
   align-items: center;
   gap: $space-1;
   padding: $space-1 $space-2;
-  border: 1px solid $color-border;
+  border: 1px solid var(--border);
   border-radius: $radius-md;
-  background: $glass-background;
+  background: var(--glass-bg);
   backdrop-filter: blur($glass-blur);
   cursor: pointer;
   transition: all $transition-base;
   position: relative;
 
   &:hover {
-    border-color: $color-lime;
+    border-color: var(--accent-primary);
   }
 }
 
 .icon {
-  color: $color-lime;
+  color: var(--accent-primary);
   flex-shrink: 0;
   pointer-events: none;
   position: absolute;
@@ -31,7 +31,7 @@
 .select {
   background: transparent;
   border: none;
-  color: $color-white;
+  color: var(--fg-primary);
   font-family: $font-mono;
   font-size: $text-sm;
   font-weight: 600;
@@ -53,8 +53,8 @@
   }
 
   option {
-    background: $color-charcoal;
-    color: $color-white;
+    background: var(--bg-base);
+    color: var(--fg-primary);
     padding: $space-2;
   }
 }

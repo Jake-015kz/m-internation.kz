@@ -22,27 +22,27 @@
   gap: $space-2;
   padding: $space-6 0;
   margin-bottom: $space-8;
-  border-bottom: 1px solid $color-border-subtle;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .breadcrumbLink {
   @include text-small;
-  color: $color-muted;
+  color: var(--fg-muted);
   transition: color $transition-base;
 
   &:hover {
-    color: $color-white;
+    color: var(--fg-primary);
   }
 }
 
 .breadcrumbSep {
   @include text-small;
-  color: $color-border;
+  color: var(--border);
 }
 
 .breadcrumbCurrent {
   @include text-small;
-  color: $color-white;
+  color: var(--fg-primary);
   font-weight: 600;
 }
 
@@ -68,7 +68,7 @@
 
 .imagePlaceholder {
   aspect-ratio: 1;
-  background-color: $color-surface;
+  background-color: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,7 +78,7 @@
   font-family: $font-heading;
   font-weight: 700;
   font-size: $text-6xl;
-  color: $color-border;
+  color: var(--border);
 }
 
 // Info section
@@ -93,12 +93,12 @@
   flex-direction: column;
   gap: $space-4;
   padding-bottom: $space-8;
-  border-bottom: 1px solid $color-border-subtle;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .category {
   @include text-label;
-  color: $color-muted;
+  color: var(--fg-muted);
 }
 
 .title {
@@ -108,13 +108,13 @@
 
 .description {
   @include text-body-large;
-  color: $color-muted;
+  color: var(--fg-muted);
 }
 
 // Specifications
 .specs {
   padding-bottom: $space-8;
-  border-bottom: 1px solid $color-border-subtle;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .specsTitle {
@@ -132,7 +132,7 @@
   display: flex;
   justify-content: space-between;
   padding: $space-3 0;
-  border-bottom: 1px solid $color-border-subtle;
+  border-bottom: 1px solid var(--border-subtle);
 
   &:last-child {
     border-bottom: none;
@@ -141,19 +141,19 @@
 
 .specKey {
   @include text-body;
-  color: $color-muted;
+  color: var(--fg-muted);
 }
 
 .specValue {
   @include text-body;
-  color: $color-white;
+  color: var(--fg-primary);
   font-weight: 600;
 }
 
 // Certificates
 .certificates {
   padding-bottom: $space-8;
-  border-bottom: 1px solid $color-border-subtle;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .certificatesTitle {
@@ -171,11 +171,11 @@
   font-family: $font-mono;
   font-weight: 600;
   font-size: 0.6rem;
-  color: $color-lime;
+  color: var(--accent-primary);
   text-transform: uppercase;
   letter-spacing: $tracking-widest;
   padding: 2px 8px;
-  border: 1px solid $color-border-subtle;
+  border: 1px solid var(--border-subtle);
 }
 
 // Actions
@@ -196,7 +196,7 @@
 // Related products
 .related {
   padding-top: $space-16;
-  border-top: 1px solid $color-border-subtle;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .relatedTitle {

@@ -1,4 +1,4 @@
-@use './variables' as *;
+@use "./variables" as *;
 
 // ============================================
 // M-INTERNATIONAL — MIXINS v2.0
@@ -9,15 +9,25 @@
 // --- Media Queries ---
 @mixin respond-to($breakpoint) {
   @if $breakpoint == sm {
-    @media (min-width: $breakpoint-sm) { @content; }
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
   } @else if $breakpoint == md {
-    @media (min-width: $breakpoint-md) { @content; }
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
   } @else if $breakpoint == lg {
-    @media (min-width: $breakpoint-lg) { @content; }
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
   } @else if $breakpoint == xl {
-    @media (min-width: $breakpoint-xl) { @content; }
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
   } @else if $breakpoint == 2xl {
-    @media (min-width: $breakpoint-2xl) { @content; }
+    @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
   }
 }
 
@@ -84,7 +94,7 @@
 // Heading — Manrope, elegant geometric
 @mixin font-heading {
   font-family: $font-heading;
-  font-weight: 600;  // Reduced from 700 for modern feel
+  font-weight: 600; // Reduced from 700 for modern feel
   letter-spacing: $tracking-tight;
 }
 
@@ -100,7 +110,7 @@
   @include font-heading;
   font-size: $text-5xl;
   line-height: $leading-tight;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-tight;
 
   @include respond-to(md) {
@@ -120,7 +130,7 @@
   @include font-heading;
   font-size: $text-3xl;
   line-height: $leading-snug;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
 
   @include respond-to(md) {
@@ -136,7 +146,7 @@
   @include font-heading;
   font-size: $text-xl;
   line-height: $leading-snug;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
 
   @include respond-to(md) {
@@ -148,7 +158,7 @@
   @include font-heading;
   font-size: $text-lg;
   line-height: $leading-snug;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
 }
 
@@ -157,28 +167,28 @@
   @include font-body;
   font-size: $text-base;
   line-height: $leading-relaxed;
-  color: $color-fg-secondary;
+  color: var(--fg-secondary);
 }
 
 @mixin text-body-large {
   @include font-body;
   font-size: $text-lg;
   line-height: $leading-relaxed;
-  color: $color-fg-secondary;
+  color: var(--fg-secondary);
 }
 
 @mixin text-small {
   @include font-body;
   font-size: $text-sm;
   line-height: $leading-normal;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
 }
 
 @mixin text-xs {
   @include font-body;
   font-size: $text-xs;
   line-height: $leading-normal;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
 }
 
 // Label — uppercase, spaced, small
@@ -188,21 +198,21 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: $tracking-widest;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
 }
 
 // Mono text for stats
 @mixin text-mono {
   @include font-mono;
   font-size: $text-sm;
-  color: $color-lime;
+  color: var(--accent-primary);
 }
 
 @mixin text-mono-large {
   @include font-mono;
   font-size: $text-2xl;
   font-weight: 600;
-  color: $color-lime;
+  color: var(--accent-primary);
 
   @include respond-to(md) {
     font-size: $text-3xl;
@@ -230,7 +240,7 @@
   overflow: hidden;
 
   &:focus-visible {
-    outline: 2px solid $color-lime;
+    outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
   }
 
@@ -242,8 +252,8 @@
 
 @mixin button-primary {
   @include button-base;
-  background-color: $color-lime;
-  color: $color-bg-base;
+  background-color: var(--accent-primary);
+  color: var(--bg-base);
   font-weight: 600;
   transition:
     background-color $transition-base $transition-expo,
@@ -252,8 +262,8 @@
 
   &:hover:not(:disabled) {
     // Увеличиваем яркость (L) в oklch — кнопка становится ярче, текст остаётся стабильным
-    background-color: oklch(0.88 0.24 135);
-    color: $color-bg-base;
+    background-color: var(--accent-primary-hover);
+    color: var(--bg-base);
     box-shadow:
       0 0 20px oklch(0.82 0.22 135 / 0.3),
       0 0 40px oklch(0.82 0.22 135 / 0.15);
@@ -262,28 +272,27 @@
 
   &:active:not(:disabled) {
     transform: scale(0.98);
-    background-color: $color-lime;
+    background-color: var(--accent-primary);
   }
 }
 
 @mixin button-outline {
   @include button-base;
   background-color: transparent;
-  border: 1px solid $color-border;
-  color: $color-fg-primary;
+  border: 1px solid var(--border);
+  color: var(--fg-primary);
 
   &:hover:not(:disabled) {
-    border-color: $color-lime;
-    color: $color-fg-primary;
+    border-color: var(--accent-primary);
+    color: var(--fg-primary);
     background-color: oklch(0.82 0.22 135 / 0.08);
-    box-shadow: 0 0 12px oklch(0.82 0.22 135 / 0.15);
   }
 }
 
 @mixin button-ghost {
   @include button-base;
   background-color: transparent;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
 
   &:hover:not(:disabled) {
     background-color: oklch(1 0 0 / 0.05);
@@ -301,10 +310,10 @@
     oklch(1 0 0 / 0.08) 0%,
     oklch(1 0 0 / 0.02) 100%
   );
-  border: 1px solid oklch(1 0 0 / 0.10);
+  border: 1px solid oklch(1 0 0 / 0.1);
   box-shadow:
     inset 0 1px 0 oklch(1 0 0 / 0.15),
-    0 8px 32px oklch(0 0 0 / 0.30);
+    0 8px 32px oklch(0 0 0 / 0.3);
   transition: all $transition-base $transition-expo;
 
   // Desktop only: backdrop-filter with reduced blur for performance
@@ -317,7 +326,7 @@
   &:hover {
     border-color: oklch(1 0 0 / 0.16);
     box-shadow:
-      inset 0 1px 0 oklch(1 0 0 / 0.20),
+      inset 0 1px 0 oklch(1 0 0 / 0.2),
       0 12px 40px oklch(0 0 0 / 0.35);
   }
 
@@ -330,8 +339,8 @@
     );
     border-color: oklch(0 0 0 / 0.08);
     box-shadow:
-      inset 0 1px 0 oklch(1 0 0 / 0.10),
-      0 8px 32px oklch(0 0 0 / 0.10);
+      inset 0 1px 0 oklch(1 0 0 / 0.1),
+      0 8px 32px oklch(0 0 0 / 0.1);
 
     &:hover {
       border-color: oklch(0 0 0 / 0.12);
@@ -343,7 +352,7 @@
 
   // Mobile: disable backdrop-filter completely, use opaque background
   @media (max-width: 767px) {
-    background: oklch(0.12 0.02 265 / 0.95);
+    background: var(--bg-surface);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
@@ -358,8 +367,8 @@
   );
   border: 1px solid oklch(1 0 0 / 0.06);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.10),
-    0 4px 16px oklch(0 0 0 / 0.20);
+    inset 0 1px 0 oklch(1 0 0 / 0.1),
+    0 4px 16px oklch(0 0 0 / 0.2);
 
   @media (min-width: 768px) {
     backdrop-filter: blur(8px) saturate(130%);
@@ -393,9 +402,9 @@
   );
   border: 1px solid oklch(1 0 0 / 0.14);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.20),
-    inset 0 -1px 0 oklch(0 0 0 / 0.10),
-    0 16px 48px oklch(0 0 0 / 0.40);
+    inset 0 1px 0 oklch(1 0 0 / 0.2),
+    inset 0 -1px 0 oklch(0 0 0 / 0.1),
+    0 16px 48px oklch(0 0 0 / 0.4);
 
   @media (min-width: 768px) {
     backdrop-filter: blur(12px) saturate(160%);
@@ -409,15 +418,15 @@
       oklch(1 0 0 / 0.05) 0%,
       oklch(1 0 0 / 0.02) 100%
     );
-    border-color: oklch(0 0 0 / 0.10);
+    border-color: oklch(0 0 0 / 0.1);
     box-shadow:
-      inset 0 1px 0 oklch(1 0 0 / 0.10),
+      inset 0 1px 0 oklch(1 0 0 / 0.1),
       inset 0 -1px 0 oklch(0 0 0 / 0.05),
       0 16px 48px oklch(0 0 0 / 0.15);
   }
 
   @media (max-width: 767px) {
-    background: oklch(0.15 0.02 265 / 0.98);
+    background: var(--bg-elevated);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
@@ -453,24 +462,31 @@
 
 // --- Neon Glow Effects ---
 @mixin glow-lime {
-  box-shadow: 0 0 20px oklch(0.82 0.22 135 / 0.3),
-              0 0 40px oklch(0.82 0.22 135 / 0.1);
+  box-shadow:
+    0 0 20px oklch(0.82 0.22 135 / 0.3),
+    0 0 40px oklch(0.82 0.22 135 / 0.1);
 }
 
 @mixin glow-lime-strong {
-  box-shadow: 0 0 30px oklch(0.82 0.22 135 / 0.5),
-              0 0 60px oklch(0.82 0.22 135 / 0.2),
-              0 0 90px oklch(0.82 0.22 135 / 0.1);
+  box-shadow:
+    0 0 30px oklch(0.82 0.22 135 / 0.5),
+    0 0 60px oklch(0.82 0.22 135 / 0.2),
+    0 0 90px oklch(0.82 0.22 135 / 0.1);
 }
 
 @mixin text-glow-lime {
-  text-shadow: 0 0 20px oklch(0.82 0.22 135 / 0.5),
-               0 0 40px oklch(0.82 0.22 135 / 0.2);
+  text-shadow:
+    0 0 20px oklch(0.82 0.22 135 / 0.5),
+    0 0 40px oklch(0.82 0.22 135 / 0.2);
 }
 
 // --- Gradient Text ---
 @mixin gradient-text-lime {
-  background: linear-gradient(135deg, $color-lime 0%, $color-gold 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary) 0%,
+    var(--accent-gold) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -479,13 +495,13 @@
 // --- Dividers ---
 @mixin divider {
   border: none;
-  border-top: 1px solid $color-border-subtle;
+  border-top: 1px solid var(--border-subtle);
   margin: 0;
 }
 
 @mixin divider-vertical {
   border: none;
-  border-left: 1px solid $color-border-subtle;
+  border-left: 1px solid var(--border-subtle);
   margin: 0;
 }
 
@@ -520,7 +536,7 @@
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -586,7 +602,7 @@
 // ============================================
 
 // Neon text glow — adaptive for light/dark
-@mixin neon-text($color: $color-lime, $intensity: 0.5) {
+@mixin neon-text($color: var(--accent-primary), $intensity: 0.5) {
   text-shadow:
     0 0 10px oklch(from $color l c h / #{$intensity}),
     0 0 20px oklch(from $color l c h / #{$intensity * 0.5}),
@@ -594,7 +610,7 @@
 }
 
 // Neon box glow — adaptive for light/dark
-@mixin neon-box($color: $color-lime, $intensity: 0.3) {
+@mixin neon-box($color: var(--accent-primary), $intensity: 0.3) {
   box-shadow:
     0 0 10px oklch(from $color l c h / #{$intensity}),
     0 0 20px oklch(from $color l c h / #{$intensity * 0.5}),
@@ -602,7 +618,7 @@
 }
 
 // Neon border glow
-@mixin neon-border($color: $color-lime, $intensity: 0.4) {
+@mixin neon-border($color: var(--accent-primary), $intensity: 0.4) {
   border-color: oklch(from $color l c h / #{$intensity});
   box-shadow:
     inset 0 0 10px oklch(from $color l c h / #{$intensity * 0.3}),
@@ -617,16 +633,16 @@
 // Spring hover — subtle scale with spring easing
 @mixin hover-lift($distance: -4px, $scale: 1.02) {
   transition: transform $transition-spring;
-  
+
   &:hover {
     transform: translateY($distance) scale($scale);
   }
 }
 
 // Glow hover — subtle neon glow on hover
-@mixin hover-glow($color: $color-lime) {
+@mixin hover-glow($color: var(--accent-primary)) {
   transition: box-shadow $transition-base $transition-expo;
-  
+
   &:hover {
     box-shadow:
       0 0 15px oklch(from $color l c h / 0.2),
@@ -635,11 +651,11 @@
 }
 
 // Border glow hover
-@mixin hover-border-glow($color: $color-lime) {
+@mixin hover-border-glow($color: var(--accent-primary)) {
   transition:
     border-color $transition-base $transition-expo,
     box-shadow $transition-base $transition-expo;
-  
+
   &:hover {
     border-color: oklch(from $color l c h / 0.3);
     box-shadow: 0 0 15px oklch(from $color l c h / 0.15);
@@ -666,15 +682,15 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: $color-bg-base;
+    background: var(--bg-base);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $color-border;
+    background: var(--border);
     border-radius: $radius-full;
 
     &:hover {
-      background: $color-fg-muted;
+      background: var(--fg-muted);
     }
   }
 }
@@ -692,7 +708,11 @@
   animation-range: 0% 100%;
 
   @keyframes parallax {
-    from { transform: translateY(0); }
-    to { transform: translateY($distance); }
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY($distance);
+    }
   }
 }

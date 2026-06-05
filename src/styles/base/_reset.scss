@@ -1,4 +1,4 @@
-@use '../utils/variables' as *;
+@use "../utils/variables" as *;
 
 // ============================================
 // M-INTERNATIONAL — CSS RESET
@@ -20,8 +20,8 @@ html {
 }
 
 body {
-  background-color: $color-background;
-  color: $color-foreground;
+  background-color: var(--bg-base);
+  color: var(--fg-primary);
   font-family: $font-body;
   font-size: $text-base;
   font-weight: 400;
@@ -51,18 +51,21 @@ img {
   display: block;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
 
 ::selection {
-  background-color: $color-lime;
-  color: $color-charcoal;
+  background-color: var(--accent-primary);
+  color: var(--bg-base);
 }
 
 // Custom scrollbar
@@ -71,25 +74,26 @@ input, textarea, select {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: $color-background;
+  background-color: var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $color-border;
+  background-color: var(--border);
   border-radius: $radius-full;
 
   &:hover {
-    background-color: $color-muted;
+    background-color: var(--fg-muted);
   }
 }
 
 :focus-visible {
-  outline: 2px solid $color-lime;
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
 // Smooth scroll for Lenis
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 

@@ -25,7 +25,7 @@
   overflow: hidden;
 
   &:focus-visible {
-    outline: 2px solid $color-lime;
+    outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
   }
 
@@ -37,8 +37,8 @@
 
 // Variants
 .primary {
-  background-color: $color-lime;
-  color: $color-bg-base;
+  background-color: var(--accent-primary);
+  color: var(--bg-base);
   font-weight: 600;
   transition:
     background-color $transition-base $transition-expo,
@@ -47,8 +47,8 @@
 
   &:hover:not(:disabled) {
     // Увеличиваем яркость (L) в oklch — кнопка становится ярче, текст остаётся стабильным
-    background-color: oklch(0.88 0.24 135);
-    color: $color-bg-base;
+    background-color: var(--accent-primary-hover);
+    color: var(--bg-base);
     box-shadow:
       0 0 20px oklch(0.82 0.22 135 / 0.3),
       0 0 40px oklch(0.82 0.22 135 / 0.15);
@@ -57,25 +57,25 @@
 
   &:active:not(:disabled) {
     transform: scale(0.98);
-    background-color: $color-lime;
+    background-color: var(--accent-primary);
   }
 }
 
 .outline {
   background-color: transparent;
-  border: 1px solid $color-border;
-  color: $color-fg-primary;
+  border: 1px solid var(--border);
+  color: var(--fg-primary);
 
   &:hover:not(:disabled) {
-    border-color: $color-lime;
-    color: $color-lime;
-    background-color: oklch(0.82 0.22 135 / 0.05);
+    border-color: var(--accent-primary);
+    color: var(--fg-primary);
+    background-color: oklch(0.82 0.22 135 / 0.08);
   }
 }
 
 .ghost {
   background-color: transparent;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
 
   &:hover:not(:disabled) {
     background-color: oklch(1 0 0 / 0.05);
@@ -92,7 +92,7 @@
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid oklch(1 0 0 / 0.10);
-  color: $color-fg-primary;
+  color: var(--fg-primary);
 
   &:hover:not(:disabled) {
     border-color: oklch(0.82 0.22 135 / 0.25);

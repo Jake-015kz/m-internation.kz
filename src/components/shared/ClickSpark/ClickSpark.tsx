@@ -18,27 +18,54 @@ interface ClickSparkProps {
   duration?: number;
 }
 
+// Check if device can handle canvas animations
+function shouldEnableSparks(): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  // Disable on touch devices
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return false;
+  
+  // Disable on low-end devices
+  const cores = navigator.hardwareConcurrency || 4;
+  if (cores < 4) return false;
+  
+  // Check for reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  
+  return true;
+}
+
 export function ClickSpark({
   sparkColor = 'oklch(0.92 0.2 128)',
-  sparkSize = 10,
-  sparkRadius = 15,
-  sparkCount = 8,
-  duration = 400,
+  sparkSize = 8,
+  sparkRadius = 12,
+  sparkCount = 6,
+  duration = 350,
 }: ClickSparkProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const animationRef = useRef<number | null>(null);
+  const lastClickTimeRef = useRef(0);
 
   useEffect(() => {
+    // Skip on mobile/touch devices
+    if (!shouldEnableSparks()) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.scale(dpr, dpr);
     };
 
     resizeCanvas();
@@ -48,6 +75,12 @@ export function ClickSpark({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const currentTime = Date.now();
+      
+      // Limit max sparks for performance
+      if (sparksRef.current.length > 30) {
+        sparksRef.current = sparksRef.current.slice(-30);
+      }
+
       sparksRef.current = sparksRef.current.filter((spark) => {
         const delta = currentTime - spark.createdAt;
         if (delta >= duration) return false;
@@ -76,29 +109,33 @@ export function ClickSpark({
 
       if (sparksRef.current.length > 0) {
         animationRef.current = requestAnimationFrame(draw);
+      } else {
+        animationRef.current = null;
       }
     };
 
     const handleClick = (e: MouseEvent) => {
+      // Throttle: max 1 spark event per 50ms
+      const now = Date.now();
+      if (now - lastClickTimeRef.current < 50) return;
+      lastClickTimeRef.current = now;
+
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      const now = Date.now();
       const newSparks: Spark[] = [];
 
       for (let i = 0; i < sparkCount; i++) {
         const angle = (Math.PI * 2 * i) / sparkCount;
-        newSparks.push({
-          x,
-          y,
-          angle,
-          createdAt: now,
-        });
+        newSparks.push({ x, y, angle, createdAt: now });
       }
 
       sparksRef.current = [...sparksRef.current, ...newSparks];
-      draw();
+      
+      if (!animationRef.current) {
+        animationRef.current = requestAnimationFrame(draw);
+      }
     };
 
     document.addEventListener('click', handleClick);
@@ -111,6 +148,11 @@ export function ClickSpark({
       }
     };
   }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration]);
+
+  // Don't render canvas on mobile
+  if (typeof window !== 'undefined' && !shouldEnableSparks()) {
+    return null;
+  }
 
   return (
     <canvas

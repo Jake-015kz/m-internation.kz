@@ -1,5 +1,5 @@
-@use '../../../styles/utils/variables' as *;
-@use '../../../styles/utils/mixins' as *;
+@use "../../../styles/utils/variables" as *;
+@use "../../../styles/utils/mixins" as *;
 
 // ============================================
 // HERO SECTION — M-INTERNATIONAL v3.0
@@ -44,13 +44,13 @@
 .label {
   display: inline-block;
   margin-bottom: $space-6;
-  color: $color-lime;
+  color: var(--accent-primary);
   font-size: $text-sm;
   font-family: $font-body;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: $tracking-widest;
-  
+
   // Liquid Glass pill effect
   padding: $space-2 $space-4;
   border-radius: $radius-full;
@@ -61,10 +61,10 @@
   );
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid oklch(0.82 0.22 135 / 0.20);
+  border: 1px solid oklch(0.82 0.22 135 / 0.2);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.10),
-    0 4px 16px oklch(0 0 0 / 0.20);
+    inset 0 1px 0 oklch(1 0 0 / 0.1),
+    0 4px 16px oklch(0 0 0 / 0.2);
 }
 
 // ============================================
@@ -76,7 +76,7 @@
   font-size: $text-4xl;
   line-height: $leading-tight;
   margin-bottom: $space-6;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
 
   @include respond-to(md) {
@@ -98,11 +98,14 @@
 
 // Градиентный акцент в заголовке
 .titleHighlight {
-  background: linear-gradient(135deg, $color-lime 0%, $color-gold 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary) 0%,
+    var(--accent-gold) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  // Убираем text-shadow для gradient text — он не работает
 }
 
 // ============================================
@@ -114,11 +117,11 @@
   line-height: $leading-relaxed;
   max-width: 32rem;
   margin-bottom: $space-8;
-  color: $color-fg-secondary;
+  color: var(--fg-secondary);
 }
 
 .descriptionBold {
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   font-weight: 600;
 }
 
@@ -188,7 +191,7 @@
   transform: translate(-50%, -50%);
   width: 80%;
   height: 80%;
-  background: $color-lime;
+  background: var(--accent-primary);
   filter: blur(80px);
   opacity: 0.15;
   z-index: 1;
@@ -205,11 +208,11 @@
   border-radius: $radius-full;
   z-index: 3;
   animation: float-badge 4s ease-in-out infinite;
-  
+
   // Liquid Glass effect
   background: linear-gradient(
     135deg,
-    oklch(1 0 0 / 0.10) 0%,
+    oklch(1 0 0 / 0.1) 0%,
     oklch(1 0 0 / 0.04) 100%
   );
   backdrop-filter: blur(16px) saturate(160%);
@@ -246,12 +249,13 @@
   font-family: $font-mono;
   font-weight: 600;
   font-size: $text-xs;
-  color: $color-lime;
+  color: var(--accent-primary);
   letter-spacing: $tracking-wider;
 }
 
 @keyframes float-badge {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -268,7 +272,7 @@
   gap: $space-6;
   margin-top: $space-16;
   padding-top: $space-10;
-  border-top: 1px solid $color-border-subtle;
+  border-top: 1px solid var(--border-subtle);
 
   @include respond-to(md) {
     grid-template-columns: repeat(4, 1fr);
@@ -292,7 +296,7 @@
   font-family: $font-mono;
   font-weight: 600;
   font-size: $text-2xl;
-  color: $color-lime;
+  color: var(--accent-primary);
   line-height: 1;
   margin-bottom: $space-2;
   text-shadow: 0 0 16px oklch(0.82 0.22 135 / 0.4);
@@ -307,7 +311,7 @@
   font-family: $font-body;
   font-size: $text-sm;
   line-height: $leading-normal;
-  color: $color-fg-muted;
+  color: var(--fg-muted);
 }
 
 .statDivider {
@@ -321,7 +325,7 @@
     transform: translateY(-50%);
     width: 1px;
     height: 2rem;
-    background: $color-border-subtle;
+    background: var(--border-subtle);
   }
 }
 
@@ -339,4 +343,12 @@
   );
   z-index: 1;
   pointer-events: none;
+
+  [data-theme="light"] & {
+    background: radial-gradient(
+      ellipse at 70% 50%,
+      oklch(0.65 0.2 135 / 0.08) 0%,
+      transparent 50%
+    );
+  }
 }

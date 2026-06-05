@@ -21,7 +21,7 @@
 .ctaSection {
   padding-top: $space-24;
   padding-bottom: $space-24;
-  border-top: 1px solid $color-border-subtle;
+  border-top: 1px solid var(--border-subtle);
   position: relative;
   overflow: hidden;
   
@@ -52,7 +52,7 @@
   font-weight: 600;
   font-size: $text-3xl;
   line-height: $leading-snug;
-  color: $color-fg-primary;
+  color: var(--fg-primary);
   letter-spacing: $tracking-slight;
   margin-bottom: $space-4;
 
@@ -70,7 +70,7 @@
   font-family: $font-body;
   font-size: $text-lg;
   line-height: $leading-relaxed;
-  color: $color-fg-secondary;
+  color: var(--fg-secondary);
   margin-bottom: $space-8;
 }
 

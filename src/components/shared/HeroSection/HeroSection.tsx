@@ -1,13 +1,71 @@
 'use client';
 
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
+import { useGSAP } from '@gsap/react';
+import { gsap } from 'gsap';
 import { FloatingProduct } from '@shared/FloatingProduct';
 import styles from './HeroSection.module.scss';
 
 export function HeroSection() {
   const t = useTranslations('hero');
+  const sectionRef = useRef<HTMLElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>(null);
+  const badgeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // GSAP анимация появления секции через Timeline
+  useGSAP(() => {
+    if (!mounted) return;
+
+    const tl = gsap.timeline({
+      defaults: {
+        duration: 0.8,
+        ease: 'power2.out',
+      },
+    });
+
+    // Анимация последовательного появления элементов
+    tl.from(labelRef.current, { autoAlpha: 0, y: 20 })
+      .from(titleRef.current, { autoAlpha: 0, y: 30 }, '-=0.4')
+      .from(descriptionRef.current, { autoAlpha: 0, y: 20 }, '-=0.3')
+      .from(actionsRef.current, { autoAlpha: 0, y: 20 }, '-=0.3')
+      .from(productRef.current, { autoAlpha: 0, x: 50, duration: 1 }, '-=0.5')
+      .from(
+        '.gsap-badge',
+        {
+          autoAlpha: 0,
+          scale: 0.8,
+          stagger: 0.15,
+          duration: 0.6,
+        },
+        '-=0.6'
+      )
+      .from(
+        '.gsap-stat',
+        {
+          autoAlpha: 0,
+          y: 20,
+          stagger: 0.1,
+          duration: 0.5,
+        },
+        '-=0.8'
+      );
+
+    return () => {
+      tl.kill();
+    };
+  }, [mounted]);
 
   const stats = [
     { value: '13+', label: t('stats.products') },
@@ -17,29 +75,24 @@ export function HeroSection() {
   ];
 
   return (
-    <section className={styles.section} aria-labelledby="hero-title">
+    <section ref={sectionRef} className={styles.section} aria-labelledby="hero-title">
       <div className={styles.container}>
         <div className={styles.content}>
           {/* Left Column - Text Content */}
-          <motion.div
-            className={styles.textContent}
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <span className={styles.label}>
+          <div className={styles.textContent}>
+            <span ref={labelRef} className={styles.label}>
               {t('label')}
             </span>
 
-            <h1 id="hero-title" className={styles.title}>
+            <h1 ref={titleRef} id="hero-title" className={styles.title}>
               <span className={styles.titleLine}>{t('title')}</span>
             </h1>
 
-            <p className={styles.description}>
+            <p ref={descriptionRef} className={styles.description}>
               {t('subtitle')}
             </p>
 
-            <div className={styles.actions}>
+            <div ref={actionsRef} className={styles.actions}>
               <Link href="/catalog" className={styles.buttonPrimary}>
                 {t('cta')}
               </Link>
@@ -47,15 +100,10 @@ export function HeroSection() {
                 {t('aboutLink')}
               </Link>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column - Product Image */}
-          <motion.div
-            className={styles.imageContent}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-          >
+          <div ref={productRef} className={styles.imageContent}>
             <FloatingProduct duration={6} distance={20}>
               <div className={styles.productImageWrapper}>
                 <img
@@ -69,55 +117,46 @@ export function HeroSection() {
             </FloatingProduct>
 
             {/* Floating badges */}
-            <motion.div
-              className={styles.floatingBadge}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+            <div
+              ref={(el) => { badgeRefs.current[0] = el; }}
+              className={`${styles.floatingBadge} gsap-badge`}
               aria-label="GMP Certified"
             >
               <span className={styles.badgeText}>GMP</span>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className={`${styles.floatingBadge} ${styles.floatingBadgeSecond}`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1 }}
+            <div
+              ref={(el) => { badgeRefs.current[1] = el; }}
+              className={`${styles.floatingBadge} ${styles.floatingBadgeSecond} gsap-badge`}
               aria-label="Halal Certified"
             >
               <span className={styles.badgeText}>HALAL</span>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className={`${styles.floatingBadge} ${styles.floatingBadgeThird}`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1.2 }}
+            <div
+              ref={(el) => { badgeRefs.current[2] = el; }}
+              className={`${styles.floatingBadge} ${styles.floatingBadgeThird} gsap-badge`}
               aria-label="ISO Certified"
             >
               <span className={styles.badgeText}>ISO</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
         {/* Stats */}
-        <motion.div
-          className={styles.stats}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          role="list"
-          aria-label="Company statistics"
-        >
+        <div ref={statsRef} className={styles.stats} role="list" aria-label="Company statistics">
           {stats.map((stat, index) => (
-            <div key={stat.label} className={styles.stat} role="listitem">
+            <div
+              key={stat.label}
+              className={`${styles.stat} gsap-stat`}
+              role="listitem"
+            >
               <div className={styles.statValue}>{stat.value}</div>
               <div className={styles.statLabel}>{stat.label}</div>
               {index < stats.length - 1 && <div className={styles.statDivider} aria-hidden="true" />}
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* Background gradient */}
