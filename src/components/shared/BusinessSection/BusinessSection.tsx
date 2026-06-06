@@ -66,7 +66,7 @@ export function BusinessSection() {
         >
           <h2
             id="business-title"
-            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-4 md:text-4xl lg:text-5xl"
+            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-6 md:text-4xl lg:text-5xl"
           >
             {t("title")}
           </h2>
@@ -89,7 +89,7 @@ export function BusinessSection() {
             return (
               <motion.div
                 key={step.id}
-                className="relative rounded-2xl p-8 overflow-hidden cursor-default bg-[linear-gradient(135deg,oklch(1_0_0/0.08)_0%,oklch(1_0_0/0.02)_100%)] border border-[oklch(1_0_0/0.1)] shadow-[inset_0_1px_0_oklch(1_0_0/0.15),inset_0_-1px_0_oklch(0_0_0/0.05),0_8px_32px_oklch(0_0_0/0.3)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:scale-[1.02] hover:border-[oklch(0.82_0.22_135/0.25)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.08)_0%,oklch(1_0_0/0.04)_100%)] hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.2),inset_0_-1px_0_oklch(0_0_0/0.08),0_20px_60px_oklch(0_0_0/0.4),0_0_30px_oklch(0.82_0.22_135/0.1)] [&:hover_.card-glow]:opacity-100 [&:hover_.card-glow]:scale-[1.1] [&:hover_.card-icon]:scale-[1.15] [&:hover_.card-icon]:rotate-[-5deg] [&:hover_.card-icon]:bg-[oklch(0.82_0.22_135/0.15)] [&:hover_.card-icon]:shadow-[0_0_20px_oklch(0.82_0.22_135/0.2)] [&:hover_.card-number]:opacity-[0.08] [&:hover_.card-number]:scale-[1.1] [&:hover_.card-line]:opacity-60 [&:hover_.card-line]:w-full"
+                className="glass-card relative rounded-2xl p-8 overflow-hidden cursor-default [&:hover_.card-glow]:opacity-100 [&:hover_.card-glow]:scale-[1.1] [&:hover_.card-icon]:scale-[1.15] [&:hover_.card-icon]:rotate-[-5deg] [&:hover_.card-icon]:bg-[oklch(0.82_0.22_135/0.15)] [&:hover_.card-icon]:shadow-[0_0_20px_oklch(0.82_0.22_135/0.2)] [&:hover_.card-number]:opacity-[0.08] [&:hover_.card-number]:scale-[1.1] [&:hover_.card-line]:opacity-60 [&:hover_.card-line]:w-full"
                 variants={cardVariants}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
               >

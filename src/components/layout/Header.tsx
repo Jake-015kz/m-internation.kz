@@ -25,24 +25,21 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-[300]",
-        "transition-all duration-[250ms] cubic-bezier(0.4, 0, 0.2, 1)",
+        "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
         "border-b border-transparent",
-        // Dark theme background
-        "bg-[linear-gradient(180deg,oklch(0.08_0.015_265/.8)_0%,oklch(0.08_0.015_265/.4)_100%)]",
         "backdrop-blur-[12px] saturate-[150%]",
-        "[data-theme='light']_&:bg-[linear-gradient(180deg,oklch(0.97_0.005_90/.85)_0%,oklch(0.97_0.005_90/.6)_100%)]",
+        // Default (not scrolled) background
+        "bg-[linear-gradient(180deg,var(--header-bg-from)_0%,var(--header-bg-to)_100%)]",
         // Scrolled state
         isScrolled && [
           "border-b border-[var(--border-subtle)]",
-          "bg-[linear-gradient(180deg,oklch(0.08_0.015_265/.95)_0%,oklch(0.08_0.015_265/.85)_100%)]",
           "backdrop-blur-[20px] saturate-[180%]",
-          "shadow-[0_4px_32px_oklch(0_0_0/.3)]",
-          "[data-theme='light']_&:bg-[linear-gradient(180deg,oklch(0.97_0.005_90/.95)_0%,oklch(0.97_0.005_90/.9)_100%)]",
-          "[data-theme='light']_&:shadow-[0_4px_20px_oklch(0_0_0/.08)]",
+          "bg-[linear-gradient(180deg,var(--header-bg-scrolled-from)_0%,var(--header-bg-scrolled-to)_100%)]",
+          "shadow-[var(--header-shadow)]",
         ],
       )}
     >
-      <div className="container mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-16 md:h-[4.5rem] flex items-center justify-between">
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-16 md:h-[4.5rem] flex items-center justify-between">
         <Link
           href={`/${locale}`}
           className="flex items-center gap-2 text-decoration-none"
@@ -160,11 +157,10 @@ export function Header() {
       <div
         id="mobile-menu"
         className={cn(
-          "max-h-0 opacity-0 overflow-hidden transition-[max-height,opacity] duration-[400ms] cubic-bezier(0.34, 1.56, 0.64, 1) ease-out",
-          "bg-[linear-gradient(135deg,oklch(0.12_0.02_265/.95)_0%,oklch(0.1_0.015_265/.98)_100%)]",
+          "max-h-0 opacity-0 overflow-hidden transition-[max-height,opacity] duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+          "bg-[linear-gradient(135deg,var(--bg-elevated)_0%,var(--bg-base)_100%)]",
           "backdrop-blur-[20px] saturate-[180%]",
           "border-b border-transparent",
-          "[data-theme='light']_&:bg-[linear-gradient(135deg,oklch(0.95_0.008_90/.95)_0%,oklch(0.97_0.005_90/.98)_100%)]",
           isMenuOpen &&
             "max-h-[500px] opacity-100 border-b border-[var(--border-subtle)]",
           "md:!hidden",

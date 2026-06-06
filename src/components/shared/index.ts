@@ -12,6 +12,8 @@ export { ClickSpark } from "./ClickSpark";
 export { FloatingProduct } from "./FloatingProduct";
 export { NoiseOverlay } from "./NoiseOverlay";
 export { LenisProvider } from "./LenisProvider";
+export { CursorGlow } from "./CursorGlow";
+export { AnimatedCounter } from "./AnimatedCounter";
 
 // Product Components
 export { ProductCard } from "./ProductCard";

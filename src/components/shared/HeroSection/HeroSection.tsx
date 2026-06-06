@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { FloatingProduct } from "@shared/FloatingProduct";
+import { AnimatedCounter } from "@shared/AnimatedCounter";
 
 export function HeroSection() {
   const t = useTranslations("hero");
@@ -75,7 +76,7 @@ export function HeroSection() {
             <h1
               ref={titleRef}
               id="hero-title"
-              className="font-heading font-semibold text-4xl leading-[0.95] mb-6 text-[var(--fg-primary)] tracking-[-0.02em] md:text-5xl lg:text-6xl xl:text-7xl"
+              className="font-heading font-bold mb-6 tracking-[-0.03em] editorial-title gradient"
             >
               <span className="block">{t("title")}</span>
             </h1>
@@ -154,9 +155,10 @@ export function HeroSection() {
               className="gsap-stat relative p-4 text-center md:text-left md:px-6 md:py-4"
               role="listitem"
             >
-              <div className="font-mono font-semibold text-2xl text-[var(--accent-primary)] leading-none mb-2 [text-shadow:0_0_16px_oklch(0.82_0.22_135/0.4)] md:text-3xl">
-                {stat.value}
-              </div>
+              <AnimatedCounter
+                target={stat.value}
+                className="font-mono font-semibold text-2xl text-[var(--accent-primary)] leading-none mb-2 [text-shadow:0_0_16px_oklch(0.82_0.22_135/0.4)] md:text-3xl"
+              />
               <div className="font-body text-sm leading-normal text-[var(--fg-muted)]">
                 {stat.label}
               </div>

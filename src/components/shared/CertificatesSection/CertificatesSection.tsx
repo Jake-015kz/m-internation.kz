@@ -51,7 +51,7 @@ export function CertificatesSection() {
         >
           <h2
             id="certificates-title"
-            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-4 md:text-4xl lg:text-5xl"
+            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-6 md:text-4xl lg:text-5xl"
           >
             {t("title")}
           </h2>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
-import { gsap } from "gsap";
 
 type Theme = "dark" | "light";
 
@@ -12,21 +11,25 @@ function getInitialTheme(): Theme {
   if (currentAttr === "dark" || currentAttr === "light") return currentAttr;
   try {
     const saved = localStorage.getItem("theme") as Theme | null;
-    if (saved && (saved === "dark" || saved === "light")) return saved;
+    if (saved === "dark" || saved === "light") return saved;
   } catch {}
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
 }
 
-function applyTheme(theme: Theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-}
-
 export function ThemeSwitcher() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [mounted, setMounted] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
 
+  // Initialize theme from DOM/localStorage after mount
+  useEffect(() => {
+    setTheme(getInitialTheme());
+    setMounted(true);
+  }, []);
+
+  // Listen for system theme changes
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
@@ -37,7 +40,7 @@ export function ThemeSwitcher() {
       }
       const newTheme: Theme = e.matches ? "dark" : "light";
       setTheme(newTheme);
-      applyTheme(newTheme);
+      document.documentElement.setAttribute("data-theme", newTheme);
     };
 
     mediaQuery.addEventListener("change", handleChange);
@@ -47,38 +50,35 @@ export function ThemeSwitcher() {
   const toggleTheme = useCallback(() => {
     const newTheme: Theme = theme === "dark" ? "light" : "dark";
 
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReducedMotion || !iconRef.current) {
-      applyTheme(newTheme);
+    // Animate icon
+    if (iconRef.current) {
+      iconRef.current.style.transition = "transform 0.3s ease";
+      iconRef.current.style.transform = "rotate(180deg) scale(0.6)";
+      setTimeout(() => {
+        document.documentElement.setAttribute("data-theme", newTheme);
+        try {
+          localStorage.setItem("theme", newTheme);
+        } catch {}
+        setTheme(newTheme);
+        if (iconRef.current) {
+          iconRef.current.style.transform = "rotate(0deg) scale(1)";
+        }
+      }, 150);
+    } else {
+      document.documentElement.setAttribute("data-theme", newTheme);
       try {
         localStorage.setItem("theme", newTheme);
       } catch {}
-    } else {
-      gsap.to(iconRef.current, {
-        rotate: -180,
-        scale: 0.6,
-        duration: 0.4,
-        ease: "back.in(1.7)",
-        onComplete: () => {
-          applyTheme(newTheme);
-          try {
-            localStorage.setItem("theme", newTheme);
-          } catch {}
-          gsap.to(iconRef.current, {
-            rotate: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: "elastic.out(1.2, 0.5)",
-          });
-        },
-      });
+      setTheme(newTheme);
     }
-
-    setTheme(newTheme);
   }, [theme]);
+
+  // Prevent hydration mismatch — render placeholder until mounted
+  if (!mounted) {
+    return (
+      <div className="flex items-center justify-center w-10 h-10 rounded-[0.375rem] border border-[var(--border)] bg-[var(--bg-surface)]" />
+    );
+  }
 
   return (
     <button
@@ -93,17 +93,7 @@ export function ThemeSwitcher() {
         className="flex items-center justify-center origin-center"
         ref={iconRef}
       >
-        {theme === "dark" ? (
-          <Sun
-            size={18}
-            className="transition-colors duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          />
-        ) : (
-          <Moon
-            size={18}
-            className="transition-colors duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          />
-        )}
+        {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
       </div>
     </button>
   );

@@ -6,9 +6,9 @@ import { getLocale, getMessages } from "next-intl/server";
 import { onest, manrope, jetbrainsMono } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer } from "@/components/layout";
-import { NoiseOverlay } from "@shared/NoiseOverlay";
-import { ClickSpark } from "@shared/ClickSpark";
-import { LenisProvider } from "@shared/LenisProvider/LenisDynamic";
+import { LenisProvider } from "@shared/LenisProvider";
+import { ProvidersWrapper } from "@shared/ProvidersWrapper";
+import { CursorGlow } from "@shared/CursorGlow";
 
 function getThemeScript() {
   return `
@@ -119,13 +119,14 @@ export default async function RootLayout({
       <body className={`${onest.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
-            <NoiseOverlay />
-            <ClickSpark />
-            <div className="relative z-10 flex min-h-screen flex-col">
-              <Header />
-              <main style={{ flex: "1 1 auto" }}>{children}</main>
-              <Footer />
-            </div>
+            <ProvidersWrapper>
+              <div className="relative z-10 flex min-h-screen flex-col">
+                <Header />
+                <main style={{ flex: "1 1 auto" }}>{children}</main>
+                <Footer />
+              </div>
+              <CursorGlow />
+            </ProvidersWrapper>
           </LenisProvider>
         </NextIntlClientProvider>
       </body>

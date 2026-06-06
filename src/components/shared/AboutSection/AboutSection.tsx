@@ -79,7 +79,7 @@ export function AboutSection() {
         >
           <h2
             id="about-title"
-            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-4 md:text-4xl lg:text-5xl"
+            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-6 md:text-4xl lg:text-5xl"
           >
             {t("title")}
           </h2>
@@ -130,9 +130,9 @@ export function AboutSection() {
                   />
                 </div>
 
-                {/* Card */}
+                {/* Card — Glassmorphism 2.0 */}
                 <div
-                  className={`bg-[linear-gradient(135deg,oklch(1_0_0/0.08)_0%,oklch(1_0_0/0.02)_100%)] backdrop-blur-[20px] border border-[oklch(1_0_0/0.1)] rounded-lg p-6 transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-default max-w-[400px] shadow-[inset_0_1px_0_oklch(1_0_0/0.15),inset_0_-1px_0_oklch(0_0_0/0.05),0_8px_32px_oklch(0_0_0/0.3)] hover:border-[oklch(0.82_0.22_135/0.3)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.1)_0%,oklch(1_0_0/0.04)_100%)] hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.2),inset_0_-1px_0_oklch(0_0_0/0.08),0_16px_48px_oklch(0_0_0/0.35),0_0_24px_oklch(0.82_0.22_135/0.12)] hover:-translate-y-1 hover:scale-[1.01] md:max-w-[350px] ${isLeft ? "md:mr-[calc(50%+40px)]" : "md:ml-[calc(50%+40px)]"}`}
+                  className={`glass-card rounded-2xl p-6 cursor-default max-w-[400px] md:max-w-[350px] ${isLeft ? "md:mr-[calc(50%+40px)]" : "md:ml-[calc(50%+40px)]"}`}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="font-mono font-semibold text-2xl text-[var(--accent-primary)] leading-none shadow-[0_0_16px_oklch(0.82_0.22_135/0.4)] transition-shadow duration-250">

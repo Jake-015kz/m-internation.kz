@@ -29,7 +29,7 @@ export function ProductGrid({
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3">
+      <div className="bento-grid">
         {products.map((product) => (
           <ProductCard key={product.slug} product={product} />
         ))}
