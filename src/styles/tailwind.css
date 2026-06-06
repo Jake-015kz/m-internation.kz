@@ -201,29 +201,12 @@
 /* ============================================
  * BASE STYLES (reset)
  * ============================================ */
-/*
- * Element reset — Tailwind v4 Preflight сбрасывает box-sizing,
- * но НЕ обнуляет margin/padding на семантических элементах.
- * Без этого браузерные user-agent стили вернут margin к h1-h6, p, ul и т.д.
- */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-ol,
-li,
-blockquote,
-figure,
-pre,
-dl,
-dd {
+/* Ресет для семантических элементов — Tailwind Preflight не обнуляет margin
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote, figure, pre, dl, dd {
   margin: 0;
   padding: 0;
 }
+
 
 html {
   scroll-behavior: smooth;

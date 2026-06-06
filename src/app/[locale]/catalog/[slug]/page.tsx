@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import {
   products,
@@ -67,9 +68,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* Image */}
           <div className="sticky top-24 self-start">
             <div className="aspect-square bg-[var(--bg-surface)] flex items-center justify-center">
-              <span className="font-heading font-bold text-6xl text-[var(--border)]">
-                {product.name.charAt(0)}
-              </span>
+              {product.images?.[0] ? (
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <span className="font-heading font-bold text-6xl text-[var(--border)]">
+                  {product.name.charAt(0)}
+                </span>
+              )}
             </div>
           </div>
 

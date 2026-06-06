@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { onest, manrope, jetbrainsMono } from "@/lib/fonts";
+import { geist, geistMono, nunito } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer } from "@/components/layout";
 import { LenisProvider } from "@shared/LenisProvider";
 import { ProvidersWrapper } from "@shared/ProvidersWrapper";
-import { CursorGlow } from "@shared/CursorGlow";
+import CursorGlowDynamic from "@shared/CursorGlow/CursorGlowDynamic";
 
 function getThemeScript() {
   return `
@@ -19,11 +19,11 @@ function getThemeScript() {
           document.documentElement.setAttribute('data-theme', saved);
         } else {
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
         }
-      } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
     })();
   `;
 }
@@ -98,7 +98,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${onest.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+      className={`${geist.variable} ${geistMono.variable} ${nunito.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -116,7 +116,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${onest.className} antialiased`}>
+      <body className={`${nunito.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
             <ProvidersWrapper>
@@ -125,7 +125,7 @@ export default async function RootLayout({
                 <main style={{ flex: "1 1 auto" }}>{children}</main>
                 <Footer />
               </div>
-              <CursorGlow />
+              <CursorGlowDynamic />
             </ProvidersWrapper>
           </LenisProvider>
         </NextIntlClientProvider>

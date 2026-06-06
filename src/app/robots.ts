@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import { SITE_CONFIG } from "@/lib/constants";
 
-const baseUrl = "https://m-internation.kz";
+const baseUrl = SITE_CONFIG.url;
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -10,8 +11,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/_next/"],
     },
-    sitemap: routing.locales.flatMap((locale) => [
-      `${baseUrl}/${locale}/sitemap.xml`,
-    ]),
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

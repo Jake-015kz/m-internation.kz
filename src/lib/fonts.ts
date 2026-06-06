@@ -1,25 +1,26 @@
-import { Onest, Manrope, JetBrains_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Nunito } from "next/font/google";
 
-// Body text font — Onest (clean, modern, supports cyrillic)
-export const onest = Onest({
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-  variable: '--font-onest',
-  weight: ['300', '400', '500', '600', '700'],
+// Primary font — Geist (clean, modern, geometric sans-serif)
+export const geist = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-// Heading font — Manrope (elegant, geometric, premium, supports cyrillic)
-export const manrope = Manrope({
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-  variable: '--font-manrope',
-  weight: ['400', '500', '600', '700', '800'],
+// Monospace font — Geist Mono (code, stats, labels)
+export const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
+  weight: ["400", "500", "600", "700"],
 });
 
-// Monospace font — JetBrains Mono (code, stats, supports cyrillic)
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-  variable: '--font-mono',
-  weight: ['400', '500', '600', '700'],
+// Cyrillic body font — Nunito (warm, rounded, pairs well with Geist)
+// Not overused like Inter/Roboto, excellent cyrillic support
+export const nunito = Nunito({
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+  variable: "--font-nunito",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });

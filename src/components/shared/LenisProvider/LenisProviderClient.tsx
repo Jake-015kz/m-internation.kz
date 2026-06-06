@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { ReactNode } from "react";
 import { ReactLenis } from "lenis/react";
 
 // Check if device is touch/mobile — Lenis causes jank on weak devices
@@ -21,11 +21,7 @@ function shouldEnableSmoothScroll(): boolean {
   return true;
 }
 
-export function LenisProviderClient({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function LenisProviderClient({ children }: { children: ReactNode }) {
   const lenisOptions = {
     duration: 1.2,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

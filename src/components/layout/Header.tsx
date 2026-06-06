@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState, useCallback } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { SITE_CONFIG, CONTACTS } from "@/lib/constants";
+import { SITE_CONFIG } from "@/lib/constants";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useScroll, useNavLinks } from "@/hooks";
@@ -25,31 +25,29 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-[300]",
-        "transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+        "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
         "border-b border-transparent",
-        "backdrop-blur-[12px] saturate-[150%]",
-        // Default (not scrolled) background
-        "bg-[linear-gradient(180deg,var(--header-bg-from)_0%,var(--header-bg-to)_100%)]",
-        // Scrolled state
         isScrolled && [
           "border-b border-[var(--border-subtle)]",
-          "backdrop-blur-[20px] saturate-[180%]",
-          "bg-[linear-gradient(180deg,var(--header-bg-scrolled-from)_0%,var(--header-bg-scrolled-to)_100%)]",
+          "bg-[var(--header-bg-scrolled-from)]",
+          "backdrop-blur-[16px] saturate-[150%]",
           "shadow-[var(--header-shadow)]",
         ],
+        !isScrolled && ["bg-[var(--header-bg-from)]", "backdrop-blur-[12px]"],
       )}
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-16 md:h-[4.5rem] flex items-center justify-between">
+        {/* Logo */}
         <Link
           href={`/${locale}`}
           className="flex items-center gap-2 text-decoration-none"
         >
-          <span className="font-heading font-600 text-lg md:text-xl text-[var(--fg-primary)] tracking-[-0.02em]">
+          <span className="font-heading font-semibold text-lg md:text-xl text-[var(--fg-primary)] tracking-[-0.02em]">
             {SITE_CONFIG.name}
           </span>
-          <span className="w-2 h-2 bg-[var(--accent-primary)] rounded-full shadow-[0_0_12px_oklch(0.82_0.22_135/.5)]" />
         </Link>
 
+        {/* Desktop nav */}
         <nav
           className="hidden md:flex items-center gap-8"
           role="navigation"
@@ -59,139 +57,85 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-body font-500 text-sm text-[var(--fg-muted)] tracking-[0.02em] transition-colors duration-[250ms] relative
-                after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-[var(--accent-primary)] after:transition-all after:duration-[250ms] after:shadow-[0_0_8px_oklch(0.82_0.22_135/.4)]
-                hover:text-[var(--fg-primary)] hover:after:w-full"
+              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-[var(--accent-primary)] after:transition-all after:duration-300 hover:text-[var(--fg-primary)] hover:after:w-full"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-3 md:gap-4">
-          {/* Social icons — visible on lg+ */}
-          <div className="hidden lg:flex items-center gap-2">
-            <a
-              href={CONTACTS.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8 rounded-[0.375rem] border border-[var(--border)] text-[var(--fg-muted)] bg-[var(--bg-surface)] transition-all duration-[250ms] cubic-bezier(0.16, 1, 0.3, 1) relative overflow-hidden
-                before:content-[''] before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-[250ms] before:bg-[linear-gradient(135deg,var(--social-instagram),var(--social-instagram-hover))]
-                hover:border-transparent hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(0_0_0/.2)] hover:before:opacity-100
-                last:before:bg-[linear-gradient(135deg,var(--social-tiktok),var(--social-tiktok-hover),#fe2c55)]
-                [data-theme='light']_&:bg-[var(--bg-elevated)] [data-theme='light']_&:hover:shadow-[0_4px_12px_oklch(0_0_0/.15)]"
-              aria-label="Instagram"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="relative z-10 transition-all duration-[250ms] hover:scale-110"
-              >
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" y1="6.5" />
-              </svg>
-            </a>
-            <a
-              href={CONTACTS.tiktok}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8 rounded-[0.375rem] border border-[var(--border)] text-[var(--fg-muted)] bg-[var(--bg-surface)] transition-all duration-[250ms] cubic-bezier(0.16, 1, 0.3, 1) relative overflow-hidden
-                before:content-[''] before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-[250ms] before:bg-[linear-gradient(135deg,var(--social-tiktok),var(--social-tiktok-hover),#fe2c55)]
-                hover:border-transparent hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(0_0_0/.2)] hover:before:opacity-100
-                [data-theme='light']_&:bg-[var(--bg-elevated)] [data-theme='light']_&:hover:shadow-[0_4px_12px_oklch(0_0_0/.15)]"
-              aria-label="TikTok"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="relative z-10 transition-all duration-[250ms] hover:scale-110"
-              >
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-              </svg>
-            </a>
-          </div>
-
-          <a
-            href={`tel:${CONTACTS.phone}`}
-            className="hidden lg:flex items-center gap-2 font-mono font-500 text-sm text-[var(--fg-primary)] whitespace-nowrap"
-            aria-label={CONTACTS.phone}
-          >
-            <Phone size={16} />
-            <span>{CONTACTS.phone}</span>
-          </a>
-
+        {/* Right side */}
+        <div className="flex items-center gap-2 md:gap-3">
           <LanguageSwitcher />
-
           <ThemeSwitcher />
 
-          {/* Кнопка "Контакты" — скрыта на мобилке, видна на md+ */}
+          {/* CTA — desktop only */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-600 text-xs md:text-sm px-2 md:px-6 py-2 rounded-[0.375rem] hover:opacity-90 transition-all duration-[250ms] cubic-bezier(0.34, 1.56, 0.64, 1) hover:scale-105 active:scale-95"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-5 py-2 rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--accent-primary-hover)] hover:scale-[1.02] active:scale-[0.95]"
           >
             {t("contacts")}
           </Link>
 
+          {/* Mobile menu button */}
           <button
-            className="flex md:hidden items-center justify-center w-10 h-10 text-[var(--fg-primary)] border border-[var(--border)] rounded-[0.375rem] transition-all duration-[250ms] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+            className="flex md:hidden items-center justify-center w-10 h-10 text-[var(--fg-primary)] border border-[var(--border)] rounded-[var(--radius-sm)] transition-all duration-250 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — full screen overlay */}
       <div
         id="mobile-menu"
         className={cn(
-          "max-h-0 opacity-0 overflow-hidden transition-[max-height,opacity] duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-          "bg-[linear-gradient(135deg,var(--bg-elevated)_0%,var(--bg-base)_100%)]",
-          "backdrop-blur-[20px] saturate-[180%]",
-          "border-b border-transparent",
-          isMenuOpen &&
-            "max-h-[500px] opacity-100 border-b border-[var(--border-subtle)]",
-          "md:!hidden",
+          "fixed inset-0 top-[4rem] z-[299] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden",
+          "bg-[var(--bg-base)] backdrop-blur-[20px]",
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none",
         )}
         aria-hidden={!isMenuOpen}
       >
-        <nav className="flex flex-col gap-0 px-4 py-4">
-          {navLinks.map((link) => (
+        <nav className="flex flex-col px-6 py-8 gap-2">
+          {navLinks.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              className="font-body font-500 text-base text-[var(--fg-primary)] py-4 border-b border-[var(--border-subtle)] transition-colors duration-[250ms] hover:text-[var(--accent-primary)]"
+              className={cn(
+                "font-heading font-medium text-2xl text-[var(--fg-primary)] py-3 transition-all duration-300",
+                isMenuOpen
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-4",
+              )}
+              style={{ transitionDelay: isMenuOpen ? `${i * 50}ms` : "0ms" }}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <a
-            href={`tel:${CONTACTS.phone}`}
-            className="font-mono font-500 text-base text-[var(--accent-primary)] py-4 flex items-center gap-2"
+          <div
+            className={cn(
+              "mt-6 pt-6 border-t border-[var(--border-subtle)] transition-all duration-300",
+              isMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4",
+            )}
+            style={{ transitionDelay: isMenuOpen ? "250ms" : "0ms" }}
           >
-            <Phone size={18} />
-            <span>{CONTACTS.phone}</span>
-          </a>
-          <Link
-            href={`/${locale}/contacts`}
-            className="font-body font-500 text-base text-[var(--fg-primary)] py-4 border-b border-[var(--border-subtle)] transition-colors duration-[250ms] hover:text-[var(--accent-primary)]"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {t("contacts")}
-          </Link>
+            <Link
+              href={`/${locale}/contacts`}
+              className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-base px-6 py-3 rounded-[var(--radius-sm)] w-full"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t("contacts")}
+            </Link>
+          </div>
         </nav>
       </div>
     </header>

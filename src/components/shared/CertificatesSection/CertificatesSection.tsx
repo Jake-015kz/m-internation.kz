@@ -1,114 +1,126 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import {
-  Award,
-  Shield,
-  CheckCircle,
-  BadgeCheck,
-  FileCheck,
-  Globe,
-} from "lucide-react";
-
-const certificates = [
-  { id: "gmp", name: "GMP", icon: Award },
-  { id: "iso", name: "ISO", icon: Globe },
-  { id: "halal", name: "HALAL", icon: CheckCircle },
-  { id: "mesti", name: "MESTI", icon: FileCheck },
-  { id: "fda", name: "FDA", icon: Shield },
-  { id: "eac", name: "EAC", icon: BadgeCheck },
-];
-
-const marqueeItems = [...certificates, ...certificates];
+import { CERTIFICATES } from "@/lib/constants";
 
 export function CertificatesSection() {
   const t = useTranslations("certificates");
+  const [paused, setPaused] = useState(false);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+
+  // Duplicate items for seamless loop
+  const row1 = [...CERTIFICATES, ...CERTIFICATES];
+  const row2 = [
+    ...CERTIFICATES.slice(4),
+    ...CERTIFICATES.slice(0, 4),
+    ...CERTIFICATES.slice(4),
+    ...CERTIFICATES.slice(0, 4),
+  ];
+
+  const togglePause = useCallback(() => {
+    setPaused((p) => !p);
+    [row1Ref, row2Ref].forEach((ref) => {
+      if (ref.current) {
+        ref.current.style.animationPlayState = paused ? "running" : "paused";
+      }
+    });
+  }, [paused]);
 
   return (
     <section
-      className="py-24 relative overflow-hidden md:py-32"
+      className="relative overflow-hidden py-16 md:py-24"
       aria-labelledby="certificates-title"
     >
-      {/* Background text */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none select-none"
-        aria-hidden="true"
-      >
-        <span className="font-mono font-bold text-[clamp(4rem,15vw,12rem)] text-[var(--fg-primary)] opacity-[0.03] tracking-[0.1em] whitespace-nowrap">
-          CERTIFIED
-        </span>
-      </div>
-
-      <div className="relative z-2 mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          className="mb-12 text-center relative z-2 md:mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+      {/* Header — title + subtitle side by side */}
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 mb-12 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 md:gap-8">
+          {/* Title */}
           <h2
             id="certificates-title"
-            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-6 md:text-4xl lg:text-5xl"
+            className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] md:text-3xl lg:text-4xl"
           >
             {t("title")}
           </h2>
-          <p className="font-body text-lg leading-[1.625] text-[var(--fg-muted)] max-w-[40rem] mx-auto">
+          {/* Subtitle — right aligned on desktop, below on mobile */}
+          <p className="font-body text-sm md:text-base leading-[1.45] text-[var(--fg-muted)] max-w-[28rem] md:text-right">
             {t("description")}
           </p>
-        </motion.div>
+        </div>
+        {/* Decorative accent line */}
+        <div className="mt-8 h-[2px] w-16 bg-[var(--accent-primary)] rounded-full" />
+      </div>
 
-        {/* Marquee row 1 — right */}
-        <div className="overflow-hidden relative my-4 md:my-6">
-          <div className="absolute inset-y-0 left-0 w-20 z-2 pointer-events-none bg-gradient-to-r from-[var(--bg-base)] to-transparent" />
-          <div className="absolute inset-y-0 right-0 w-20 z-2 pointer-events-none bg-gradient-to-l from-[var(--bg-base)] to-transparent" />
-          <div className="flex gap-4 w-fit hover:[animation-play-state:paused] animate-[marqueeRight_30s_linear_infinite]">
-            {marqueeItems.map((cert, index) => {
-              const Icon = cert.icon;
-              return (
-                <div
-                  key={`row1-${cert.id}-${index}`}
-                  className="flex items-center gap-3 px-5 py-3 rounded-full whitespace-nowrap cursor-default transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[linear-gradient(135deg,oklch(1_0_0/0.06)_0%,oklch(1_0_0/0.02)_100%)] backdrop-blur-[12px] border border-[oklch(1_0_0/0.08)] shadow-[inset_0_1px_0_oklch(1_0_0/0.1),0_4px_16px_oklch(0_0_0/0.2)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.1)_0%,oklch(1_0_0/0.04)_100%)] hover:border-[oklch(0.82_0.22_135/0.25)] hover:scale-[1.05] hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.15),0_8px_24px_oklch(0_0_0/0.25),0_0_16px_oklch(0.82_0.22_135/0.1)]"
-                >
-                  <Icon
-                    size={20}
-                    className="text-[var(--accent-primary)] flex-shrink-0 [&:hover]:drop-shadow-[0_0_8px_oklch(0.82_0.22_135/0.5)]"
-                  />
-                  <span className="font-mono font-semibold text-sm text-[var(--fg-primary)] tracking-[0.05em]">
-                    {cert.name}
+      {/* Marquee Row 1 — left to right */}
+      <div className="marquee-container mb-4">
+        <div ref={row1Ref} className="marquee-track">
+          {row1.map((cert, i) => (
+            <div
+              key={`r1-${cert.id}-${i}`}
+              className="marquee-item mx-2 md:mx-3"
+            >
+              <div
+                className="flex items-center gap-3 px-5 py-3 md:px-6 md:py-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] hover:border-[var(--border)] transition-colors duration-300 group cursor-pointer"
+                onClick={togglePause}
+              >
+                {/* Icon badge */}
+                <div className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-[oklch(0.52_0.14_145/0.1)] rounded-[var(--radius-sm)] flex-shrink-0 group-hover:bg-[oklch(0.52_0.14_145_/_0.18)] transition-colors duration-300">
+                  <span className="font-mono font-bold text-xs text-[var(--accent-primary)]">
+                    {cert.name.slice(0, 2)}
                   </span>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Marquee row 2 — left */}
-        <div className="overflow-hidden relative my-4 md:my-6">
-          <div className="absolute inset-y-0 left-0 w-20 z-2 pointer-events-none bg-gradient-to-r from-[var(--bg-base)] to-transparent" />
-          <div className="absolute inset-y-0 right-0 w-20 z-2 pointer-events-none bg-gradient-to-l from-[var(--bg-base)] to-transparent" />
-          <div className="flex gap-4 w-fit hover:[animation-play-state:paused] animate-[marqueeLeft_30s_linear_infinite]">
-            {[...marqueeItems].reverse().map((cert, index) => {
-              const Icon = cert.icon;
-              return (
-                <div
-                  key={`row2-${cert.id}-${index}`}
-                  className="flex items-center gap-3 px-5 py-3 rounded-full whitespace-nowrap cursor-default transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[linear-gradient(135deg,oklch(1_0_0/0.06)_0%,oklch(1_0_0/0.02)_100%)] backdrop-blur-[12px] border border-[oklch(1_0_0/0.08)] shadow-[inset_0_1px_0_oklch(1_0_0/0.1),0_4px_16px_oklch(0_0_0/0.2)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.1)_0%,oklch(1_0_0/0.04)_100%)] hover:border-[oklch(0.82_0.22_135/0.25)] hover:scale-[1.05] hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.15),0_8px_24px_oklch(0_0_0/0.25),0_0_16px_oklch(0.82_0.22_135/0.1)]"
-                >
-                  <Icon
-                    size={20}
-                    className="text-[var(--accent-primary)] flex-shrink-0"
-                  />
-                  <span className="font-mono font-semibold text-sm text-[var(--fg-primary)] tracking-[0.05em]">
+                {/* Text */}
+                <div className="min-w-0">
+                  <span className="font-heading font-semibold text-sm md:text-base text-[var(--fg-primary)] tracking-[-0.01em] block">
                     {cert.name}
                   </span>
+                  <span className="font-body text-xs text-[var(--fg-muted)] hidden md:block leading-tight">
+                    {cert.description}
+                  </span>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
+
+      {/* Marquee Row 2 — right to left (reverse) */}
+      <div className="marquee-container">
+        <div ref={row2Ref} className="marquee-track marquee-track-reverse">
+          {row2.map((cert, i) => (
+            <div
+              key={`r2-${cert.id}-${i}`}
+              className="marquee-item mx-2 md:mx-3"
+            >
+              <div
+                className="flex items-center gap-3 px-5 py-3 md:px-6 md:py-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] hover:border-[var(--border)] transition-colors duration-300 group cursor-pointer"
+                onClick={togglePause}
+              >
+                <div className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-[oklch(0.52_0.14_145/0.1)] rounded-[var(--radius-sm)] flex-shrink-0 group-hover:bg-[oklch(0.52_0.14_145_/_0.18)] transition-colors duration-300">
+                  <span className="font-mono font-bold text-xs text-[var(--accent-primary)]">
+                    {cert.name.slice(0, 2)}
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <span className="font-heading font-semibold text-sm md:text-base text-[var(--fg-primary)] tracking-[-0.01em] block">
+                    {cert.name}
+                  </span>
+                  <span className="font-body text-xs text-[var(--fg-muted)] hidden md:block leading-tight">
+                    {cert.description}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom label */}
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 mt-8 md:mt-10">
+        <p className="font-mono text-xs text-[var(--fg-dim)] uppercase tracking-[0.15em] text-center">
+          {t("certified")}
+        </p>
       </div>
     </section>
   );
