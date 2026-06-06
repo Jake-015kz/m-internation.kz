@@ -1,1 +1,2 @@
-export { LenisProvider } from './LenisProvider';
+export { LenisProviderClient } from "./LenisProviderClient";
+export { LenisProvider } from "./LenisDynamic";

@@ -1,14 +1,13 @@
-import type { Metadata } from 'next';
-import Script from 'next/script';
-import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages } from 'next-intl/server';
-import { onest, manrope, jetbrainsMono } from '@/lib/fonts';
-import { SITE_CONFIG } from '@/lib/constants';
-import { Header, Footer } from '@/components/layout';
-import { NoiseOverlay } from '@shared/NoiseOverlay';
-import { ClickSpark } from '@shared/ClickSpark';
-import { LenisProvider } from '@shared/LenisProvider';
-import '@/styles/globals.scss';
+import type { Metadata } from "next";
+import Script from "next/script";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
+import { onest, manrope, jetbrainsMono } from "@/lib/fonts";
+import { SITE_CONFIG } from "@/lib/constants";
+import { Header, Footer } from "@/components/layout";
+import { NoiseOverlay } from "@shared/NoiseOverlay";
+import { ClickSpark } from "@shared/ClickSpark";
+import { LenisProvider } from "@shared/LenisProvider/LenisDynamic";
 
 function getThemeScript() {
   return `
@@ -28,26 +27,59 @@ function getThemeScript() {
   `;
 }
 
+// Schema.org Organization JSON-LD
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "M-International",
+  url: SITE_CONFIG.url,
+  description:
+    "Международная компания по производству БАДов и оздоровительной продукции",
+  foundingDate: "2010",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "KZ",
+  },
+  sameAs: [
+    "https://www.instagram.com/m.international",
+    "https://www.facebook.com/m.international",
+    "https://www.youtube.com/@m.international",
+  ],
+  knowsAbout: ["Russian", "English", "Kazakh"],
+};
+
 export const metadata: Metadata = {
   title: {
     default: SITE_CONFIG.name,
     template: `%s | ${SITE_CONFIG.name}`,
   },
-  description: 'M-International — международная компания по производству БАДов и оздоровительной продукции. Инновационные натуральные продукты для вашего здоровья и долголетия.',
-  keywords: ['БАДы', 'здоровье', 'M-International', 'MLM', 'биодобавки', 'велнес', 'GreenMAX', 'BluMAX', 'Ye-Katerina'],
+  description:
+    "M-International — международная компания по производству БАДов и оздоровительной продукции. Инновационные натуральные продукты для вашего здоровья и долголетия.",
+  keywords: [
+    "БАДы",
+    "здоровье",
+    "M-International",
+    "MLM",
+    "биодобавки",
+    "велнес",
+    "GreenMAX",
+    "BluMAX",
+    "Ye-Katerina",
+  ],
   authors: [{ name: SITE_CONFIG.name }],
   openGraph: {
-    type: 'website',
-    locale: 'ru_KZ',
+    type: "website",
+    locale: "ru_KZ",
     siteName: SITE_CONFIG.name,
-    description: 'Инновационные натуральные продукты для вашего здоровья и долголетия от M-International',
+    description:
+      "Инновационные натуральные продукты для вашего здоровья и долголетия от M-International",
   },
   alternates: {
-    canonical: '/',
+    canonical: "/",
     languages: {
-      'ru': '/ru',
-      'en': '/en',
-      'kk': '/kk',
+      ru: "/ru",
+      en: "/en",
+      kk: "/kk",
     },
   },
 };
@@ -63,12 +95,24 @@ export default async function RootLayout({
   const themeScript = getThemeScript();
 
   return (
-    <html lang={locale} className={`${onest.variable} ${manrope.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${onest.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <Script
           id="theme-script"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
+        <Script
+          id="organization-schema"
+          strategy="afterInteractive"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
         />
       </head>
       <body className={`${onest.className} antialiased`}>
@@ -78,9 +122,7 @@ export default async function RootLayout({
             <ClickSpark />
             <div className="relative z-10 flex min-h-screen flex-col">
               <Header />
-              <main style={{ flex: '1 1 auto' }}>
-                {children}
-              </main>
+              <main style={{ flex: "1 1 auto" }}>{children}</main>
               <Footer />
             </div>
           </LenisProvider>

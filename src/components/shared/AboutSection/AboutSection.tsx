@@ -1,52 +1,53 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { ArrowRight, Rocket, Globe, Award, Users, Sparkles } from 'lucide-react';
-import styles from './AboutSection.module.scss';
+import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Rocket,
+  Globe,
+  Award,
+  Users,
+  Sparkles,
+} from "lucide-react";
 
 const timelineItems = [
   {
-    year: '2018',
-    titleKey: 'timeline.2018.title',
-    descriptionKey: 'timeline.2018.description',
+    year: "2018",
+    titleKey: "timeline.2018.title",
+    descriptionKey: "timeline.2018.description",
     icon: Rocket,
   },
   {
-    year: '2019',
-    titleKey: 'timeline.2019.title',
-    descriptionKey: 'timeline.2019.description',
+    year: "2019",
+    titleKey: "timeline.2019.title",
+    descriptionKey: "timeline.2019.description",
     icon: Sparkles,
   },
   {
-    year: '2020',
-    titleKey: 'timeline.2020.title',
-    descriptionKey: 'timeline.2020.description',
+    year: "2020",
+    titleKey: "timeline.2020.title",
+    descriptionKey: "timeline.2020.description",
     icon: Globe,
   },
   {
-    year: '2022',
-    titleKey: 'timeline.2022.title',
-    descriptionKey: 'timeline.2022.description',
+    year: "2022",
+    titleKey: "timeline.2022.title",
+    descriptionKey: "timeline.2022.description",
     icon: Award,
   },
   {
-    year: '2024',
-    titleKey: 'timeline.2024.title',
-    descriptionKey: 'timeline.2024.description',
+    year: "2024",
+    titleKey: "timeline.2024.title",
+    descriptionKey: "timeline.2024.description",
     icon: Users,
   },
 ];
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
 };
 
 const itemVariants = {
@@ -54,52 +55,60 @@ const itemVariants = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 0.6,
-      ease: 'easeOut' as const,
-    },
+    transition: { duration: 0.6, ease: "easeOut" as const },
   },
 };
 
 export function AboutSection() {
   const locale = useLocale();
-  const t = useTranslations('about');
+  const t = useTranslations("about");
 
   return (
-    <section className={styles.section} aria-labelledby="about-title">
-      <div className={styles.container}>
-        {/* Заголовок */}
+    <section
+      className="py-24 relative overflow-hidden md:py-32"
+      aria-labelledby="about-title"
+    >
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
-          className={styles.header}
+          className="mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 id="about-title" className={styles.title}>{t('title')}</h2>
-          <p className={styles.subtitle}>{t('description')}</p>
+          <h2
+            id="about-title"
+            className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-4 md:text-4xl lg:text-5xl"
+          >
+            {t("title")}
+          </h2>
+          <p className="font-body text-lg leading-[1.625] text-[var(--fg-muted)] max-w-[40rem] mx-auto">
+            {t("description")}
+          </p>
         </motion.div>
 
         {/* Timeline */}
         <motion.div
-          className={styles.timeline}
+          className="relative py-8 md:py-12"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          {/* Вертикальная линия */}
-          <div className={styles.timelineLine} aria-hidden="true">
+          {/* Vertical line */}
+          <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-[var(--border-subtle)] rounded-full overflow-hidden md:left-1/2 md:-translate-x-1/2">
             <motion.div
-              className={styles.timelineLineFill}
+              className="absolute top-0 left-0 w-full bg-gradient-to-b from-[var(--accent-primary)] via-[oklch(0.75_0.2_100)] to-[var(--accent-gold)] shadow-[0_0_12px_oklch(0.82_0.22_135/0.5)]"
+              style={{ height: "100%" }}
               initial={{ height: 0 }}
-              whileInView={{ height: '100%' }}
+              whileInView={{ height: "100%" }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
             />
           </div>
 
-          {/* Элементы timeline */}
+          {/* Timeline items */}
           {timelineItems.map((item, index) => {
             const Icon = item.icon;
             const isLeft = index % 2 === 0;
@@ -107,13 +116,13 @@ export function AboutSection() {
             return (
               <motion.div
                 key={item.year}
-                className={`${styles.timelineItem} ${isLeft ? styles.timelineItemLeft : styles.timelineItemRight}`}
+                className="relative mb-12 pl-15 md:pl-0 md:mb-16 md:flex md:justify-center"
                 variants={itemVariants}
               >
-                {/* Точка на линии */}
-                <div className={styles.timelineDot}>
+                {/* Dot */}
+                <div className="absolute left-3 top-0 w-[18px] h-[18px] bg-[var(--bg-base)] border-2 border-[var(--border)] rounded-full flex items-center justify-center z-2 transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] md:left-1/2 md:-translate-x-1/2 group-hover:border-[var(--accent-primary)] group-hover:shadow-[0_0_16px_oklch(0.82_0.22_135/0.4)]">
                   <motion.div
-                    className={styles.timelineDotInner}
+                    className="w-2 h-2 bg-[var(--accent-primary)] rounded-full shadow-[0_0_12px_oklch(0.82_0.22_135/0.5)] transition-all duration-250"
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
@@ -121,21 +130,26 @@ export function AboutSection() {
                   />
                 </div>
 
-                {/* Карточка */}
-                <motion.div
-                  className={styles.timelineCard}
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: '0 20px 40px rgba(180, 230, 50, 0.1)',
-                  }}
+                {/* Card */}
+                <div
+                  className={`bg-[linear-gradient(135deg,oklch(1_0_0/0.08)_0%,oklch(1_0_0/0.02)_100%)] backdrop-blur-[20px] border border-[oklch(1_0_0/0.1)] rounded-lg p-6 transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-default max-w-[400px] shadow-[inset_0_1px_0_oklch(1_0_0/0.15),inset_0_-1px_0_oklch(0_0_0/0.05),0_8px_32px_oklch(0_0_0/0.3)] hover:border-[oklch(0.82_0.22_135/0.3)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.1)_0%,oklch(1_0_0/0.04)_100%)] hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.2),inset_0_-1px_0_oklch(0_0_0/0.08),0_16px_48px_oklch(0_0_0/0.35),0_0_24px_oklch(0.82_0.22_135/0.12)] hover:-translate-y-1 hover:scale-[1.01] md:max-w-[350px] ${isLeft ? "md:mr-[calc(50%+40px)]" : "md:ml-[calc(50%+40px)]"}`}
                 >
-                  <div className={styles.cardHeader}>
-                    <span className={styles.year}>{item.year}</span>
-                    <Icon className={styles.cardIcon} size={24} />
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-mono font-semibold text-2xl text-[var(--accent-primary)] leading-none shadow-[0_0_16px_oklch(0.82_0.22_135/0.4)] transition-shadow duration-250">
+                      {item.year}
+                    </span>
+                    <Icon
+                      size={24}
+                      className="text-[var(--accent-primary)] opacity-70 transition-all duration-250"
+                    />
                   </div>
-                  <h3 className={styles.cardTitle}>{t(item.titleKey)}</h3>
-                  <p className={styles.cardDescription}>{t(item.descriptionKey)}</p>
-                </motion.div>
+                  <h3 className="font-heading font-semibold text-lg text-[var(--fg-primary)] mb-2 tracking-[-0.02em] leading-[1.1]">
+                    {t(item.titleKey)}
+                  </h3>
+                  <p className="font-body text-base leading-[1.625] text-[var(--fg-muted)]">
+                    {t(item.descriptionKey)}
+                  </p>
+                </div>
               </motion.div>
             );
           })}
@@ -143,15 +157,21 @@ export function AboutSection() {
 
         {/* CTA */}
         <motion.div
-          className={styles.cta}
+          className="mt-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Link href={`/${locale}/about`} className={styles.ctaLink}>
-            {t('learnMore')}
-            <ArrowRight size={20} />
+          <Link
+            href={`/${locale}/about`}
+            className="inline-flex items-center gap-3 bg-transparent border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 rounded-[0.375rem] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--accent-primary)] hover:bg-[oklch(0.82_0.22_135/0.08)] [&:hover_svg]:translate-x-1"
+          >
+            {t("learnMore")}
+            <ArrowRight
+              size={20}
+              className="transition-transform duration-250"
+            />
           </Link>
         </motion.div>
       </div>

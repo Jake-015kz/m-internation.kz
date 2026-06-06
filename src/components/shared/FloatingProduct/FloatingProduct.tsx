@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import styles from './FloatingProduct.module.scss';
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface FloatingProductProps {
   children: React.ReactNode;
@@ -14,19 +14,19 @@ export function FloatingProduct({
   children,
   duration = 6,
   distance = 20,
-  className = '',
+  className = "",
 }: FloatingProductProps) {
   return (
     <motion.div
-      className={`${styles.floatingProduct} ${className}`}
+      className={cn("will-change-transform", className)}
       animate={{
         y: [0, -distance, 0],
       }}
       transition={{
         duration,
-        ease: 'easeInOut',
+        ease: "easeInOut",
         repeat: Infinity,
-        repeatType: 'loop',
+        repeatType: "loop",
       }}
     >
       {children}

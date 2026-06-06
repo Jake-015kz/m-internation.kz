@@ -1,7 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import styles from './ClickSpark.module.scss';
+import { useEffect, useRef } from "react";
 
 interface Spark {
   x: number;
@@ -20,23 +19,24 @@ interface ClickSparkProps {
 
 // Check if device can handle canvas animations
 function shouldEnableSparks(): boolean {
-  if (typeof window === 'undefined') return false;
-  
+  if (typeof window === "undefined") return false;
+
   // Disable on touch devices
-  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return false;
-  
+  if ("ontouchstart" in window || navigator.maxTouchPoints > 0) return false;
+
   // Disable on low-end devices
   const cores = navigator.hardwareConcurrency || 4;
   if (cores < 4) return false;
-  
+
   // Check for reduced motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    return false;
+
   return true;
 }
 
 export function ClickSpark({
-  sparkColor = 'oklch(0.92 0.2 128)',
+  sparkColor = "oklch(0.92 0.2 128)",
   sparkSize = 8,
   sparkRadius = 12,
   sparkCount = 6,
@@ -56,7 +56,7 @@ export function ClickSpark({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d', { alpha: true });
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const resizeCanvas = () => {
@@ -69,13 +69,13 @@ export function ClickSpark({
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const currentTime = Date.now();
-      
+
       // Limit max sparks for performance
       if (sparksRef.current.length > 30) {
         sparksRef.current = sparksRef.current.slice(-30);
@@ -98,7 +98,7 @@ export function ClickSpark({
 
         ctx.strokeStyle = sparkColor;
         ctx.lineWidth = 2 * (1 - easedProgress);
-        ctx.lineCap = 'round';
+        ctx.lineCap = "round";
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
@@ -132,17 +132,17 @@ export function ClickSpark({
       }
 
       sparksRef.current = [...sparksRef.current, ...newSparks];
-      
+
       if (!animationRef.current) {
         animationRef.current = requestAnimationFrame(draw);
       }
     };
 
-    document.addEventListener('click', handleClick);
+    document.addEventListener("click", handleClick);
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      document.removeEventListener('click', handleClick);
+      window.removeEventListener("resize", resizeCanvas);
+      document.removeEventListener("click", handleClick);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -150,14 +150,14 @@ export function ClickSpark({
   }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration]);
 
   // Don't render canvas on mobile
-  if (typeof window !== 'undefined' && !shouldEnableSparks()) {
+  if (typeof window !== "undefined" && !shouldEnableSparks()) {
     return null;
   }
 
   return (
     <canvas
       ref={canvasRef}
-      className={styles.canvas}
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-[9998]"
       aria-hidden="true"
     />
   );

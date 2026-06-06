@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
 import { gsap } from "gsap";
-import styles from "./ThemeSwitcher.module.scss";
 
 type Theme = "dark" | "light";
 
@@ -25,13 +24,8 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeSwitcher() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const iconRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const initialTheme = getInitialTheme();
-    setTheme(initialTheme);
-  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -53,31 +47,26 @@ export function ThemeSwitcher() {
   const toggleTheme = useCallback(() => {
     const newTheme: Theme = theme === "dark" ? "light" : "dark";
 
-    // Check for reduced motion preference
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion || !iconRef.current) {
-      // Skip animation for accessibility or SSR
       applyTheme(newTheme);
       try {
         localStorage.setItem("theme", newTheme);
       } catch {}
     } else {
-      // Icon rotation animation on click
       gsap.to(iconRef.current, {
         rotate: -180,
         scale: 0.6,
         duration: 0.4,
         ease: "back.in(1.7)",
         onComplete: () => {
-          // Apply theme after animation starts
           applyTheme(newTheme);
           try {
             localStorage.setItem("theme", newTheme);
           } catch {}
-          // Animate back to normal
           gsap.to(iconRef.current, {
             rotate: 0,
             scale: 1,
@@ -93,18 +82,27 @@ export function ThemeSwitcher() {
 
   return (
     <button
-      className={styles.button}
+      className="flex items-center justify-center w-10 h-10 rounded-[0.375rem] border border-[var(--border)] bg-[var(--bg-surface)] text-[var(--fg-primary)] cursor-pointer transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[0_0_15px_oklch(0.82_0.22_135/0.2),0_0_30px_oklch(0.82_0.22_135/0.1)] active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2"
       onClick={toggleTheme}
       aria-label={
         theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
       }
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >
-      <div className={styles.iconWrapper} ref={iconRef}>
+      <div
+        className="flex items-center justify-center origin-center"
+        ref={iconRef}
+      >
         {theme === "dark" ? (
-          <Sun size={18} className={styles.icon} />
+          <Sun
+            size={18}
+            className="transition-colors duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          />
         ) : (
-          <Moon size={18} className={styles.icon} />
+          <Moon
+            size={18}
+            className="transition-colors duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          />
         )}
       </div>
     </button>
