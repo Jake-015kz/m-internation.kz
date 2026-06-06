@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 
-const baseUrl = "https://m-international.com";
+const baseUrl = "https://m-internation.kz";
 
 const pages = ["", "/about", "/business", "/catalog", "/contacts"];
 
