@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="gmp-g" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5eb53a"/>
+      <stop offset="100%" stop-color="#3a7a25"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="56" stroke="url(#gmp-g)" stroke-width="3" fill="none"/>
+  <circle cx="60" cy="60" r="48" stroke="url(#gmp-g)" stroke-width="1" fill="none" opacity="0.3"/>
+  <text x="60" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="22" fill="#5eb53a">GMP</text>
+  <text x="60" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="400" font-size="9" fill="#8bc97a" letter-spacing="2">CERTIFIED</text>
+  <path d="M30 88 Q60 100 90 88" stroke="#5eb53a" stroke-width="1.5" fill="none" opacity="0.5"/>
+</svg>

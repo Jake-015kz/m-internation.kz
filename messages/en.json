@@ -31,7 +31,15 @@
   "certificates": {
     "title": "INTERNATIONAL QUALITY CERTIFICATES",
     "description": "Our products meet the most stringent international standards",
-    "certified": "CERTIFIED"
+    "certified": "CERTIFIED",
+    "gmp": "Good Manufacturing Practice",
+    "iso": "ISO 9001:2015 — quality management system",
+    "halal": "Halal Compliance Certificate",
+    "mesti": "Malaysian Quality Standard",
+    "fda": "Food and Drug Administration Approval",
+    "natural": "100% natural ingredients",
+    "eac": "Eurasian Conformity",
+    "vegan": "Vegan Certified Product"
   },
   "products": {
     "title": "OUR PRODUCTS",

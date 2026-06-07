@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="halal-g" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c4a035"/>
+      <stop offset="100%" stop-color="#8a6e20"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="56" stroke="url(#halal-g)" stroke-width="3" fill="none"/>
+  <circle cx="60" cy="60" r="48" stroke="url(#halal-g)" stroke-width="1" fill="none" opacity="0.3"/>
+  <!-- Crescent moon -->
+  <path d="M68 32 A20 20 0 1 0 68 72 A15 15 0 1 1 68 32Z" fill="#c4a035" opacity="0.8"/>
+  <!-- Star -->
+  <polygon points="78,42 80,48 86,48 81,52 83,58 78,54 73,58 75,52 70,48 76,48" fill="#c4a035" opacity="0.9"/>
+  <text x="60" y="86" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600" font-size="11" fill="#c4a035" letter-spacing="3">HALAL</text>
+</svg>
