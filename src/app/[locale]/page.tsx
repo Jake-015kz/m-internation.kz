@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { HeroSection as HeroSection } from "@shared/HeroSection";
+import { HeroSectionA } from "@shared/HeroSection";
 import { CertificatesSection } from "@shared/CertificatesSection";
 import { ProductShowcase } from "@shared/ProductShowcase";
 import { AboutSection } from "@shared/AboutSection";
@@ -30,7 +30,7 @@ export default async function HomePage({ params }: HomePageProps) {
         aria-hidden="true"
       />
 
-      <HeroSection />
+      <HeroSectionA />
       <CertificatesSection />
       <ProductShowcase />
       <AboutSection />
