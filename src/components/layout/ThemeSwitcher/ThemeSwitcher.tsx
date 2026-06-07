@@ -28,21 +28,20 @@ function getInitialTheme(): Theme {
   return getSystemTheme();
 }
 
+function resolveTheme(): Theme {
+  const stored = getStoredTheme();
+  if (stored) return stored;
+  return getInitialTheme();
+}
+
 export function ThemeSwitcher() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
 
-  // Initialize from DOM on mount
-  useEffect(() => {
-    const initial = getStoredTheme() ?? getInitialTheme();
-    setTheme(initial);
-    setMounted(true);
-  }, []);
+  // Initial theme from DOM — no useEffect needed, useState initializer runs once
+  const [theme, setTheme] = useState<Theme>(resolveTheme);
 
   // Listen for system theme changes
   useEffect(() => {
-    if (!mounted) return;
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = (e: MediaQueryListEvent) => {
       if (!getStoredTheme()) {
@@ -53,7 +52,7 @@ export function ThemeSwitcher() {
     };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
-  }, [mounted]);
+  }, []);
 
   const toggle = useCallback(() => {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -78,12 +77,6 @@ export function ThemeSwitcher() {
       setTheme(next);
     }
   }, [theme]);
-
-  if (!mounted) {
-    return (
-      <div className="w-9 h-9 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-surface)]" />
-    );
-  }
 
   return (
     <button

@@ -3,7 +3,7 @@
 import { useRef, type RefObject } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -63,6 +63,7 @@ function useLetterReveal(
 }
 
 export function HeroSection() {
+  const locale = useLocale();
   const t = useTranslations("hero");
   const sectionRef = useRef<HTMLElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
@@ -145,7 +146,7 @@ export function HeroSection() {
 
             <div ref={actionsRef} className="flex flex-wrap gap-4">
               <Link
-                href="/catalog"
+                href={`/${locale}/catalog`}
                 className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-base px-8 py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("cta")}

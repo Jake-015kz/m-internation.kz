@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 
 export function HeroSectionC() {
+  const locale = useLocale();
   const t = useTranslations("hero");
 
   return (
@@ -72,13 +72,13 @@ export function HeroSectionC() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <Link
-              href="/catalog"
+              href={`/${locale}/catalog`}
               className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-base px-10 py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
             >
               {t("cta")}
             </Link>
             <Link
-              href="/about"
+              href={`/${locale}/about`}
               className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-base px-10 py-4 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
             >
               {t("aboutLink")}

@@ -19,11 +19,11 @@ function getThemeScript() {
           document.documentElement.setAttribute('data-theme', saved);
         } else {
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.setAttribute('data-theme', 'light');
-          }
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
         }
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
     })();
   `;
 }
