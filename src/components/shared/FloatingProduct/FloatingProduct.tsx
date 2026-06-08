@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 
 interface FloatingProductProps {
@@ -16,20 +17,25 @@ export function FloatingProduct({
   distance = 20,
   className = "",
 }: FloatingProductProps) {
-  return (
-    <motion.div
-      className={cn("will-change-transform", className)}
-      animate={{
-        y: [0, -distance, 0],
-      }}
-      transition={{
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const ctx = gsap.context(() => {
+      gsap.to(ref.current, {
+        y: -distance,
         duration,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: "loop",
-      }}
-    >
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+    });
+    return () => ctx.revert();
+  }, [duration, distance]);
+
+  return (
+    <div ref={ref} className={cn("will-change-transform", className)}>
       {children}
-    </motion.div>
+    </div>
   );
 }

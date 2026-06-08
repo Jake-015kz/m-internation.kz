@@ -17,12 +17,16 @@ function getThemeScript() {
         var saved = localStorage.getItem('theme');
         if (saved === 'light' || saved === 'dark') {
           document.documentElement.setAttribute('data-theme', saved);
+          document.documentElement.style.colorScheme = saved;
         } else {
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+          var t = prefersDark ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', t);
+          document.documentElement.style.colorScheme = t;
         }
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.style.colorScheme = 'dark';
       }
     })();
   `;

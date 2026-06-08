@@ -2,11 +2,10 @@
 
 import { useRef, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "framer-motion";
+import { prefersReducedMotion, EASING } from "@/lib/gsap-animations";
 import { products } from "@/data/products";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -45,9 +44,19 @@ export function ProductShowcase() {
   const t = useTranslations("products");
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const reduce = prefersReducedMotion();
+
+    // Header fade-in
+    if (!reduce && headerRef.current) {
+      gsap.fromTo(headerRef.current, { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as any,
+        scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
+      });
+    }
+
     if (reduce || !sectionRef.current || !trackRef.current) return;
 
     const ctx = gsap.context(() => {
@@ -76,7 +85,7 @@ export function ProductShowcase() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [reduce]);
+  }, []);
 
   return (
     <section
@@ -85,20 +94,14 @@ export function ProductShowcase() {
     >
       {/* Header — outside the pinned area */}
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 pt-20 md:pt-28 pb-12">
-        <motion.div
-          className="text-left" style={{ marginBottom: "2.5rem" }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headerRef} className="text-left" style={{ marginBottom: "2.5rem", opacity: 1 }}>
           <h2 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-5 md:text-3xl lg:text-4xl">
             {t("title")}
           </h2>
           <p className="font-body text-base leading-[1.45] text-[var(--fg-muted)] max-w-[32rem]">
             {t("description")}
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Horizontal scroll track */}

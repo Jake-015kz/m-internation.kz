@@ -1,13 +1,40 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { prefersReducedMotion, EASING } from "@/lib/gsap-animations";
 
 export function HeroSectionB() {
   const locale = useLocale();
   const t = useTranslations("hero");
+  const textRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const badge1Ref = useRef<HTMLDivElement>(null);
+  const badge2Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(textRef.current, {
+        opacity: 1, x: 0, duration: 0.8, ease: EASING.gentle as any,
+      });
+      gsap.to(imageRef.current, {
+        opacity: 1, x: 0, duration: 0.8, delay: 0.2, ease: EASING.gentle as any,
+      });
+      gsap.to(badge1Ref.current, {
+        y: -8, duration: 3, repeat: -1, yoyo: true, ease: "power1.inOut",
+      });
+      gsap.to(badge2Ref.current, {
+        y: 8, duration: 3.5, repeat: -1, yoyo: true, ease: "power1.inOut",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
@@ -26,11 +53,10 @@ export function HeroSectionB() {
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-10">
         <div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text with large typography */}
-          <motion.div
-            className="text-left py-12 lg:py-0"
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            ref={textRef}
+            className="text-left py-12 lg:py-0 opacity-0"
+            style={{ transform: "translateX(-40px)" }}
           >
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-[var(--border)] bg-[var(--bg-surface)]">
               <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)] animate-pulse" />
@@ -82,14 +108,13 @@ export function HeroSectionB() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Right — Product showcase */}
-          <motion.div
-            className="relative flex justify-center items-center"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            ref={imageRef}
+            className="relative flex justify-center items-center opacity-0"
+            style={{ transform: "translateX(40px)" }}
           >
             <div className="relative">
               {/* Decorative ring */}
@@ -107,35 +132,25 @@ export function HeroSectionB() {
               />
 
               {/* Floating badges */}
-              <motion.div
+              <div
+                ref={badge1Ref}
                 className="absolute top-8 -left-4 glass-card px-4 py-2 z-20"
-                animate={{ y: [0, -8, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
               >
                 <span className="font-mono text-xs font-semibold text-[var(--accent-primary)]">
                   100% Natural
                 </span>
-              </motion.div>
+              </div>
 
-              <motion.div
+              <div
+                ref={badge2Ref}
                 className="absolute bottom-8 -right-4 glass-card px-4 py-2 z-20"
-                animate={{ y: [0, 8, 0] }}
-                transition={{
-                  duration: 3.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
               >
                 <span className="font-mono text-xs font-semibold text-[var(--accent-primary)]">
                   GMP Certified
                 </span>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

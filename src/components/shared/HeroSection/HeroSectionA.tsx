@@ -1,13 +1,36 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { prefersReducedMotion, EASING } from "@/lib/gsap-animations";
 
 export function HeroSectionA() {
   const locale = useLocale();
   const t = useTranslations("hero");
+  const textRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const badgesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(textRef.current, {
+        opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as any,
+      });
+      gsap.to(imageRef.current, {
+        opacity: 1, scale: 1, duration: 1, delay: 0.2, ease: EASING.gentle as any,
+      });
+      gsap.to(badgesRef.current, {
+        opacity: 1, duration: 0.6, delay: 0.5,
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
@@ -24,11 +47,10 @@ export function HeroSectionA() {
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-10">
         <div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text */}
-          <motion.div
-            className="text-left"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            ref={textRef}
+            className="text-left opacity-0"
+            style={{ transform: "translateY(30px)" }}
           >
             <span className="inline-block mb-6 font-mono font-semibold text-xs uppercase tracking-[0.15em] text-[var(--accent-primary)]">
               {t("label")}
@@ -59,14 +81,13 @@ export function HeroSectionA() {
                 {t("aboutLink")}
               </Link>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right — Product with glass card */}
-          <motion.div
-            className="relative flex justify-center items-center"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            ref={imageRef}
+            className="relative flex justify-center items-center opacity-0"
+            style={{ transform: "scale(0.95)" }}
           >
             <div className="relative">
               {/* Glass card behind product */}
@@ -87,15 +108,13 @@ export function HeroSectionA() {
                 aria-hidden="true"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Trust badges */}
-        <motion.div
-          className="mt-16 pt-8 border-t border-[var(--border-subtle)]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+        <div
+          ref={badgesRef}
+          className="mt-16 pt-8 border-t border-[var(--border-subtle)] opacity-0"
         >
           <div className="flex flex-wrap gap-8 items-center">
             <p className="font-mono text-xs text-[var(--fg-muted)] tracking-[0.05em]">
@@ -112,7 +131,7 @@ export function HeroSectionA() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

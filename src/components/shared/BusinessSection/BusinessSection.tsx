@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion, EASING } from "@/lib/gsap-animations";
 import { BUSINESS_STEPS } from "@/lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,10 +14,29 @@ export function BusinessSection() {
   const locale = useLocale();
   const t = useTranslations("business");
   const sectionRef = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   // Sticky-stack animation for cards
   useEffect(() => {
+    const reduce = prefersReducedMotion();
+
+    // Header fade-in
+    if (!reduce && headerRef.current) {
+      gsap.fromTo(headerRef.current, { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as any,
+        scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
+      });
+    }
+
+    // CTA fade-in
+    if (!reduce && ctaRef.current) {
+      gsap.fromTo(ctaRef.current, { opacity: 0, y: 16 }, {
+        opacity: 1, y: 0, duration: 0.5, ease: EASING.gentle as any,
+        scrollTrigger: { trigger: ctaRef.current, start: "top 90%" },
+      });
+    }
+
     if (reduce || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
@@ -51,7 +70,7 @@ export function BusinessSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [reduce]);
+  }, []);
 
   return (
     <section
@@ -61,13 +80,7 @@ export function BusinessSection() {
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          className="mb-20 text-left max-w-[36rem]"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headerRef} className="mb-20 text-left max-w-[36rem]" style={{ opacity: 1 }}>
           <h2
             id="business-title"
             className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-5 md:text-3xl lg:text-4xl"
@@ -77,7 +90,7 @@ export function BusinessSection() {
           <p className="font-body text-base leading-[1.45] text-[var(--fg-muted)]">
             {t("description")}
           </p>
-        </motion.div>
+        </div>
 
         {/* Sticky-stack cards */}
         <div className="relative">
@@ -112,20 +125,14 @@ export function BusinessSection() {
         </div>
 
         {/* CTA */}
-        <motion.div
-          className="mt-16 flex justify-start"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <div ref={ctaRef} className="mt-16 flex justify-start" style={{ opacity: 1 }}>
           <Link
             href={`/${locale}/business`}
             className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("cta")}
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

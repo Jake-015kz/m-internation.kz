@@ -20,34 +20,42 @@ function getSystemTheme(): Theme {
     : "light";
 }
 
-// Get initial theme from DOM (set by script in layout)
+function applyTheme(t: Theme) {
+  const root = document.documentElement;
+  root.setAttribute("data-theme", t);
+  // Update color-scheme for native form controls / scrollbar
+  root.style.colorScheme = t;
+}
+
 function getInitialTheme(): Theme {
   if (typeof window === "undefined") return "dark";
+  // DOM already has data-theme from inline <script> in layout
   const attr = document.documentElement.getAttribute("data-theme");
   if (attr === "dark" || attr === "light") return attr;
   return getSystemTheme();
 }
 
 function resolveTheme(): Theme {
-  const stored = getStoredTheme();
-  if (stored) return stored;
-  return getInitialTheme();
+  return getStoredTheme() ?? getInitialTheme();
 }
 
 export function ThemeSwitcher() {
   const iconRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Initial theme from DOM — no useEffect needed, useState initializer runs once
   const [theme, setTheme] = useState<Theme>(resolveTheme);
 
-  // Listen for system theme changes
+  // Sync DOM whenever theme changes (covers both toggle & system changes)
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  // Listen for system theme changes when no user preference is stored
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = (e: MediaQueryListEvent) => {
       if (!getStoredTheme()) {
-        const t: Theme = e.matches ? "dark" : "light";
-        setTheme(t);
-        document.documentElement.setAttribute("data-theme", t);
+        setTheme(e.matches ? "dark" : "light");
       }
     };
     mq.addEventListener("change", handler);
@@ -55,28 +63,37 @@ export function ThemeSwitcher() {
   }, []);
 
   const toggle = useCallback(() => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
+    // Clear any pending animation to prevent race conditions
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    if (iconRef.current) {
-      iconRef.current.style.transition = "transform 0.3s ease";
-      iconRef.current.style.transform = "rotate(180deg) scale(0.6)";
-      setTimeout(() => {
-        document.documentElement.setAttribute("data-theme", next);
-        try {
-          localStorage.setItem("theme", next);
-        } catch {}
-        setTheme(next);
-        if (iconRef.current)
-          iconRef.current.style.transform = "rotate(0deg) scale(1)";
-      }, 150);
-    } else {
-      document.documentElement.setAttribute("data-theme", next);
+    setTheme((prev) => {
+      const next: Theme = prev === "dark" ? "light" : "dark";
+
+      // Persist immediately
       try {
         localStorage.setItem("theme", next);
       } catch {}
-      setTheme(next);
-    }
-  }, [theme]);
+
+      // Animate icon
+      if (iconRef.current) {
+        const el = iconRef.current;
+        el.style.transition = "transform 0.3s ease";
+        el.style.transform = "rotate(180deg) scale(0.6)";
+        timeoutRef.current = setTimeout(() => {
+          el.style.transform = "rotate(0deg) scale(1)";
+        }, 150);
+      }
+
+      return next;
+    });
+  }, []);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   return (
     <button
