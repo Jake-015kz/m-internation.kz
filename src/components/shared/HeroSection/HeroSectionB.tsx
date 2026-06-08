@@ -38,7 +38,7 @@ export function HeroSectionB() {
 
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center pt-20 pb-12 md:pt-24 md:pb-16 overflow-hidden"
+      className="relative min-h-screen md:min-h-[100dvh] flex items-center pt-16 pb-8 md:pt-24 md:pb-16 overflow-hidden"
       aria-labelledby="hero-title"
     >
       {/* Split background */}
@@ -50,59 +50,59 @@ export function HeroSectionB() {
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 grid-pattern opacity-50" />
 
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto max-w-[80rem] px-3 md:px-6 lg:px-8 w-full relative z-10">
+        <div className="grid grid-cols-1 gap-8 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text with large typography */}
           <div
             ref={textRef}
-            className="text-left py-12 lg:py-0 opacity-0"
+            className="text-left py-8 lg:py-0 opacity-0"
             style={{ transform: "translateX(-40px)" }}
           >
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-[var(--border)] bg-[var(--bg-surface)]">
-              <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)] animate-pulse" />
-              <span className="font-mono text-xs text-[var(--fg-muted)] tracking-wide">
+            <div className="inline-flex items-center gap-2 mb-4 md:mb-6 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-[var(--border)] bg-[var(--bg-surface)]">
+              <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[var(--accent-primary)] animate-pulse" />
+              <span className="font-mono text-[10px] md:text-xs text-[var(--fg-muted)] tracking-wide">
                 {t("label")}
               </span>
             </div>
 
             <h1
               id="hero-title"
-              className="font-heading font-bold tracking-[-0.04em] mb-6 text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] text-[var(--fg-primary)]"
+              className="font-heading font-bold tracking-[-0.01em] md:tracking-[-0.04em] mb-4 md:mb-6 text-[clamp(1.75rem,7vw,4rem)] leading-[1.1] md:leading-[1.05] text-[var(--fg-primary)] break-words"
             >
               {t("title")}
             </h1>
 
-            <p className="font-body text-lg leading-[1.5] max-w-[32rem] mb-8 text-[var(--fg-secondary)]">
+            <p className="font-body text-sm md:text-lg leading-[1.5] max-w-[32rem] mb-6 md:mb-8 text-[var(--fg-secondary)]">
               {t("subtitle")}
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-base px-8 py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm md:text-base px-6 py-3 md:px-8 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("cta")}
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-base px-8 py-4 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-6 py-3 md:px-8 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
               >
                 {t("aboutLink")}
               </Link>
             </div>
 
             {/* Stats row */}
-            <div className="mt-12 flex gap-8">
+            <div className="mt-8 md:mt-12 flex gap-4 md:gap-8">
               {[
                 { value: "10K+", label: t("stats.clients") },
                 { value: "50+", label: t("stats.countries") },
                 { value: "8", label: t("stats.certificates") },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="font-heading font-bold text-2xl text-[var(--accent-primary)]">
+                  <div className="font-heading font-bold text-lg md:text-2xl text-[var(--accent-primary)]">
                     {stat.value}
                   </div>
-                  <div className="font-body text-xs text-[var(--fg-muted)] mt-1">
+                  <div className="font-body text-[10px] md:text-xs text-[var(--fg-muted)] mt-0.5 md:mt-1">
                     {stat.label}
                   </div>
                 </div>
@@ -117,9 +117,9 @@ export function HeroSectionB() {
             style={{ transform: "translateX(40px)" }}
           >
             <div className="relative">
-              {/* Decorative ring */}
-              <div className="absolute inset-0 -m-12 rounded-full border border-dashed border-[var(--border)] opacity-30" />
-              <div className="absolute inset-0 -m-24 rounded-full border border-dashed border-[var(--border)] opacity-20" />
+              {/* Decorative ring — desktop only */}
+              <div className="hidden lg:block absolute inset-0 -m-12 rounded-full border border-dashed border-[var(--border)] opacity-30" />
+              <div className="hidden lg:block absolute inset-0 -m-24 rounded-full border border-dashed border-[var(--border)] opacity-20" />
 
               {/* Product image */}
               <Image
@@ -128,13 +128,13 @@ export function HeroSectionB() {
                 width={420}
                 height={420}
                 priority
-                className="w-full max-w-[350px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-2xl"
+                className="w-full max-w-[250px] md:max-w-[350px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-2xl"
               />
 
-              {/* Floating badges */}
+              {/* Floating badges — desktop only (they overflow on mobile) */}
               <div
                 ref={badge1Ref}
-                className="absolute top-8 -left-4 glass-card px-4 py-2 z-20"
+                className="hidden md:block absolute top-8 -left-4 glass-card px-4 py-2 z-20"
               >
                 <span className="font-mono text-xs font-semibold text-[var(--accent-primary)]">
                   100% Natural
@@ -143,7 +143,7 @@ export function HeroSectionB() {
 
               <div
                 ref={badge2Ref}
-                className="absolute bottom-8 -right-4 glass-card px-4 py-2 z-20"
+                className="hidden md:block absolute bottom-8 -right-4 glass-card px-4 py-2 z-20"
               >
                 <span className="font-mono text-xs font-semibold text-[var(--accent-primary)]">
                   GMP Certified

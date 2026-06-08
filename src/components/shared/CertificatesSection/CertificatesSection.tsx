@@ -55,9 +55,9 @@ export function CertificatesSection() {
       className="relative py-16 md:py-24 overflow-hidden"
       aria-labelledby="certificates-title"
     >
-      {/* Subtle background glow */}
+      {/* Subtle background glow — desktop only */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[oklch(0.52_0.14_145/0.04)] blur-3xl pointer-events-none"
+        className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[oklch(0.52_0.14_145/0.04)] blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 
@@ -78,11 +78,11 @@ export function CertificatesSection() {
         </div>
 
         {/* Certificates Grid */}
-        <div ref={cardsRef} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5">
+        <div ref={cardsRef} className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 md:gap-4 lg:gap-5">
           {CERTIFICATES.map((cert) => (
             <div
               key={cert.id}
-              className="group relative flex flex-col items-center text-center p-4 md:p-6 rounded-[var(--radius-lg)] bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border)] transition-all duration-300 cursor-default h-full"
+              className="group relative flex flex-col items-center text-center p-3 md:p-6 rounded-[var(--radius-lg)] bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border)] transition-all duration-300 cursor-default h-full"
               style={{
                 // @ts-expect-error CSS custom property
                 "--cert-color": cert.color,
@@ -99,7 +99,7 @@ export function CertificatesSection() {
               />
 
               {/* Certificate icon */}
-              <div className="relative w-16 h-16 md:w-20 md:h-20 mb-3 md:mb-4 flex-shrink-0">
+              <div className="relative w-10 h-10 md:w-20 md:h-20 mb-2 md:mb-4 flex-shrink-0">
                 <Image
                   src={cert.image}
                   alt={cert.name}
@@ -111,14 +111,14 @@ export function CertificatesSection() {
 
               {/* Name */}
               <span
-                className="font-heading font-semibold text-sm md:text-base leading-[1.2] tracking-[-0.01em] mb-1"
+                className="font-heading font-semibold text-xs md:text-base leading-[1.2] tracking-[-0.01em] mb-0.5 md:mb-1"
                 style={{ color: "var(--fg-primary)" }}
               >
                 {cert.name}
               </span>
 
               {/* Description */}
-              <span className="font-body text-[11px] md:text-xs leading-[1.4] text-[var(--fg-muted)]">
+              <span className="font-body text-[9px] md:text-xs leading-[1.3] md:leading-[1.4] text-[var(--fg-muted)]">
                 {t(cert.descriptionKey)}
               </span>
 

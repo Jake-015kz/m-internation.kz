@@ -115,16 +115,16 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100dvh] flex items-center pt-20 pb-12 md:pt-24 md:pb-16 overflow-hidden"
+      className="relative min-h-screen md:min-h-[100dvh] flex items-center pt-16 pb-8 md:pt-24 md:pb-16 overflow-hidden"
       aria-labelledby="hero-title"
     >
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-2">
-        <div className="grid grid-cols-1 gap-10 items-center lg:grid-cols-5 lg:gap-16">
+      <div className="mx-auto max-w-[80rem] px-3 md:px-6 lg:px-8 w-full relative z-2">
+        <div className="grid grid-cols-1 gap-8 items-center lg:grid-cols-5 lg:gap-16">
           {/* Left — Text (60%) */}
           <div className="lg:col-span-3 text-left">
             <span
               ref={labelRef}
-              className="inline-block mb-6 font-mono font-semibold text-xs uppercase tracking-[0.15em] text-[var(--accent-primary)]"
+              className="inline-block mb-4 md:mb-6 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em] text-[var(--accent-primary)]"
             >
               {t("label")}
             </span>
@@ -132,22 +132,22 @@ export function HeroSection() {
             <h1
               ref={titleRef}
               id="hero-title"
-              className="font-heading font-semibold tracking-[-0.03em] mb-6 display-l"
+              className="font-heading font-semibold tracking-[-0.01em] md:tracking-[-0.03em] mb-4 md:mb-6 display-l break-words"
             >
               {t("title")}
             </h1>
 
             <p
               ref={descriptionRef}
-              className="font-body text-lg leading-[1.625] max-w-[28rem] mb-8 text-[var(--fg-secondary)]"
+              className="font-body text-sm md:text-lg leading-[1.5] md:leading-[1.625] max-w-[28rem] mb-6 md:mb-8 text-[var(--fg-secondary)]"
             >
               {t("subtitle")}
             </p>
 
-            <div ref={actionsRef} className="flex flex-wrap gap-4">
+            <div ref={actionsRef} className="flex flex-wrap gap-3 md:gap-4">
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-base px-8 py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm md:text-base px-6 py-3 md:px-8 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("cta")}
               </Link>
@@ -159,7 +159,7 @@ export function HeroSection() {
             ref={productRef}
             className="lg:col-span-2 relative flex justify-center items-center"
           >
-            <div className="relative w-full max-w-[380px] lg:max-w-[420px]">
+            <div className="relative w-full max-w-[280px] md:max-w-[380px] lg:max-w-[420px]">
               <Image
                 src="/products/greenmax/main.png"
                 alt="GreenMAX — flagship product of M-International"
@@ -170,19 +170,19 @@ export function HeroSection() {
               />
               {/* Subtle shadow under product */}
               <div
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-[var(--fg-primary)] opacity-[0.06] blur-2xl rounded-full z-1"
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-6 md:h-8 bg-[var(--fg-primary)] opacity-[0.06] blur-xl md:blur-2xl rounded-full z-1"
                 aria-hidden="true"
               />
             </div>
           </div>
         </div>
 
-        {/* Trust line — replaces hero-metric stats */}
+        {/* Trust line */}
         <div
           ref={trustRef}
-          className="mt-16 pt-8 border-t border-[var(--border-subtle)]"
+          className="mt-10 md:mt-16 pt-6 md:pt-8 border-t border-[var(--border-subtle)]"
         >
-          <p className="font-mono text-xs text-[var(--fg-muted)] tracking-[0.05em]">
+          <p className="font-mono text-[10px] md:text-xs text-[var(--fg-muted)] tracking-[0.05em]">
             Trusted by 10,000+ customers across 50 countries
           </p>
         </div>

@@ -38,7 +38,7 @@ export function Footer() {
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
         {/* Top section: Brand + Subscription */}
-        <div className="flex flex-col gap-8 pb-10 mb-10 border-b border-[var(--border-subtle)] lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+        <div className="flex flex-col gap-6 pb-8 mb-8 border-b border-[var(--border-subtle)] lg:flex-row lg:items-start lg:justify-between lg:gap-12">
           {/* Brand */}
           <div className="flex-1 max-w-[20rem]">
             <Link
@@ -46,11 +46,11 @@ export function Footer() {
               className="inline-flex items-center gap-2 mb-3 no-underline"
               aria-label={`${SITE_CONFIG.name} - Home`}
             >
-              <span className="font-heading font-semibold text-lg text-[var(--fg-primary)] tracking-[-0.02em]">
+              <span className="font-heading font-semibold text-base md:text-lg text-[var(--fg-primary)] tracking-[-0.02em]">
                 {SITE_CONFIG.name}
               </span>
             </Link>
-            <p className="text-sm text-[var(--fg-muted)] mb-4 leading-[1.625]">
+            <p className="text-xs md:text-sm text-[var(--fg-muted)] mb-3 md:mb-4 leading-[1.625]">
               {SITE_CONFIG.description}
             </p>
             <div className="flex gap-2">
@@ -58,12 +58,12 @@ export function Footer() {
                 href={CONTACTS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
+                className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
                 aria-label="Instagram"
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -80,12 +80,12 @@ export function Footer() {
                 href={CONTACTS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
+                className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
                 aria-label="TikTok"
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -97,10 +97,10 @@ export function Footer() {
 
           {/* Subscription */}
           <div className="flex-1 max-w-[28rem]">
-            <h3 className="font-heading font-semibold text-base text-[var(--fg-primary)] mb-2">
+            <h3 className="font-heading font-semibold text-sm md:text-base text-[var(--fg-primary)] mb-1.5 md:mb-2">
               {t("subscription.title")}
             </h3>
-            <p className="text-sm text-[var(--fg-muted)] mb-4">
+            <p className="text-xs md:text-sm text-[var(--fg-muted)] mb-3 md:mb-4">
               {t("subscription.description")}
             </p>
             <form
@@ -113,16 +113,16 @@ export function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t("subscription.placeholder")}
-                className="flex-1 min-w-0 px-4 py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-l-[var(--radius-sm)] text-[var(--fg-primary)] font-body text-sm outline-none placeholder:text-[var(--fg-dim)] focus:border-[var(--accent-primary)] transition-colors duration-250"
+                className="flex-1 min-w-0 px-3 md:px-4 py-2.5 md:py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-l-[var(--radius-sm)] text-[var(--fg-primary)] font-body text-xs md:text-sm outline-none placeholder:text-[var(--fg-dim)] focus:border-[var(--accent-primary)] transition-colors duration-250"
                 required
                 aria-label="Email address"
               />
               <button
                 type="submit"
-                className="flex items-center justify-center px-4 py-3 bg-[var(--accent-primary)] text-white border-none rounded-r-[var(--radius-sm)] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
+                className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 bg-[var(--accent-primary)] text-white border-none rounded-r-[var(--radius-sm)] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
                 aria-label="Subscribe"
               >
-                {isSubscribed ? "✓" : <Send size={16} />}
+                {isSubscribed ? "✓" : <Send size={14} />}
               </button>
             </form>
             {isSubscribed && (

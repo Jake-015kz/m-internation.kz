@@ -36,7 +36,7 @@ export function Header() {
         !isScrolled && ["bg-[var(--header-bg-from)]", "backdrop-blur-[12px]"],
       )}
     >
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-16 md:h-[4.5rem] flex items-center justify-between">
+      <div className="mx-auto max-w-[80rem] px-3 md:px-6 lg:px-8 h-14 md:h-[4.5rem] flex items-center justify-between">
         {/* Logo */}
         <Link
           href={`/${locale}`}
@@ -94,7 +94,7 @@ export function Header() {
       <div
         id="mobile-menu"
         className={cn(
-          "fixed inset-0 top-[4rem] z-[299] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden",
+          "fixed inset-0 top-[3.5rem] z-[299] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden",
           "bg-[var(--bg-base)] backdrop-blur-[20px]",
           isMenuOpen
             ? "opacity-100 pointer-events-auto"

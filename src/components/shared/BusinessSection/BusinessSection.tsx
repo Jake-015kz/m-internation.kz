@@ -39,6 +39,9 @@ export function BusinessSection() {
 
     if (reduce || !sectionRef.current) return;
 
+    // Bail on mobile — sticky stack breaks on small screens
+    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".stack-card");
       if (cards.length < 2) return;
@@ -92,27 +95,30 @@ export function BusinessSection() {
           </p>
         </div>
 
-        {/* Sticky-stack cards */}
+        {/* Sticky-stack cards — desktop only */}
         <div className="relative">
-          {BUSINESS_STEPS.map((step) => (
-            <div key={step.id} className="stack-card sticky top-24 mb-6">
+          {BUSINESS_STEPS.map((step, i) => (
+            <div key={step.id} className="stack-card sticky top-24 mb-6 lg:sticky">
               <div
-                className={`card-clean p-8 md:p-10 rounded-[var(--radius-xl)] ${
+                className={`card-clean p-5 md:p-10 rounded-[var(--radius-xl)] ${
                   step.featured
                     ? "bg-[var(--accent-primary)] text-white"
                     : "bg-[var(--bg-surface)]"
                 }`}
               >
-                <div className="flex flex-col gap-4 max-w-[480px]">
+                <div className="flex flex-col gap-3 md:gap-4 max-w-[480px]">
+                  <span className="font-mono text-[10px] md:text-xs text-[var(--fg-muted)] opacity-60">
+                    Step {String(i + 1).padStart(2, "0")}
+                  </span>
                   <h3
-                    className={`font-heading font-semibold text-xl tracking-[-0.01em] ${
+                    className={`font-heading font-semibold text-lg md:text-xl tracking-[-0.01em] ${
                       step.featured ? "text-white" : "text-[var(--fg-primary)]"
                     }`}
                   >
                     {t(step.titleKey)}
                   </h3>
                   <p
-                    className={`font-body text-sm leading-[1.625] ${
+                    className={`font-body text-xs md:text-sm leading-[1.5] md:leading-[1.625] ${
                       step.featured ? "text-white/80" : "text-[var(--fg-muted)]"
                     }`}
                   >
