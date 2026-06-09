@@ -1,4 +1,6 @@
 // src/services/catalogService.ts
+// Server-only — called from Server Components and Server Actions only
+
 "use server";
 
 import { products } from "@/data/products";
@@ -8,37 +10,57 @@ import type { CategoryKey } from "@/config/categories";
 
 export type { CategoryKey };
 
+// Guard: ensure locale exists before filtering
+function guardLocale(locale?: string | null): boolean {
+  if (!locale) {
+    console.warn("[catalogService] No locale provided, returning empty array");
+    return false;
+  }
+  return true;
+}
+
 export async function getCategorySlugs(key: CategoryKey): Promise<Set<string> | null> {
   if (key === "all") return null;
   const cat = CATEGORIES.find((c) => c.key === key);
   return cat?.slugs ? new Set(cat.slugs) : null;
 }
 
-export async function filterProductsByCategory(categoryKey: CategoryKey): Promise<Product[]> {
-  console.log("[catalogService] filterProductsByCategory called with:", categoryKey);
-  console.log("[catalogService] products isArray:", Array.isArray(products), "length:", products?.length);
+export async function filterProductsByCategory(
+  categoryKey: CategoryKey,
+  locale?: string
+): Promise<Product[]> {
+  guardLocale(locale);
 
   try {
-    if (!Array.isArray(products)) {
-      console.error("[catalogService] CRITICAL: products is not an array!", typeof products, products);
-      return [];
-    }
-
     const slugSet = await getCategorySlugs(categoryKey);
     if (!slugSet) {
-      console.log("[catalogService] returning all products, count:", products.length);
-      return [...products];
+      // Return plain copies — no references
+      return products.map((p) => ({ ...p }));
     }
 
-    const filtered = products.filter((p) => slugSet.has(p.slug));
-    console.log("[catalogService] filtered count:", filtered.length);
-    return filtered;
+    return products
+      .filter((p) => slugSet.has(p.slug))
+      .map((p) => ({ ...p }));
   } catch (e) {
-    console.error("[catalogService] ERROR in filterProductsByCategory:", e instanceof Error ? e.message : JSON.stringify(e));
+    console.error("[catalogService] filterProductsByCategory error:", e instanceof Error ? e.message : String(e));
     return [];
   }
 }
 
-export async function getCategoryCount(categoryKey: CategoryKey): Promise<number> {
-  return (await filterProductsByCategory(categoryKey)).length;
+export async function getCategoryCount(categoryKey: CategoryKey, locale?: string): Promise<number> {
+  guardLocale(locale);
+  return (await filterProductsByCategory(categoryKey, locale)).length;
+}
+
+// All products as plain JSON — safe for serialization
+export async function getAllProductsSafe(locale?: string): Promise<Product[]> {
+  guardLocale(locale);
+  return products.map((p) => ({ ...p }));
+}
+
+// Get products by slug — returns plain object
+export async function getProductBySlugSafe(slug: string, locale?: string): Promise<Product | undefined> {
+  guardLocale(locale);
+  const product = products.find((p) => p.slug === slug);
+  return product ? { ...product } : undefined;
 }

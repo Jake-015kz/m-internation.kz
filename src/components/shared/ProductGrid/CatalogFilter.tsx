@@ -1,105 +1,89 @@
 // src/components/shared/ProductGrid/CatalogFilter.tsx
-"use client";
+// Server Component — receives all products + current category as props
+// Category switching via <Link> (full page navigation, no JS needed)
 
-import { useState, useEffect, useCallback } from "react";
-import { useTranslations } from "next-intl";
-import { ProductGrid } from "./ProductGrid";
-import {
-  filterProductsByCategory,
-  type CategoryKey,
-} from "@/services/catalogService";
-import { CATEGORIES, categoryLabels } from "@/config/categories";
+import Link from "next/link";
+import { Suspense } from "react";
 import type { Product } from "@/types";
+import { CATEGORIES, type CategoryKey } from "@/config/categories";
+import { categoryLabels } from "@/config/categories";
+import { ProductGrid } from "./ProductGrid";
 
-export function CatalogFilter() {
-  const [activeCategory, setActiveCategory] = useState<CategoryKey>("all");
-  const [filtered, setFiltered] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const t = useTranslations("footer");
+interface CatalogFilterProps {
+  products: Product[];
+  locale: string;
+  currentCategory?: string;
+}
 
-  const loadProducts = useCallback(async (category: CategoryKey) => {
-    setLoading(true);
-    setError(null);
-    try {
-      console.log("[CatalogFilter] Loading category:", category);
-      const result = await filterProductsByCategory(category);
-      console.log("[CatalogFilter] Result:", typeof result, Array.isArray(result), result?.length);
-      if (!result || !Array.isArray(result)) {
-        setError("No products found — result is not an array");
-        setFiltered([]);
-      } else {
-        setFiltered(result);
-      }
-    } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : JSON.stringify(e);
-      console.error("[CatalogFilter] loadProducts error:", msg);
-      setError(msg);
-      setFiltered([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+export function CatalogFilter({ products, locale, currentCategory = "all" }: CatalogFilterProps) {
+  const activeCategory: CategoryKey = (
+    CATEGORIES.some((c) => c.key === currentCategory)
+      ? (currentCategory as CategoryKey)
+      : "all"
+  );
 
-  useEffect(() => {
-    loadProducts(activeCategory);
-  }, [activeCategory, loadProducts]);
+  // Filter synchronously — no async, no server calls
+  const filtered = (() => {
+    if (activeCategory === "all") return products;
+    const cat = CATEGORIES.find((c) => c.key === activeCategory);
+    if (!cat?.slugs) return products;
+    const slugSet = new Set(cat.slugs);
+    return products.filter((p) => slugSet.has(p.slug));
+  })();
 
-  const handleCategoryChange = useCallback((key: CategoryKey) => {
-    setActiveCategory(key);
-  }, []);
-
-  // Synchronous count for all categories (use static data)
-  const getCount = (key: CategoryKey) => {
-    if (key === "all") return filtered.length;
-    const cat = CATEGORIES.find(c => c.key === key);
-    if (!cat?.slugs) return 0;
-    return cat.slugs.length;
-  };
-
+  // Static labels — categoryLabels are pre-translated in config
   const labels: Record<CategoryKey, string> = {
-    all: t("allProducts"),
+    all: categoryLabels.all,
     supplements: categoryLabels.supplements,
     personal: categoryLabels.personal,
     lifestyle: categoryLabels.lifestyle,
   };
 
+  const getCount = (key: CategoryKey) => {
+    if (key === "all") return products.length;
+    const cat = CATEGORIES.find((c) => c.key === key);
+    if (!cat?.slugs) return 0;
+    return cat.slugs.length;
+  };
+
+  const categoryHref = (key: CategoryKey) => {
+    const base = `/${locale}/catalog`;
+    if (key === "all") return base;
+    return `${base}?category=${key}`;
+  };
+
   return (
     <div>
-      {/* Error banner */}
-      {error && (
-        <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-left">
-          <p className="font-mono text-xs text-red-400 font-semibold mb-1">DEBUG ERROR:</p>
-          <p className="font-mono text-sm text-red-300 break-all">{error}</p>
-        </div>
-      )}
-
       {/* Filter tabs */}
       <div className="mb-8 md:mb-10">
         <div className="flex flex-wrap gap-2 md:gap-3">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setActiveCategory(cat.key)}
-              className={`
-                inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-full
-                font-body text-xs md:text-sm font-medium
-                transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
-                border
-                ${
-                  activeCategory === cat.key
-                    ? "bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-[0_0_16px_oklch(0.78_0.22_135/0.2)]"
-                    : "bg-[var(--bg-surface)] text-[var(--fg-secondary)] border-[var(--border)] hover:border-[var(--accent-primary)] hover:text-[var(--fg-primary)]"
-                }
-              `}
-            >
-              <span className="text-[10px] md:text-xs opacity-60">{cat.icon}</span>
-              <span>{labels[cat.key]}</span>
-              <span className={`text-[10px] ml-0.5 ${activeCategory === cat.key ? "text-white/60" : "text-[var(--fg-dim)]"}`}>
-              ({getCount(cat.key)})
-              </span>
-            </button>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat.key;
+            return (
+              <Link
+                key={cat.key}
+                href={categoryHref(cat.key)}
+                scroll={false}
+                className={`
+                  inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-full
+                  font-body text-xs md:text-sm font-medium
+                  transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+                  border no-underline
+                  ${
+                    isActive
+                      ? "bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-[0_0_16px_oklch(0.78_0.22_135/0.2)]"
+                      : "bg-[var(--bg-surface)] text-[var(--fg-secondary)] border-[var(--border)] hover:border-[var(--accent-primary)] hover:text-[var(--fg-primary)]"
+                  }
+                `}
+              >
+                <span className="text-[10px] md:text-xs opacity-60">{cat.icon}</span>
+                <span>{labels[cat.key]}</span>
+                <span className={`text-[10px] ml-0.5 ${isActive ? "text-white/60" : "text-[var(--fg-dim)]"}`}>
+                  ({getCount(cat.key)})
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
 
@@ -113,7 +97,9 @@ export function CatalogFilter() {
 
       {/* Product grid */}
       {filtered.length > 0 ? (
-        <ProductGrid products={filtered} />
+        <Suspense fallback={<GridSkeleton />}>
+          <ProductGrid products={filtered} />
+        </Suspense>
       ) : (
         <div className="text-center py-20">
           <p className="font-body text-sm text-[var(--fg-muted)]">
@@ -121,6 +107,20 @@ export function CatalogFilter() {
           </p>
         </div>
       )}
+    </div>
+  );
+}
+
+function GridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border)] animate-pulse"
+          style={{ aspectRatio: "0.85" }}
+        />
+      ))}
     </div>
   );
 }
