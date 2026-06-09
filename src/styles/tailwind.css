@@ -214,13 +214,7 @@
 /* ============================================
  * BASE STYLES (reset)
  * ============================================ */
-/* Ресет для семантических элементов — Tailwind Preflight не обнуляет margin
-h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote, figure, pre, dl, dd {
-  margin: 0;
-  padding: 0;
-}
-
-
+/* Tailwind Preflight handles most resets. No custom reset needed. */
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;

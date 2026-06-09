@@ -209,7 +209,21 @@
     "joinTitle": "Welcoming You",
     "joinSubtitle": "Be Part Of Us",
     "joinButton": "JOIN NOW",
-    "cta": "Learn more about business"
+    "cta": "Learn more about business",
+    "steps": {
+      "register": {
+        "title": "Register",
+        "description": "Sign up as a member and get access to our product catalog and business tools."
+      },
+      "training": {
+        "title": "Training",
+        "description": "Complete our free training program to learn about products, sales techniques, and team building."
+      },
+      "income": {
+        "title": "Earn Income",
+        "description": "Start earning through product sales and team performance bonuses from day one."
+      }
+    }
   },
   "cta": {
     "title": "READY TO START?",

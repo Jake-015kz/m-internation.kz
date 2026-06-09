@@ -19,8 +19,3 @@ export { AnimatedCounter } from "./AnimatedCounter";
 export { ProductCard } from "./ProductCard";
 export { ProductGrid } from "./ProductGrid";
 export { ProductShowcase } from "./ProductShowcase";
-
-// Subfolder exports
-export * from "./Sections";
-export * from "./Effects";
-export * from "./Products";

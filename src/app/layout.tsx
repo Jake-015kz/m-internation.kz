@@ -7,8 +7,15 @@ import { manrope, onest, jetbrainsMono } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer } from "@/components/layout";
 import { LenisProvider } from "@shared/LenisProvider";
-import { ProvidersWrapper } from "@shared/ProvidersWrapper";
-import CursorGlowDynamic from "@shared/CursorGlow/CursorGlowDynamic";
+import dynamic from "next/dynamic";
+
+// Client-side only effects — dynamically imported to reduce initial bundle
+const ProvidersWrapper = dynamic(
+  () => import("@shared/ProvidersWrapper").then((m) => m.ProvidersWrapper)
+);
+const CursorGlowDynamic = dynamic(
+  () => import("@shared/CursorGlow/CursorGlowDynamic")
+);
 
 function getThemeScript() {
   return `
