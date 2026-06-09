@@ -15,13 +15,28 @@ export function CatalogFilter() {
   const [activeCategory, setActiveCategory] = useState<CategoryKey>("all");
   const [filtered, setFiltered] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const t = useTranslations("footer");
 
   const loadProducts = useCallback(async (category: CategoryKey) => {
     setLoading(true);
-    const result = await filterProductsByCategory(category);
-    setFiltered(result);
-    setLoading(false);
+    setError(null);
+    try {
+      const result = await filterProductsByCategory(category);
+      if (!result || !Array.isArray(result)) {
+        setError("No products found — result is not an array");
+        setFiltered([]);
+      } else {
+        setFiltered(result);
+      }
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : JSON.stringify(e);
+      console.error("[CatalogFilter] loadProducts error:", msg);
+      setError(msg);
+      setFiltered([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -49,6 +64,14 @@ export function CatalogFilter() {
 
   return (
     <div>
+      {/* Error banner */}
+      {error && (
+        <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-left">
+          <p className="font-mono text-xs text-red-400 font-semibold mb-1">DEBUG ERROR:</p>
+          <p className="font-mono text-sm text-red-300 break-all">{error}</p>
+        </div>
+      )}
+
       {/* Filter tabs */}
       <div className="mb-8 md:mb-10">
         <div className="flex flex-wrap gap-2 md:gap-3">

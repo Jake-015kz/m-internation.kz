@@ -44,9 +44,21 @@ export async function getCategorySlugs(key: CategoryKey): Promise<Set<string> | 
 }
 
 export async function filterProductsByCategory(categoryKey: CategoryKey): Promise<Product[]> {
-  const slugSet = await getCategorySlugs(categoryKey);
-  if (!slugSet) return products;
-  return products.filter((p) => slugSet.has(p.slug));
+  console.log("[catalogService] filterProductsByCategory called with:", categoryKey);
+  console.log("[catalogService] products array length:", products?.length, "isArray:", Array.isArray(products));
+  try {
+    const slugSet = await getCategorySlugs(categoryKey);
+    if (!slugSet) {
+      console.log("[catalogService] returning all products, count:", products.length);
+      return products;
+    }
+    const filtered = products.filter((p) => slugSet.has(p.slug));
+    console.log("[catalogService] filtered count:", filtered.length);
+    return filtered;
+  } catch (e) {
+    console.error("[catalogService] ERROR in filterProductsByCategory:", e);
+    throw e;
+  }
 }
 
 export async function getCategoryCount(categoryKey: CategoryKey): Promise<number> {
