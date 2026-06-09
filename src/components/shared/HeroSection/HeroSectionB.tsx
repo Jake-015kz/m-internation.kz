@@ -20,10 +20,10 @@ export function HeroSectionB() {
 
     const ctx = gsap.context(() => {
       gsap.to(textRef.current, {
-        opacity: 1, x: 0, duration: 0.8, ease: EASING.gentle as any,
+        opacity: 1, x: 0, duration: 0.8, ease: EASING.gentle as unknown as gsap.EaseFunction,
       });
       gsap.to(imageRef.current, {
-        opacity: 1, x: 0, duration: 0.8, delay: 0.2, ease: EASING.gentle as any,
+        opacity: 1, x: 0, duration: 0.8, delay: 0.2, ease: EASING.gentle as unknown as gsap.EaseFunction,
       });
       gsap.to(badge1Ref.current, {
         y: -8, duration: 3, repeat: -1, yoyo: true, ease: "power1.inOut",

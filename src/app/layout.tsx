@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { geist, geistMono, nunito } from "@/lib/fonts";
+import { manrope, onest, jetbrainsMono } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer } from "@/components/layout";
 import { LenisProvider } from "@shared/LenisProvider";
@@ -61,15 +61,8 @@ export const metadata: Metadata = {
   description:
     "M-International — международная компания по производству БАДов и оздоровительной продукции. Инновационные натуральные продукты для вашего здоровья и долголетия.",
   keywords: [
-    "БАДы",
-    "здоровье",
-    "M-International",
-    "MLM",
-    "биодобавки",
-    "велнес",
-    "GreenMAX",
-    "BluMAX",
-    "Ye-Katerina",
+    "БАДы", "здоровье", "M-International", "MLM", "биодобавки",
+    "велнес", "GreenMAX", "BluMAX", "Ye-Katerina",
   ],
   authors: [{ name: SITE_CONFIG.name }],
   openGraph: {
@@ -87,6 +80,10 @@ export const metadata: Metadata = {
       kk: "/kk",
     },
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function RootLayout({
@@ -102,10 +99,13 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${geist.variable} ${geistMono.variable} ${nunito.variable}`}
+      className={`${manrope.variable} ${onest.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>
+        <meta name="theme-color" content="#0f0f14" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f7f7f2" media="(prefers-color-scheme: light)" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <Script
           id="theme-script"
           strategy="beforeInteractive"
@@ -120,7 +120,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${nunito.className} antialiased`}>
+      <body className={`${onest.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
             <ProvidersWrapper>

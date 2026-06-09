@@ -23,10 +23,10 @@ export function HeroSectionC() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
       tl.to(labelRef.current, { opacity: 1, y: 0, duration: 0.6 })
-        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as any }, "-=0.4")
-        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as any }, "-=0.5")
-        .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as any }, "-=0.5")
-        .to(productRef.current, { opacity: 1, y: 0, duration: 1, ease: EASING.gentle as any }, "-=0.4")
+        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as unknown as gsap.EaseFunction }, "-=0.4")
+        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as unknown as gsap.EaseFunction }, "-=0.5")
+        .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.8, ease: EASING.gentle as unknown as gsap.EaseFunction }, "-=0.5")
+        .to(productRef.current, { opacity: 1, y: 0, duration: 1, ease: EASING.gentle as unknown as gsap.EaseFunction }, "-=0.4")
         .to(trustRef.current, { opacity: 1, duration: 0.6 }, "-=0.3");
     });
 

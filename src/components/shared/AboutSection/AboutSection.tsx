@@ -27,7 +27,7 @@ export function AboutSection() {
       // Header fade-in
       if (headerRef.current) {
         gsap.fromTo(headerRef.current, { opacity: 0, y: 20 }, {
-          opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as any,
+          opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
         });
       }
@@ -54,7 +54,7 @@ export function AboutSection() {
       itemRefs.current.forEach((item) => {
         if (!item) return;
         gsap.fromTo(item, { opacity: 0, x: -20 }, {
-          opacity: 1, x: 0, duration: 0.5, ease: EASING.gentle as any,
+          opacity: 1, x: 0, duration: 0.5, ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: item, start: "top 90%" },
         });
       });
@@ -62,7 +62,7 @@ export function AboutSection() {
       // CTA fade-in
       if (ctaRef.current) {
         gsap.fromTo(ctaRef.current, { opacity: 0, y: 16 }, {
-          opacity: 1, y: 0, duration: 0.5, ease: EASING.gentle as any,
+          opacity: 1, y: 0, duration: 0.5, ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: ctaRef.current, start: "top 90%" },
         });
       }

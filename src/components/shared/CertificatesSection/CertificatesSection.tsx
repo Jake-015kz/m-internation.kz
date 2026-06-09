@@ -24,7 +24,7 @@ export function CertificatesSection() {
       // Header fade-in
       if (headerRef.current) {
         gsap.fromTo(headerRef.current, { opacity: 0, y: 24 }, {
-          opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as any,
+          opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
         });
       }
@@ -33,7 +33,7 @@ export function CertificatesSection() {
       if (cardsRef.current) {
         const cards = cardsRef.current.children;
         gsap.fromTo(cards, { opacity: 0, y: 20 }, {
-          opacity: 1, y: 0, duration: 0.45, stagger: 0.06, ease: EASING.gentle as any,
+          opacity: 1, y: 0, duration: 0.45, stagger: 0.06, ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: cardsRef.current, start: "top 90%" },
         });
       }
