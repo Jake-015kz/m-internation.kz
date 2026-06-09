@@ -87,7 +87,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </h3>
         <span
-          className="font-mono text-[0.6rem] font-medium uppercase tracking-[0.1em] flex-shrink-0 px-1.5 py-0.5 rounded-full"
+          className="font-mono text-[0.6rem] font-medium uppercase tracking-[0.04em] flex-shrink-0 px-1.5 py-0.5 rounded-full"
           style={{
             color: accent,
             backgroundColor: `${accent}08`,

@@ -50,7 +50,7 @@ const organizationSchema = {
     "https://www.facebook.com/m.international",
     "https://www.youtube.com/@m.international",
   ],
-  knowsAbout: ["Russian", "English", "Kazakh"],
+  availableLanguage: ["ru", "en", "kk"],
 };
 
 export const metadata: Metadata = {
@@ -125,8 +125,14 @@ export default async function RootLayout({
           <LenisProvider>
             <ProvidersWrapper>
               <div className="relative z-10 flex min-h-screen flex-col">
-                <Header />
-                <main style={{ flex: "1 1 auto" }}>{children}</main>
+                <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:bg-[var(--accent-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded"
+              >
+                {locale === "ru" ? "Перейти к содержимому" : locale === "kk" ? "Мазмұнына өту" : "Skip to content"}
+              </a>
+              <Header />
+                <main id="main-content" className="flex-[1_1_auto]">{children}</main>
                 <Footer />
               </div>
               <CursorGlowDynamic />

@@ -883,19 +883,6 @@ html.lenis body {
 }
 
 /* ============================================
- * SNAP SCROLL (Tesla-style)
- * ============================================ */
-.snap-container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
-}
-.snap-section {
-  scroll-snap-align: start;
-  min-height: 100vh;
-}
-
-/* ============================================
  * BENTO GRID
  * ============================================ */
 .bento-grid {
@@ -946,8 +933,8 @@ html.lenis body {
 @media (min-width: 768px) {
   .editorial-title {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    line-height: 1.15;
+    letter-spacing: normal;
   }
 }
 .editorial-title.gradient {
@@ -1017,22 +1004,6 @@ html.lenis body {
 }
 
 /* ============================================
- * SPLIT SCREEN CTA
- * ============================================ */
-.split-cta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 60vh;
-  align-items: center;
-}
-@media (max-width: 767px) {
-  .split-cta {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-}
-
-/* ============================================
  * DECO ORBS & UTILITIES (used by page.tsx)
  * ============================================ */
 .deco-orb {
@@ -1067,8 +1038,8 @@ html.lenis body {
 @media (min-width: 768px) {
   .display-l {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.04em;
+    line-height: 1.1;
+    letter-spacing: normal;
   }
 }
 

@@ -141,13 +141,13 @@ function SlideContent({
         className="flex flex-col gap-2 md:gap-3 text-center lg:text-left"
       >
         <span
-          className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em] opacity-0"
+          className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.08em] opacity-0"
           style={{ color: config.color }}
         >
           {config.subtitle}
         </span>
 
-        <h3 className="font-heading font-bold leading-[1.1] md:leading-[1.05] tracking-[-0.01em] md:tracking-[-0.03em] text-xl md:text-3xl lg:text-4xl text-[var(--fg-primary)] opacity-0">
+        <h3 className="font-heading font-bold leading-[1.1] tracking-normal text-xl md:text-3xl lg:text-4xl text-[var(--fg-primary)] opacity-0">
           {product.name}
         </h3>
 
@@ -249,6 +249,20 @@ export function ProductShowcase() {
         }
       );
     }
+
+    // Resize listener for GSAP ScrollTrigger refresh
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const onResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 250);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   return (
@@ -272,7 +286,7 @@ export function ProductShowcase() {
           className="text-center lg:text-left max-w-[36rem]"
           style={{ opacity: 1 }}
         >
-          <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-2 md:mb-4 md:text-3xl lg:text-4xl">
+          <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-2 md:mb-4 md:text-3xl lg:text-4xl">
             {t("title")}
           </h2>
           <p className="font-body text-sm md:text-base leading-[1.45] text-[var(--fg-muted)]">

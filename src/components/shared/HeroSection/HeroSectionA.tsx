@@ -62,7 +62,7 @@ export function HeroSectionA() {
           <div className="text-left order-1 lg:order-1">
             <span
               ref={labelRef}
-              className="inline-block mb-3 md:mb-5 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.08em] md:tracking-[0.12em] text-[var(--accent-primary)]"
+              className="inline-block mb-3 md:mb-5 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.08em] text-[var(--accent-primary)]"
             >
               {t("label")}
             </span>
@@ -70,7 +70,7 @@ export function HeroSectionA() {
             <h1
               ref={titleRef}
               id="hero-title"
-              className="font-heading font-semibold tracking-[-0.02em] mb-3 md:mb-5 text-[clamp(1.75rem,4.5vw,3.25rem)] leading-[1.1] md:leading-[1.08] text-[var(--fg-primary)]"
+              className="font-heading font-semibold tracking-normal mb-3 md:mb-5 text-[clamp(1.75rem,4.5vw,3.25rem)] leading-[1.1] md:leading-[1.1] text-[var(--fg-primary)]"
             >
               {t("title")}
             </h1>

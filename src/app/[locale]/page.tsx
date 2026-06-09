@@ -40,7 +40,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <section className="relative overflow-hidden py-12 md:py-20 bg-[var(--bg-surface)]">
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
           <div className="max-w-[36rem] mx-auto text-center">
-            <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-3 md:mb-4 md:text-3xl lg:text-4xl">
+            <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-3 md:mb-4 md:text-3xl lg:text-4xl">
               {t("cta.title")}
             </h2>
             <p className="font-body text-sm md:text-base leading-[1.45] text-[var(--fg-secondary)] mb-6 md:mb-8">

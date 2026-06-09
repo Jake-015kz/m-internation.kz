@@ -46,7 +46,7 @@ export function Footer() {
               className="inline-flex items-center gap-2 mb-3 no-underline"
               aria-label={`${SITE_CONFIG.name} - Home`}
             >
-              <span className="font-heading font-semibold text-base md:text-lg text-[var(--fg-primary)] tracking-[-0.02em]">
+              <span className="font-heading font-semibold text-base md:text-lg text-[var(--fg-primary)] tracking-normal">
                 {SITE_CONFIG.name}
               </span>
             </Link>

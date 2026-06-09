@@ -120,7 +120,7 @@ export function CertificatesSection() {
         <div ref={headerRef} className="text-center mb-8 md:mb-12">
           <h2
             id="certificates-title"
-            className="font-heading font-semibold text-2xl leading-[1.15] text-[var(--fg-primary)] tracking-[-0.02em] mb-3 md:text-3xl lg:text-4xl"
+            className="font-heading font-semibold text-2xl leading-[1.15] text-[var(--fg-primary)] tracking-normal mb-3 md:text-3xl lg:text-4xl"
           >
             {t("title")}
           </h2>
@@ -140,7 +140,7 @@ export function CertificatesSection() {
 
         {/* Bottom trust line */}
         <div className="mt-8 md:mt-12 text-center">
-          <p className="font-mono text-[10px] md:text-xs text-[var(--fg-dim)] uppercase tracking-[0.15em]">
+          <p className="font-mono text-[10px] md:text-xs text-[var(--fg-dim)] uppercase tracking-[0.08em]">
             {t("certified")}
           </p>
         </div>

@@ -143,7 +143,7 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
             <div className="flex flex-col gap-3 pb-6 border-b border-[var(--border-subtle)]">
               <div className="flex items-center gap-2">
                 <span
-                  className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.12em] px-2 py-0.5 rounded-full"
+                  className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.05em] px-2 py-0.5 rounded-full"
                   style={{
                     color: accent,
                     backgroundColor: `${accent}12`,
@@ -154,7 +154,7 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
                 </span>
               </div>
 
-              <h1 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] md:text-3xl lg:text-4xl">
+              <h1 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-normal md:text-3xl lg:text-4xl">
                 {productName}
               </h1>
 

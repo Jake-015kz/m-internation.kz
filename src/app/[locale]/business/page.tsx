@@ -48,7 +48,7 @@ export default async function BusinessPage({
     <main className="min-h-screen pt-20">
       <section className="py-16 text-left border-b border-[var(--border-subtle)]">
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
-          <h1 className="font-heading font-semibold text-4xl leading-[0.95] text-[var(--fg-primary)] tracking-[-0.04em] mb-4 text-left md:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="font-heading font-semibold text-4xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-4 text-left md:text-5xl lg:text-6xl xl:text-7xl">
             {t("title")}
           </h1>
           <p className="font-body text-lg leading-[1.625] max-w-[32rem] text-[var(--fg-muted)] text-left">
@@ -59,7 +59,7 @@ export default async function BusinessPage({
 
       <section className="py-12 pb-20">
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
-          <h2 className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] text-left mb-10 md:text-4xl lg:text-5xl">
+          <h2 className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-normal text-left mb-10 md:text-4xl lg:text-5xl">
             {tPage("howToStart")}
           </h2>
           <div className="flex flex-col gap-0">
@@ -87,7 +87,7 @@ export default async function BusinessPage({
 
       <section className="py-16 text-left border-t border-[var(--border-subtle)]">
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
-          <h2 className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-4 md:text-4xl lg:text-5xl">
+          <h2 className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-4 md:text-4xl lg:text-5xl">
             {t("cta")}
           </h2>
           <p className="font-body text-lg leading-[1.625] max-w-[32rem] text-[var(--fg-muted)] mb-8">

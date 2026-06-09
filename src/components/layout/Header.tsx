@@ -53,7 +53,7 @@ export function Header() {
           href={`/${locale}`}
           className="flex items-center gap-2 no-underline z-[301] relative"
         >
-          <span className="font-heading font-bold text-base md:text-lg text-[var(--fg-primary)] tracking-[-0.02em]">
+          <span className="font-heading font-bold text-base md:text-lg text-[var(--fg-primary)] tracking-normal">
             {SITE_CONFIG.name}
           </span>
         </Link>

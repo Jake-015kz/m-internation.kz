@@ -39,7 +39,7 @@ export default async function CatalogPage({
         />
 
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
-          <h1 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-3 text-left md:text-3xl lg:text-4xl">
+          <h1 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-3 text-left md:text-3xl lg:text-4xl">
             {t("title")}
           </h1>
           <p className="font-body text-sm md:text-base leading-[1.5] max-w-[32rem] text-[var(--fg-muted)] text-left">

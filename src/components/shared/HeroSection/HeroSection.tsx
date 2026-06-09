@@ -124,7 +124,7 @@ export function HeroSection() {
           <div className="lg:col-span-3 text-left">
             <span
               ref={labelRef}
-              className="inline-block mb-4 md:mb-6 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em] text-[var(--accent-primary)]"
+              className="inline-block mb-4 md:mb-6 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.08em] text-[var(--accent-primary)]"
             >
               {t("label")}
             </span>
@@ -132,7 +132,7 @@ export function HeroSection() {
             <h1
               ref={titleRef}
               id="hero-title"
-              className="font-heading font-semibold tracking-[-0.01em] md:tracking-[-0.03em] mb-4 md:mb-6 display-l break-words"
+              className="font-heading font-semibold tracking-normal mb-4 md:mb-6 display-l break-words"
             >
               {t("title")}
             </h1>

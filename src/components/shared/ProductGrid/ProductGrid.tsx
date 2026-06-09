@@ -17,7 +17,7 @@ export function ProductGrid({
       {(title || description) && (
         <div className="text-left mb-10">
           {title && (
-            <h2 className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] mb-2 md:text-4xl lg:text-5xl">
+            <h2 className="font-heading font-semibold text-3xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-2 md:text-4xl lg:text-5xl">
               {title}
             </h2>
           )}
