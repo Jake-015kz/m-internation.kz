@@ -45,23 +45,43 @@
     "description": "Innovative natural products for your health",
     "micrystal": {
       "name": "MiCrystal",
-      "subtitle": "Health & Energy",
-      "description": "Supports overall health, boosts energy, strengthens immunity, and fills nutritional gaps for daily wellness."
+      "subtitle": "Vision & Energy",
+      "description": "Cellular nutrition for eye health. 100% natural composition: elderberry extract, FloraGLO*, lutein and astaxanthin. Reduces eye pressure, relieves redness and discomfort from screen work."
     },
     "greenmax": {
       "name": "GreenMAX",
-      "subtitle": "Antioxidant & Detox",
-      "description": "Detox, immunity, energy. Contains prebiotics, probiotics, enzymes, fiber, antioxidants."
+      "subtitle": "Detox & Cleansing",
+      "description": "Herbal formula 3 in 1: intestinal cleansing, microflora restoration, liver protection. Prebiotics, probiotics, enzymes, fiber, antioxidants."
+    },
+    "mimax": {
+      "name": "MiMAX",
+      "subtitle": "Anti-Aging",
+      "description": "Powerful antioxidant #1 with astaxanthin. 6000x more effective than vitamin C. Slows aging, protects cells, strengthens heart and liver."
+    },
+    "nutrimax": {
+      "name": "NutriMAX",
+      "subtitle": "Protein Shake",
+      "description": "Complete nutrition in one shake. Soy protein + spirulina + chlorella. For energy, post-workout recovery and weight management."
+    },
+    "fleximax": {
+      "name": "FlexiMAX",
+      "subtitle": "Joint Health",
+      "description": "Comprehensive protection of joints, cartilage and bones. Plant-based glucosamine + turmeric + hyaluronic acid. Relieves pain and inflammation."
+    },
+    "machoman": {
+      "name": "MachoMAN",
+      "subtitle": "Men's Health",
+      "description": "Cellular nutrition for men. Sexual function support, testosterone boost, stamina and energy. Maca + L-arginine + ginseng."
     },
     "blumax": {
       "name": "BluMAX",
-      "subtitle": "Immunity & Vitality",
-      "description": "For children and adults. Immunity and vitality support."
+      "subtitle": "Immunity & Brain",
+      "description": "Blue-green algae AFA + vitamin C. 60+ minerals, neuropeptides, organic iron. Immunity boost, memory and concentration improvement."
     },
     "yekaterina": {
       "name": "Ye-Katerina",
-      "subtitle": "Women's Health",
-      "description": "Product for women's health and beauty."
+      "subtitle": "Women's Hygiene",
+      "description": "Natural pads with aloe vera extract and silver ions. Antibacterial effect, protection from bacteria and odor."
     },
     "features": {
       "natural": "Natural ingredients",

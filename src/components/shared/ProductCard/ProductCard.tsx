@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useLocale } from "next-intl";
 import type { Product } from "@/types";
 
 interface ProductCardProps {
@@ -6,11 +10,30 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const locale = useLocale();
+
   return (
     <Link
-      href={`/catalog/${product.slug}`}
+      href={`/${locale}/catalog/${product.slug}`}
       className="group card-clean flex flex-col p-6 rounded-[var(--radius-lg)] no-underline text-inherit transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer hover:-translate-y-1"
     >
+      {/* Product Image */}
+      <div className="aspect-square mb-4 bg-[var(--bg-surface)] rounded-[var(--radius-md)] overflow-hidden flex items-center justify-center">
+        {product.images?.[0] ? (
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            width={200}
+            height={200}
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <span className="font-heading font-bold text-4xl text-[var(--border)]">
+            {product.name.charAt(0)}
+          </span>
+        )}
+      </div>
+
       <div className="flex items-baseline justify-between gap-4 mb-3">
         <h3 className="font-heading font-semibold text-lg text-[var(--fg-primary)] leading-[1.1] tracking-[-0.01em]">
           {product.name}

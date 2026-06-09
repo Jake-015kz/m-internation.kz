@@ -16,34 +16,39 @@ const SHOWCASE_CONFIG: Record<
   { subtitle: string; descriptionKey: string; color: string }
 > = {
   micrystal: {
-    subtitle: "Health & Energy",
+    subtitle: "Зрение",
     descriptionKey: "micrystal.description",
     color: "#c4a035",
   },
-  "ye-katerina": {
-    subtitle: "Personal Care",
-    descriptionKey: "yekaterina.description",
-    color: "#8a4a7a",
-  },
   greenmax: {
-    subtitle: "Antioxidant & Detox",
+    subtitle: "Детокс",
     descriptionKey: "greenmax.description",
     color: "#5a9e3a",
   },
-  mitown: {
-    subtitle: "Lifestyle",
-    descriptionKey: "mitown.description",
-    color: "#4a90d9",
+  mimax: {
+    subtitle: "Антиоксидант",
+    descriptionKey: "mimax.description",
+    color: "#d45a2a",
   },
   blumax: {
-    subtitle: "Immunity",
+    subtitle: "Иммунитет",
     descriptionKey: "blumax.description",
     color: "#3a8ab5",
   },
-  kordymax: {
-    subtitle: "Cardio",
-    descriptionKey: "kordymax.description",
-    color: "#b53a3a",
+  nutrimax: {
+    subtitle: "Питание",
+    descriptionKey: "nutrimax.description",
+    color: "#7a9e3a",
+  },
+  fleximax: {
+    subtitle: "Суставы",
+    descriptionKey: "fleximax.description",
+    color: "#b58a3a",
+  },
+  machoman: {
+    subtitle: "Мужское здоровье",
+    descriptionKey: "machoman.description",
+    color: "#8a3a3a",
   },
 };
 

@@ -15,7 +15,7 @@ function MarqueeRow({
   direction = "left",
   speed = 30,
 }: {
-  items: typeof CERTIFICATES;
+  items: readonly { readonly id: string; readonly name: string; readonly descriptionKey: string; readonly image: string; readonly color: string }[];
   direction?: "left" | "right";
   speed?: number;
 }) {
@@ -103,8 +103,8 @@ export function CertificatesSection() {
 
   // Split certificates into two rows
   const mid = Math.ceil(CERTIFICATES.length / 2);
-  const row1 = CERTIFICATES.slice(0, mid);
-  const row2 = CERTIFICATES.slice(mid);
+  const row1: readonly (typeof CERTIFICATES)[number][] = CERTIFICATES.slice(0, mid);
+  const row2: readonly (typeof CERTIFICATES)[number][] = CERTIFICATES.slice(mid);
 
   return (
     <section

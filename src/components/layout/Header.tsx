@@ -106,14 +106,14 @@ export function Header() {
         id="mobile-menu"
         className={cn(
           "fixed inset-0 top-0 z-[299] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden",
-          "bg-[var(--bg-base)]/98 backdrop-blur-[20px]",
+          "bg-[var(--bg-base)]",
           isMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none",
         )}
         aria-hidden={!isMenuOpen}
       >
-        <nav className="flex flex-col h-full pt-20 px-6 pb-8">
+        <nav className="flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto">
           <div className="flex flex-col gap-1 flex-1">
             {navLinks.map((link, i) => (
               <Link
