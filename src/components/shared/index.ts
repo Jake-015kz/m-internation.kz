@@ -1,15 +1,14 @@
 // Shared Components - Barrel Export
 // Note: Layout components (Header, Footer) are exported from @/components/layout
+// Note: HeroSection removed — HeroSectionA is used instead (imported directly to avoid GSAP in bundle)
 
 // Sections
-export { HeroSection } from "./HeroSection";
 export { CertificatesSection } from "./CertificatesSection";
 export { BusinessSection } from "./BusinessSection";
 export { AboutSection } from "./AboutSection";
 
 // UI Effects
 export { ClickSpark } from "./ClickSpark";
-export { FloatingProduct } from "./FloatingProduct";
 export { NoiseOverlay } from "./NoiseOverlay";
 export { LenisProvider } from "./LenisProvider";
 export { CursorGlow } from "./CursorGlow";

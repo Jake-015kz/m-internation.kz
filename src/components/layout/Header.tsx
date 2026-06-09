@@ -38,7 +38,7 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-[300]",
-        "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
         isScrolled ? [
           "bg-[var(--bg-base)]/95 backdrop-blur-[12px] saturate-[140%]",
           "border-b border-[var(--border-subtle)]",
@@ -67,7 +67,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[var(--accent-primary)] after:transition-all after:duration-300 after:rounded-full hover:text-[var(--fg-primary)] hover:after:w-full"
+              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[var(--accent-primary)] after:transition-[width] after:duration-300 after:rounded-full hover:text-[var(--fg-primary)] hover:after:w-full"
             >
               {link.label}
             </Link>
@@ -82,14 +82,14 @@ export function Header() {
           {/* CTA — desktop only */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-[0.5rem] transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("contacts")}
           </Link>
 
           {/* Mobile menu button */}
           <button
-            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-all duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
+            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -100,57 +100,42 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu — full screen overlay */}
-      <div
-        id="mobile-menu"
-        className={cn(
-          "fixed inset-0 top-0 z-[299] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden",
-          "bg-[var(--bg-base)]",
-          isMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none",
-        )}
-        aria-hidden={!isMenuOpen}
-      >
-        <nav className="flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto">
-          <div className="flex flex-col gap-1 flex-1">
-            {navLinks.map((link, i) => (
+      {/* Mobile Menu — only render when open to reduce DOM size */}
+      {isMenuOpen && (
+        <div
+          id="mobile-menu"
+          className="fixed inset-0 top-0 z-[299] bg-[var(--bg-base)] transition-opacity duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden"
+        >
+          <nav className="flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto">
+            <div className="flex flex-col gap-1 flex-1">
+              {navLinks.map((link, i) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="font-heading font-semibold text-2xl text-[var(--fg-primary)] py-3 transition-[opacity,transform] duration-300 border-b border-[var(--border-subtle)] opacity-100 translate-x-0"
+                  style={{ transitionDelay: `${i * 60}ms` }}
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            <div
+              className="pt-6 transition-[opacity,transform] duration-300 opacity-100 translate-y-0"
+              style={{ transitionDelay: "300ms" }}
+            >
               <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "font-heading font-semibold text-2xl text-[var(--fg-primary)] py-3 transition-all duration-300 border-b border-[var(--border-subtle)]",
-                  isMenuOpen
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 -translate-x-4",
-                )}
-                style={{ transitionDelay: isMenuOpen ? `${i * 60}ms` : "0ms" }}
+                href={`/${locale}/contacts`}
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[0.5rem] w-full shadow-[var(--shadow-glow-subtle)]"
                 onClick={closeMenu}
               >
-                {link.label}
+                {t("contacts")}
               </Link>
-            ))}
-          </div>
-
-          <div
-            className={cn(
-              "pt-6 transition-all duration-300",
-              isMenuOpen
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4",
-            )}
-            style={{ transitionDelay: isMenuOpen ? "300ms" : "0ms" }}
-          >
-            <Link
-              href={`/${locale}/contacts`}
-              className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[0.5rem] w-full shadow-[var(--shadow-glow-subtle)]"
-              onClick={closeMenu}
-            >
-              {t("contacts")}
-            </Link>
-          </div>
-        </nav>
-      </div>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

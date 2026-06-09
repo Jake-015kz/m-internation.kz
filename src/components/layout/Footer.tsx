@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { Send } from "lucide-react";
+import dynamic from "next/dynamic";
 import { SITE_CONFIG, CONTACTS } from "@/lib/constants";
-import { useSubscription } from "@/hooks";
+
+// Subscription form — dynamic to avoid loading subscription logic on every page
+const SubscriptionForm = dynamic(
+  () => import("./SubscriptionForm").then((m) => m.SubscriptionForm),
+  { ssr: false }
+);
 
 export function Footer() {
   const locale = useLocale();
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
-  const { email, setEmail, isSubscribed, error, handleSubscribe } =
-    useSubscription();
 
   const footerLinks = {
     company: [
@@ -58,19 +61,10 @@ export function Footer() {
                 href={CONTACTS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-[color,border-color,box-shadow] duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
                 aria-label="Instagram"
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
@@ -80,67 +74,22 @@ export function Footer() {
                 href={CONTACTS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-[color,border-color,box-shadow] duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
                 aria-label="TikTok"
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                 </svg>
               </a>
             </div>
           </div>
 
-          {/* Subscription */}
-          <div className="flex-1 max-w-[28rem]">
-            <h3 className="font-heading font-semibold text-sm md:text-base text-[var(--fg-primary)] mb-1.5 md:mb-2">
-              {t("subscription.title")}
-            </h3>
-            <p className="text-xs md:text-sm text-[var(--fg-muted)] mb-3 md:mb-4">
-              {t("subscription.description")}
-            </p>
-            <form
-              className="flex gap-0"
-              onSubmit={handleSubscribe}
-              aria-label="Newsletter subscription"
-            >
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t("subscription.placeholder")}
-                className="flex-1 min-w-0 px-3 md:px-4 py-2.5 md:py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-l-[0.5rem] text-[var(--fg-primary)] font-body text-xs md:text-sm outline-none placeholder:text-[var(--fg-dim)] focus:border-[var(--accent-primary)] transition-colors duration-250"
-                required
-                aria-label="Email address"
-              />
-              <button
-                type="submit"
-                className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 min-h-[44px] bg-[var(--accent-primary)] text-[var(--bg-base)] border-none rounded-r-[0.5rem] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
-                aria-label="Subscribe"
-              >
-                {isSubscribed ? "✓" : <Send size={14} />}
-              </button>
-            </form>
-            {isSubscribed && (
-              <p className="mt-2 text-sm text-[var(--success)]" role="alert">
-                {t("subscription.success")}
-              </p>
-            )}
-            {error && (
-              <p className="mt-2 text-sm text-[var(--error)]" role="alert">
-                {error}
-              </p>
-            )}
-          </div>
+          {/* Subscription — dynamically loaded */}
+          <SubscriptionForm />
         </div>
 
         {/* Links Grid */}
         <div className="grid grid-cols-2 gap-8 mb-10 md:grid-cols-3 md:gap-12">
-          {/* Company */}
           <div>
             <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
               {t("company")}
@@ -158,7 +107,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Catalog */}
           <div>
             <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
               {t("catalog")}
@@ -176,7 +124,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Legal */}
           <div>
             <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
               {t("contacts")}

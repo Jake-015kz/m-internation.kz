@@ -27,7 +27,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          "rounded-xl transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
           variantStyles[variant],
           hover &&
             "cursor-pointer hover:border-[oklch(0.82_0.22_135/0.2)] hover:shadow-[0_8px_32px_oklch(0_0_0/0.25),0_0_16px_oklch(0.82_0.22_135/0.06)] hover:-translate-y-1",

@@ -45,7 +45,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2 font-body font-medium rounded-[0.5rem] cursor-pointer border-none outline-none no-nowrap tracking-[0.01em] relative overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed",
+          "inline-flex items-center justify-center gap-2 font-body font-medium rounded-[0.5rem] cursor-pointer border-none outline-none no-nowrap tracking-[0.01em] relative overflow-hidden transition-[color,background-color,opacity,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed",
           variantStyles[variant],
           sizeStyles[size],
           isLoading && "pointer-events-none",

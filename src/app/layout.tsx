@@ -3,19 +3,11 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { manrope, onest, jetbrainsMono } from "@/lib/fonts";
+import { manrope, onest } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer } from "@/components/layout";
 import { LenisProvider } from "@shared/LenisProvider";
-import dynamic from "next/dynamic";
-
-// Client-side only effects — dynamically imported to reduce initial bundle
-const ProvidersWrapper = dynamic(
-  () => import("@shared/ProvidersWrapper").then((m) => m.ProvidersWrapper)
-);
-const CursorGlowDynamic = dynamic(
-  () => import("@shared/CursorGlow/CursorGlowDynamic")
-);
+import { ClientProviders } from "./ClientProviders";
 
 function getThemeScript() {
   return `
@@ -39,7 +31,6 @@ function getThemeScript() {
   `;
 }
 
-// Schema.org Organization JSON-LD
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -48,9 +39,15 @@ const organizationSchema = {
   description:
     "Международная компания по производству БАДов и оздоровительной продукции",
   foundingDate: "2010",
+  logo: `${SITE_CONFIG.url}/logo.png`,
   address: {
     "@type": "PostalAddress",
     addressCountry: "KZ",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    availableLanguage: ["Russian", "English", "Kazakh"],
   },
   sameAs: [
     "https://www.instagram.com/m.international",
@@ -61,29 +58,40 @@ const organizationSchema = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONFIG.url),
   title: {
     default: SITE_CONFIG.name,
     template: `%s | ${SITE_CONFIG.name}`,
   },
   description:
-    "M-International — международная компания по производству БАДов и оздоровительной продукции. Растительные формулы для здоровья с международными сертификатами качества. Натуральные биодобавки для иммунитета, детокса, зрения и долголетия.",
-  keywords: [
-    "БАДы", "здоровье", "M-International", "MLM", "биодобавки",
-    "велнес", "GreenMAX", "BluMAX", "Ye-Katerina",
-    "международные сертификаты качества", "растительные формулы",
-    "натуральные добавки", "детокс", "иммунитет", "зрение",
-    "биологически активные добавки", "оздоровительная продукция",
-  ],
+    "M-International — международная компания по производству БАДов и оздоровительной продукции. Растительные формулы для здоровья с международными сертификатами качества.",
   authors: [{ name: SITE_CONFIG.name }],
   openGraph: {
     type: "website",
     locale: "ru_KZ",
     siteName: SITE_CONFIG.name,
+    url: SITE_CONFIG.url,
     description:
       "Растительные формулы для здоровья с международными сертификатами качества. Натуральные биодобавки для иммунитета, детокса и долголетия от M-International.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "M-International — БАДы и оздоровительная продукция",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@minternational",
+    title: SITE_CONFIG.name,
+    description:
+      "Растительные формулы для здоровья с международными сертификатами качества.",
+    images: ["/og-image.jpg"],
   },
   alternates: {
-    canonical: `${SITE_CONFIG.url}/ru`,
+    canonical: SITE_CONFIG.url,
     languages: {
       "ru": `${SITE_CONFIG.url}/ru`,
       "en": `${SITE_CONFIG.url}/en`,
@@ -104,13 +112,12 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
-
   const themeScript = getThemeScript();
 
   return (
     <html
       lang={locale}
-      className={`${manrope.variable} ${onest.variable} ${jetbrainsMono.variable}`}
+      className={`${manrope.variable} ${onest.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -134,20 +141,19 @@ export default async function RootLayout({
       <body className={`${onest.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
-            <ProvidersWrapper>
+            <ClientProviders>
               <div className="relative z-10 flex min-h-screen flex-col">
                 <a
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:bg-[var(--accent-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded"
-              >
-                {locale === "ru" ? "Перейти к содержимому" : locale === "kk" ? "Мазмұнына өту" : "Skip to content"}
-              </a>
-              <Header />
+                  href="#main-content"
+                  className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:bg-[var(--accent-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded"
+                >
+                  {locale === "ru" ? "Перейти к содержимому" : locale === "kk" ? "Мазмұнына өту" : "Skip to content"}
+                </a>
+                <Header />
                 <main id="main-content" className="flex-[1_1_auto]">{children}</main>
                 <Footer />
               </div>
-              <CursorGlowDynamic />
-            </ProvidersWrapper>
+            </ClientProviders>
           </LenisProvider>
         </NextIntlClientProvider>
       </body>

@@ -23,11 +23,11 @@ function shouldEnableSmoothScroll(): boolean {
 
 export function LenisProviderClient({ children }: { children: ReactNode }) {
   const lenisOptions = {
-    duration: 1.2,
+    duration: 0.8,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: "vertical" as const,
     gestureOrientation: "vertical" as const,
-    smoothWheel: true,
+    smoothWheel: false,
     // Performance optimizations
     syncTouch: false,
     touchMultiplier: 1,

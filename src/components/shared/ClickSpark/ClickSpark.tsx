@@ -36,7 +36,7 @@ function shouldEnableSparks(): boolean {
 }
 
 export function ClickSpark({
-  sparkColor = "oklch(0.92 0.2 128)",
+  sparkColor = "oklch(0.78 0.16 145)",
   sparkSize = 8,
   sparkRadius = 12,
   sparkCount = 6,

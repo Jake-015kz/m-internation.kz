@@ -1,12 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
-import Link from "next/link";
-import { HeroSectionA } from "@shared/HeroSection";
-import { CertificatesSection } from "@shared/CertificatesSection";
-import { ProductShowcase } from "@shared/ProductShowcase";
-import { AboutSection } from "@shared/AboutSection";
-import { BusinessSection } from "@shared/BusinessSection";
+import { HeroSectionA } from "@shared/HeroSection/HeroSectionA";
 import { SITE_CONFIG } from "@/lib/constants";
+import { HomeSections } from "./HomeSections";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -37,6 +33,14 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
       siteName: SITE_CONFIG.name,
       title: t("title"),
       description: t("subtitle"),
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: t("title"),
+        },
+      ],
     },
   };
 }
@@ -62,40 +66,7 @@ export default async function HomePage({ params }: HomePageProps) {
       />
 
       <HeroSectionA />
-      <CertificatesSection />
-      <ProductShowcase />
-      <AboutSection />
-      <BusinessSection />
-
-      {/* CTA Section */}
-      <section className="relative overflow-hidden py-12 md:py-20 bg-[var(--bg-surface)]">
-        <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
-          <div className="max-w-[36rem] mx-auto text-center">
-            <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-3 md:mb-4 md:text-3xl lg:text-4xl">
-              {t("cta.title")}
-            </h2>
-            <p className="font-body text-sm md:text-base leading-[1.45] text-[var(--fg-secondary)] mb-6 md:mb-8">
-              {t("cta.description")}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                href={`/${locale}/contacts`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
-              >
-                {t("cta.contact")}
-              </Link>
-              <Link
-                href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 min-h-[44px] rounded-[0.5rem] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
-              >
-                {t("cta.catalog")}
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="section-divider mt-12 md:mt-20" />
-      </section>
+      <HomeSections locale={locale} />
     </main>
   );
 }
