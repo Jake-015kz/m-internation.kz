@@ -12,6 +12,17 @@ export function ProductGrid({
   title,
   description,
 }: ProductGridProps) {
+  if (!products || !Array.isArray(products)) {
+    console.warn("[ProductGrid] products is not an array:", typeof products, products);
+    return (
+      <div className="text-center py-20">
+        <p className="font-body text-sm text-[var(--fg-muted)]">
+          Ошибка загрузки данных
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col">
       {(title || description) && (

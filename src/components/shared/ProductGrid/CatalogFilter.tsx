@@ -8,7 +8,7 @@ import {
   filterProductsByCategory,
   type CategoryKey,
 } from "@/services/catalogService";
-import { CATEGORIES, categoryLabels } from "@/services/catalogService";
+import { CATEGORIES, categoryLabels } from "@/config/categories";
 import type { Product } from "@/types";
 
 export function CatalogFilter() {
@@ -22,7 +22,9 @@ export function CatalogFilter() {
     setLoading(true);
     setError(null);
     try {
+      console.log("[CatalogFilter] Loading category:", category);
       const result = await filterProductsByCategory(category);
+      console.log("[CatalogFilter] Result:", typeof result, Array.isArray(result), result?.length);
       if (!result || !Array.isArray(result)) {
         setError("No products found — result is not an array");
         setFiltered([]);
