@@ -1,13 +1,31 @@
 import { getTranslations } from "next-intl/server";
+import { Metadata } from "next";
 import Link from "next/link";
 import { HeroSectionA } from "@shared/HeroSection";
 import { CertificatesSection } from "@shared/CertificatesSection";
 import { ProductShowcase } from "@shared/ProductShowcase";
 import { AboutSection } from "@shared/AboutSection";
 import { BusinessSection } from "@shared/BusinessSection";
+import { SITE_CONFIG } from "@/lib/constants";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const baseUrl = SITE_CONFIG.url;
+  return {
+    alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages: {
+        "ru": `${baseUrl}/ru`,
+        "en": `${baseUrl}/en`,
+        "kk": `${baseUrl}/kk`,
+        "x-default": `${baseUrl}/ru`,
+      },
+    },
+  };
 }
 
 export default async function HomePage({ params }: HomePageProps) {
@@ -16,17 +34,17 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <main className="min-h-screen relative">
-      {/* Decorative background orbs */}
+      {/* Decorative background orbs — desktop only to reduce mobile paint */}
       <div
-        className="deco-orb deco-orb-1 top-20 -left-40 fixed"
+        className="hidden md:block deco-orb deco-orb-1 top-20 -left-40 fixed"
         aria-hidden="true"
       />
       <div
-        className="deco-orb deco-orb-2 top-[40vh] -right-20 fixed"
+        className="hidden md:block deco-orb deco-orb-2 top-[40vh] -right-20 fixed"
         aria-hidden="true"
       />
       <div
-        className="deco-orb deco-orb-1 bottom-20 left-1/3 fixed"
+        className="hidden md:block deco-orb deco-orb-1 bottom-20 left-1/3 fixed"
         aria-hidden="true"
       />
 
@@ -49,13 +67,13 @@ export default async function HomePage({ params }: HomePageProps) {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href={`/${locale}/contacts`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-xl)] hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-xl)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("cta.contact")}
               </Link>
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
               >
                 {t("cta.catalog")}
               </Link>

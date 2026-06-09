@@ -65,9 +65,9 @@ export function HeroSectionA() {
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-base)] via-[var(--bg-surface)] to-[var(--bg-base)]" />
 
-      {/* Subtle grid */}
+      {/* Subtle grid — hidden on mobile */}
       <div
-        className="absolute inset-0 opacity-[0.015]"
+        className="hidden md:block absolute inset-0 opacity-[0.015]"
         style={{
           backgroundImage:
             "linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px)",
@@ -75,14 +75,14 @@ export function HeroSectionA() {
         }}
       />
 
-      {/* Radial glow behind product */}
+      {/* Radial glow behind product — hidden on mobile to save GPU */}
       <div
-        className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06] blur-3xl pointer-events-none"
+        className="hidden md:block absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06] blur-3xl pointer-events-none"
         style={{ background: "var(--accent-primary)" }}
         aria-hidden="true"
       />
 
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-10">
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-10 overflow-hidden">
         <div className="grid grid-cols-1 gap-8 md:gap-10 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text */}
           <div className="text-left order-1 lg:order-1">
@@ -111,13 +111,13 @@ export function HeroSectionA() {
             <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-sm md:text-base px-7 py-3.5 md:px-9 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-xl)] hover:scale-[1.03] active:scale-[0.97]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-xl)] hover:scale-[1.03] active:scale-[0.97]"
               >
                 {t("cta")}
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-7 py-3.5 md:px-9 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
               >
                 {t("aboutLink")}
               </Link>
@@ -129,7 +129,7 @@ export function HeroSectionA() {
             ref={productRef}
             className="relative flex justify-center items-center order-2 lg:order-2"
           >
-            <div className="relative">
+            <div className="relative w-full" style={{ maxWidth: "400px", aspectRatio: "1 / 1" }}>
               {/* Animated glow ring */}
               <div
                 ref={glowRef}
@@ -139,7 +139,7 @@ export function HeroSectionA() {
               />
 
               {/* Glass card */}
-              <div className="relative glass-card rounded-2xl md:rounded-3xl p-6 md:p-10">
+              <div className="relative glass-card rounded-2xl md:rounded-3xl p-6 md:p-10 h-full flex items-center justify-center">
                 {/* Inner gradient border effect */}
                 <div
                   className="absolute inset-0 rounded-2xl md:rounded-3xl pointer-events-none"
@@ -155,6 +155,7 @@ export function HeroSectionA() {
                   height={420}
                   priority
                   className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-2xl"
+                  style={{ aspectRatio: "1 / 1" }}
                 />
 
                 {/* Floating badge */}
@@ -179,11 +180,12 @@ export function HeroSectionA() {
         <div
           ref={statsRef}
           className="mt-10 md:mt-16 pt-6 md:pt-10 border-t border-[var(--border-subtle)]"
+          style={{ minHeight: "80px" }}
         >
           <div className="grid grid-cols-3 gap-4 md:gap-12">
             {STATS.map((stat) => (
               <div key={stat.key} className="text-center md:text-left">
-                <p className="font-heading font-bold text-xl md:text-3xl lg:text-4xl text-[var(--accent-primary)] tracking-tight">
+                <p className="font-heading font-bold text-xl md:text-3xl lg:text-4xl text-[var(--accent-primary)] tracking-tight" style={{ minHeight: "clamp(1.5rem, 4vw, 3rem)" }}>
                   {stat.value}
                 </p>
                 <p className="font-body text-[10px] md:text-sm text-[var(--fg-muted)] mt-1">

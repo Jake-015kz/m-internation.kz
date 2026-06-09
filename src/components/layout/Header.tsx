@@ -83,14 +83,14 @@ export function Header() {
           {/* CTA — desktop only */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-4 py-2 rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--accent-primary-hover)] hover:scale-[1.02] active:scale-[0.95]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--accent-primary-hover)] hover:scale-[1.02] active:scale-[0.95]"
           >
             {t("contacts")}
           </Link>
 
           {/* Mobile menu button */}
           <button
-            className="flex md:hidden items-center justify-center w-9 h-9 text-[var(--fg-primary)] rounded-[var(--radius-sm)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
+            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[var(--radius-sm)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -144,7 +144,7 @@ export function Header() {
           >
             <Link
               href={`/${locale}/contacts`}
-              className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-base px-6 py-3.5 rounded-[var(--radius-sm)] w-full shadow-[var(--shadow-glow)]"
+              className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[var(--radius-sm)] w-full shadow-[var(--shadow-glow)]"
               onClick={closeMenu}
             >
               {t("contacts")}

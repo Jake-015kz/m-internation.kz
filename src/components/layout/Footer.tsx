@@ -58,7 +58,7 @@ export function Footer() {
                 href={CONTACTS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
+                className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
                 aria-label="Instagram"
               >
                 <svg
@@ -80,7 +80,7 @@ export function Footer() {
                 href={CONTACTS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
+                className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
                 aria-label="TikTok"
               >
                 <svg
@@ -119,7 +119,7 @@ export function Footer() {
               />
               <button
                 type="submit"
-                className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 bg-[var(--accent-primary)] text-white border-none rounded-r-[var(--radius-sm)] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
+                className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 min-h-[44px] bg-[var(--accent-primary)] text-[var(--bg-base)] border-none rounded-r-[var(--radius-sm)] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
                 aria-label="Subscribe"
               >
                 {isSubscribed ? "✓" : <Send size={14} />}

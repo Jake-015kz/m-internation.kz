@@ -51,7 +51,7 @@ function MarqueeRow({
             key={`${cert.id}-${i}`}
             className="flex-shrink-0 flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 rounded-full border border-[var(--border-subtle)] bg-[var(--glass-bg)] backdrop-blur-sm transition-all duration-300 hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_20px_oklch(0.78_0.22_135_/_0.08)] group"
           >
-            <div className="relative w-7 h-7 md:w-9 md:h-9 flex-shrink-0">
+            <div className="relative w-7 h-7 md:w-9 md:h-9 flex-shrink-0" style={{ aspectRatio: "1 / 1" }}>
               <Image
                 src={cert.image}
                 alt={cert.name}
@@ -155,8 +155,8 @@ export function CertificatesSection() {
           <div className="mt-5 mx-auto h-[2px] w-20 rounded-full bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-primary)] to-[var(--accent-gold)]" />
         </div>
 
-        {/* Marquee rows */}
-        <div className="space-y-3 md:space-y-5">
+        {/* Marquee rows — fixed min-height prevents CLS */}
+        <div className="space-y-3 md:space-y-5" style={{ minHeight: "clamp(120px, 20vw, 200px)" }}>
           <MarqueeRow items={row1} direction="left" speed={35} />
           {row2.length > 0 && (
             <MarqueeRow items={row2} direction="right" speed={40} />

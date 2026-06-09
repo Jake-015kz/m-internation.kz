@@ -73,11 +73,12 @@ export const metadata: Metadata = {
       "Инновационные натуральные продукты для вашего здоровья и долголетия от M-International",
   },
   alternates: {
-    canonical: "/",
+    canonical: SITE_CONFIG.url,
     languages: {
-      ru: "/ru",
-      en: "/en",
-      kk: "/kk",
+      "ru": `${SITE_CONFIG.url}/ru`,
+      "en": `${SITE_CONFIG.url}/en`,
+      "kk": `${SITE_CONFIG.url}/kk`,
+      "x-default": `${SITE_CONFIG.url}/ru`,
     },
   },
   robots: {

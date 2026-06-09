@@ -121,27 +121,27 @@ export function BusinessSection() {
               <div
                 className={`rounded-[var(--radius-xl)] p-5 md:p-8 transition-all duration-300 ${
                   step.featured
-                    ? "bg-[var(--accent-primary)] text-white shadow-[var(--shadow-glow)]"
+                    ? "bg-[var(--accent-primary)] text-[var(--bg-base)] shadow-[var(--shadow-glow)]"
                     : "card-clean"
                 }`}
               >
                 <div className="flex flex-col gap-2 md:gap-3 max-w-[480px]">
                   <div className="flex items-center gap-3">
-                    <span className={`font-mono text-[10px] md:text-xs font-semibold ${step.featured ? "text-white/60" : "text-[var(--fg-muted)]"}`}>
+                    <span className={`font-mono text-[10px] md:text-xs font-semibold ${step.featured ? "text-[var(--bg-base)]/60" : "text-[var(--fg-muted)]"}`}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <div className={`h-[1px] flex-1 ${step.featured ? "bg-white/20" : "bg-[var(--border-subtle)]"}`} />
+                    <div className={`h-[1px] flex-1 ${step.featured ? "bg-[var(--bg-base)]/20" : "bg-[var(--border-subtle)]"}`} />
                   </div>
                   <h3
                     className={`font-heading font-semibold text-base md:text-xl tracking-[-0.01em] ${
-                      step.featured ? "text-white" : "text-[var(--fg-primary)]"
+                      step.featured ? "text-[var(--bg-base)]" : "text-[var(--fg-primary)]"
                     }`}
                   >
                     {t(step.titleKey)}
                   </h3>
                   <p
                     className={`font-body text-xs md:text-sm leading-[1.5] md:leading-[1.6] ${
-                      step.featured ? "text-white/80" : "text-[var(--fg-muted)]"
+                      step.featured ? "text-[var(--bg-base)]/80" : "text-[var(--fg-muted)]"
                     }`}
                   >
                     {t(step.descriptionKey)}
@@ -156,7 +156,7 @@ export function BusinessSection() {
         <div ref={ctaRef} className="mt-8 md:mt-12 flex justify-start" style={{ opacity: 1 }}>
           <Link
             href={`/${locale}/business`}
-            className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-white font-body font-semibold text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-glow)] hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-glow)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("cta")}
           </Link>

@@ -100,7 +100,7 @@ function ProductCard({
       />
 
       {/* Product image area */}
-      <div className="relative flex items-center justify-center p-6 md:p-8 pb-2">
+      <div className="relative flex items-center justify-center p-6 md:p-8 pb-2" style={{ aspectRatio: "4 / 3" }}>
         {/* Color glow behind product */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500 rounded-full blur-3xl"
@@ -108,13 +108,13 @@ function ProductCard({
           aria-hidden="true"
         />
 
-        <div className="relative w-full max-w-[140px] md:max-w-[180px]">
+        <div className="relative w-full max-w-[140px] md:max-w-[180px]" style={{ aspectRatio: "1 / 1" }}>
           <Image
             src={product.images[0] ?? ""}
             alt={`${product.name} — ${config.subtitle}`}
             width={200}
             height={200}
-            className="w-full h-auto object-contain relative z-10 group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-contain relative z-10 group-hover:scale-105 transition-transform duration-500"
           />
         </div>
       </div>
@@ -195,10 +195,12 @@ export function ProductShowcase() {
           <div className="mt-4 mx-auto h-[2px] w-16 rounded-full bg-gradient-to-r from-[var(--accent-gold)] to-[var(--accent-primary)]" />
         </div>
 
-        {/* Product grid — replaces slider */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {/* Product grid — horizontal slider on mobile, grid on desktop */}
+        <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 scrollbar-hide snap-x snap-mandatory md:snap-none">
           {showcaseProducts.map((product, index) => (
-            <ProductCard key={product.slug} product={product} index={index} />
+            <div key={product.slug} className="flex-shrink-0 w-[85vw] max-w-[320px] md:w-auto md:max-w-none snap-center md:snap-align-none">
+              <ProductCard product={product} index={index} />
+            </div>
           ))}
         </div>
       </div>

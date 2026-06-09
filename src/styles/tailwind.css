@@ -1121,3 +1121,27 @@ html.lenis body {
   background: var(--accent-primary);
   transform: scale(1.5);
 }
+
+/* ============================================
+ * SCROLLBAR HIDE — for horizontal sliders
+ * ============================================ */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ============================================
+ * MOBILE SAFE AREA — prevent overflow
+ * ============================================ */
+@media (max-width: 767px) {
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Prevent horizontal overflow on mobile — only top-level containers */
+  body {
+    overflow-x: hidden;
+  }
+}
