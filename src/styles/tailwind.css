@@ -6,24 +6,30 @@
  * CSS CUSTOM PROPERTIES — Premium Soft Palette
  * ============================================ */
 
-/* Dark theme (default) — refined, softer */
+/* Dark theme (default) — deep olive-green, warm, premium */
 :root {
-  /* Backgrounds — slightly warmer, less flat */
-  --bg-base: oklch(0.08 0.012 270);
-  --bg-elevated: oklch(0.11 0.014 270);
-  --bg-surface: oklch(0.14 0.016 270);
-  --bg-overlay: oklch(0.17 0.018 270);
+  /* Backgrounds — deep natural green, not flat black */
+  --bg-base: oklch(0.06 0.018 155);
+  --bg-elevated: oklch(0.09 0.022 155);
+  --bg-surface: oklch(0.12 0.024 155);
+  --bg-overlay: oklch(0.15 0.026 155);
 
-  /* Foreground — higher contrast for WCAG AA (≥4.5:1 on bg-base) */
-  --fg-primary: oklch(0.96 0.008 95);
-  --fg-secondary: oklch(0.78 0.012 270);
-  --fg-muted: oklch(0.65 0.012 270);
-  --fg-dim: oklch(0.52 0.01 270);
+  /* Foreground — warm white for premium feel */
+  --fg-primary: oklch(0.97 0.008 90);
+  --fg-secondary: oklch(0.76 0.014 155);
+  --fg-muted: oklch(0.62 0.012 155);
+  --fg-dim: oklch(0.50 0.01 155);
 
-  /* Accent — softer, more refined green */
-  --accent-primary: oklch(0.72 0.18 145);
-  --accent-primary-hover: oklch(0.78 0.20 145);
-  --accent-gold: oklch(0.82 0.14 85);
+  /* Accent — rich emerald green */
+  --accent-primary: oklch(0.72 0.19 148);
+  --accent-primary-hover: oklch(0.78 0.21 148);
+  --accent-gold: oklch(0.82 0.12 82);
+
+  /* Premium hero gradient colors (same for both themes, overridden below) */
+  --hero-radial-1: oklch(0.72 0.19 148 / 0.10);
+  --hero-radial-2: oklch(0.82 0.12 82 / 0.08);
+  --hero-btn-shadow: 0 14px 34px oklch(0.40 0.18 148 / 0.22);
+  --hero-btn-hover-shadow: 0 18px 40px oklch(0.40 0.18 148 / 0.30);
 
   /* Semantic */
   --success: oklch(0.65 0.16 155);
@@ -32,21 +38,21 @@
   --info: oklch(0.65 0.16 250);
 
   /* Borders */
-  --border: oklch(0.25 0.016 270);
-  --border-subtle: oklch(0.17 0.012 270);
-  --border-focus: oklch(0.72 0.18 145);
+  --border: oklch(0.22 0.020 155);
+  --border-subtle: oklch(0.15 0.015 155);
+  --border-focus: oklch(0.72 0.19 148);
 
   /* Glass */
-  --glass-bg: oklch(0.11 0.016 270);
-  --glass-border: oklch(1 0 0 / 0.06);
+  --glass-bg: oklch(0.09 0.022 155);
+  --glass-border: oklch(1 0 0 / 0.08);
 
   /* Social */
   --social-instagram: #e1306c;
   --social-instagram-hover: #f77737;
   --social-tiktok: #000000;
   --social-tiktok-hover: #25f4ee;
-  --social-icon-bg: oklch(0.14 0.016 270);
-  --social-icon-border: oklch(0.25 0.016 270);
+  --social-icon-bg: oklch(0.12 0.024 155);
+  --social-icon-border: oklch(0.22 0.020 155);
 
   /* Tailwind fallback vars */
   --background: var(--bg-base);
@@ -64,45 +70,54 @@
   --radius: 0.75rem;
 
   /* Header gradient backgrounds */
-  --header-bg-from: oklch(0.08 0.012 270 / 0.85);
-  --header-bg-to: oklch(0.08 0.012 270 / 0.5);
-  --header-bg-scrolled-from: oklch(0.08 0.012 270 / 0.95);
-  --header-bg-scrolled-to: oklch(0.08 0.012 270 / 0.88);
-  --header-shadow: 0 4px 32px oklch(0 0 0 / 0.35);
+  --header-bg-from: oklch(0.06 0.018 155 / 0.85);
+  --header-bg-to: oklch(0.06 0.018 155 / 0.5);
+  --header-bg-scrolled-from: oklch(0.06 0.018 155 / 0.95);
+  --header-bg-scrolled-to: oklch(0.06 0.018 155 / 0.88);
+  --header-shadow: 0 4px 32px oklch(0 0 0 / 0.30);
 
-  /* Shadows — softer */
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.15), 0 1px 6px oklch(0 0 0 / 0.08);
-  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.18), 0 8px 24px oklch(0 0 0 / 0.08);
-  --shadow-lg: 0 8px 28px oklch(0 0 0 / 0.22), 0 16px 56px oklch(0 0 0 / 0.1);
-  --shadow-xl: 0 12px 44px oklch(0 0 0 / 0.28), 0 24px 88px oklch(0 0 0 / 0.12);
-  --shadow-glow: 0 0 20px oklch(0.72 0.18 145 / 0.12), 0 4px 24px oklch(0 0 0 / 0.15);
-  --shadow-glow-subtle: 0 0 14px oklch(0.72 0.18 145 / 0.06), 0 2px 10px oklch(0 0 0 / 0.1);
+  /* Shadows — softer, premium */
+  --shadow-sm: 0 1px 4px oklch(0 0 0 / 0.12), 0 2px 8px oklch(0 0 0 / 0.06);
+  --shadow-md: 0 4px 16px oklch(0 0 0 / 0.15), 0 8px 28px oklch(0 0 0 / 0.06);
+  --shadow-lg: 0 8px 32px oklch(0 0 0 / 0.18), 0 16px 56px oklch(0 0 0 / 0.08);
+  --shadow-xl: 0 12px 48px oklch(0 0 0 / 0.22), 0 24px 88px oklch(0 0 0 / 0.10);
+  --shadow-glow: 0 0 24px oklch(0.72 0.19 148 / 0.10), 0 4px 24px oklch(0 0 0 / 0.12);
+  --shadow-glow-subtle: 0 0 16px oklch(0.72 0.19 148 / 0.05), 0 2px 12px oklch(0 0 0 / 0.08);
 }
 
-/* Light theme — soft minimalism */
+/* Light theme — warm, creamy, premium wellness */
 [data-theme="light"] {
-  --bg-base: oklch(0.98 0.004 90);
-  --bg-elevated: oklch(0.95 0.006 90);
+  /* Warm creamy backgrounds */
+  --bg-base: oklch(0.97 0.006 85);
+  --bg-elevated: oklch(0.94 0.008 85);
   --bg-surface: oklch(1 0.002 90);
-  --bg-overlay: oklch(0.93 0.008 90);
+  --bg-overlay: oklch(0.92 0.010 85);
 
-  --fg-primary: oklch(0.12 0.01 270);
-  --fg-secondary: oklch(0.30 0.01 270);
-  --fg-muted: oklch(0.46 0.01 270);
-  --fg-dim: oklch(0.60 0.008 270);
+  /* Text — deep olive-black */
+  --fg-primary: oklch(0.13 0.016 155);
+  --fg-secondary: oklch(0.32 0.014 155);
+  --fg-muted: oklch(0.48 0.012 155);
+  --fg-dim: oklch(0.62 0.010 155);
 
-  --accent-primary: oklch(0.48 0.16 145);
-  --accent-primary-hover: oklch(0.42 0.18 145);
-  --accent-gold: oklch(0.50 0.14 85);
+  /* Accent — rich forest green */
+  --accent-primary: oklch(0.42 0.18 148);
+  --accent-primary-hover: oklch(0.36 0.20 148);
+  --accent-gold: oklch(0.52 0.16 82);
+
+  /* Hero radial for light: warm green + gold */
+  --hero-radial-1: oklch(0.42 0.18 148 / 0.12);
+  --hero-radial-2: oklch(0.52 0.16 82 / 0.10);
+  --hero-btn-shadow: 0 14px 34px oklch(0.42 0.18 148 / 0.24);
+  --hero-btn-hover-shadow: 0 18px 40px oklch(0.42 0.18 148 / 0.32);
 
   --success: oklch(0.42 0.16 155);
   --warning: oklch(0.52 0.16 65);
   --error: oklch(0.42 0.20 25);
   --info: oklch(0.42 0.16 250);
 
-  --border: oklch(0.84 0.008 270);
-  --border-subtle: oklch(0.91 0.004 270);
-  --border-focus: oklch(0.48 0.16 145);
+  --border: oklch(0.82 0.010 85);
+  --border-subtle: oklch(0.90 0.006 85);
+  --border-focus: oklch(0.42 0.18 148);
 
   --glass-bg: oklch(1 0.002 90);
   --glass-border: oklch(0 0 0 / 0.06);
@@ -112,7 +127,7 @@
   --social-tiktok: #000000;
   --social-tiktok-hover: #fe2c55;
   --social-icon-bg: oklch(1 0.002 90);
-  --social-icon-border: oklch(0.84 0.008 270);
+  --social-icon-border: oklch(0.82 0.010 85);
 
   --background: var(--bg-base);
   --foreground: var(--fg-primary);
@@ -127,19 +142,19 @@
   --pineapple: var(--accent-gold);
 
   /* Header gradient backgrounds — light */
-  --header-bg-from: oklch(0.98 0.004 90 / 0.88);
-  --header-bg-to: oklch(0.98 0.004 90 / 0.65);
-  --header-bg-scrolled-from: oklch(0.98 0.004 90 / 0.96);
-  --header-bg-scrolled-to: oklch(0.98 0.004 90 / 0.92);
-  --header-shadow: 0 4px 20px oklch(0 0 0 / 0.05);
+  --header-bg-from: oklch(0.97 0.006 85 / 0.88);
+  --header-bg-to: oklch(0.97 0.006 85 / 0.65);
+  --header-bg-scrolled-from: oklch(0.97 0.006 85 / 0.96);
+  --header-bg-scrolled-to: oklch(0.97 0.006 85 / 0.92);
+  --header-shadow: 0 4px 20px oklch(0 0 0 / 0.04);
 
-  /* Shadows — light */
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.04), 0 1px 6px oklch(0 0 0 / 0.02);
-  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.06), 0 8px 24px oklch(0 0 0 / 0.03);
-  --shadow-lg: 0 8px 28px oklch(0 0 0 / 0.08), 0 16px 56px oklch(0 0 0 / 0.04);
-  --shadow-xl: 0 12px 44px oklch(0 0 0 / 0.1), 0 24px 88px oklch(0 0 0 / 0.05);
-  --shadow-glow: 0 0 20px oklch(0.48 0.16 145 / 0.08), 0 4px 24px oklch(0 0 0 / 0.06);
-  --shadow-glow-subtle: 0 0 14px oklch(0.48 0.16 145 / 0.04), 0 2px 10px oklch(0 0 0 / 0.04);
+  /* Shadows — light, warm */
+  --shadow-sm: 0 1px 4px oklch(0 0 0 / 0.03), 0 2px 8px oklch(0 0 0 / 0.02);
+  --shadow-md: 0 4px 16px oklch(0 0 0 / 0.05), 0 8px 28px oklch(0 0 0 / 0.02);
+  --shadow-lg: 0 8px 32px oklch(0 0 0 / 0.06), 0 16px 56px oklch(0 0 0 / 0.03);
+  --shadow-xl: 0 12px 48px oklch(0 0 0 / 0.08), 0 24px 88px oklch(0 0 0 / 0.04);
+  --shadow-glow: 0 0 24px oklch(0.42 0.18 148 / 0.08), 0 4px 24px oklch(0 0 0 / 0.04);
+  --shadow-glow-subtle: 0 0 16px oklch(0.42 0.18 148 / 0.04), 0 2px 12px oklch(0 0 0 / 0.03);
 }
 
 /* ============================================
@@ -376,21 +391,21 @@ html.lenis, html.lenis body { height: auto; }
 /* Display sizes — airy, premium */
 @utility display-l {
   font-size: clamp(2rem, 5vw, 3.75rem);
-  line-height: 1.15;
-  letter-spacing: normal;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
 }
 
 /* Heading levels — airy, premium */
 @utility heading-xl {
   font-size: clamp(2rem, 4vw, 3.5rem);
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  line-height: 1.10;
+  letter-spacing: -0.02em;
 }
 
 @utility heading-lg {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
 }
 
 @utility heading-md {

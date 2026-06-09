@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useCallback, useEffect, createContext, useContext } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Leaf } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { SITE_CONFIG } from "@/lib/constants";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -100,7 +100,7 @@ export function MobileMenu() {
       >
         {/* Mobile menu close button */}
         <button
-          className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] z-10"
+          className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] z-10"
           onClick={close}
           aria-label="Close menu"
         >
@@ -124,7 +124,7 @@ export function MobileMenu() {
         <div className="pt-6" style={{ transitionDelay: "300ms" }}>
           <Link
             href={`/${locale}/contacts`}
-            className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[0.5rem] w-full shadow-[var(--shadow-glow-subtle)]"
+            className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-base px-6 py-3.5 rounded-xl w-full shadow-[var(--shadow-glow-subtle)]"
             onClick={close}
           >
             {t("contacts")}
@@ -156,12 +156,20 @@ export function Header() {
       )}
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-14 md:h-16 flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo — premium wordmark with leaf icon */}
         <Link
           href={`/${locale}`}
-          className="flex items-center gap-2 no-underline z-[301] relative"
+          className="flex items-center gap-2 no-underline z-[301] relative group"
         >
-          <span className="font-heading font-bold text-base md:text-lg text-[var(--fg-primary)] tracking-normal">
+          <div
+            className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300"
+            style={{
+              background: "var(--accent-primary)",
+            }}
+          >
+            <Leaf size={16} className="text-white" strokeWidth={2.5} />
+          </div>
+          <span className="font-heading font-bold text-base md:text-lg text-[var(--fg-primary)] tracking-[-0.01em]">
             {SITE_CONFIG.name}
           </span>
         </Link>
@@ -183,7 +191,7 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Right side */}
+        {/* Right side — unified icon style */}
         <div className="flex items-center gap-1.5 md:gap-2">
           <LanguageSwitcher />
           <ThemeSwitcher />
@@ -191,14 +199,14 @@ export function Header() {
           {/* CTA — desktop only */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-[0.5rem] transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("contacts")}
           </Link>
 
           {/* Mobile menu button */}
           <button
-            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
+            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
             onClick={mobileMenu.toggle}
             aria-label={mobileMenu.isOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenu.isOpen}
