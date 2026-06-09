@@ -9,10 +9,26 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "catalog" });
-
+  const baseUrl = "https://m-international.kz";
   return {
     title: t("title"),
     description: t("description"),
+    alternates: {
+      canonical: `${baseUrl}/${locale}/catalog`,
+      languages: {
+        "ru": `${baseUrl}/ru/catalog`,
+        "en": `${baseUrl}/en/catalog`,
+        "kk": `${baseUrl}/kk/catalog`,
+        "x-default": `${baseUrl}/ru/catalog`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: locale === "ru" ? "ru_KZ" : locale === "kk" ? "kk_KZ" : "en_US",
+      siteName: "M-International",
+      title: t("title"),
+      description: t("description"),
+    },
   };
 }
 

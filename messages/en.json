@@ -16,9 +16,9 @@
   },
   "hero": {
     "label": "International company",
-    "title": "Health Without Chemistry — Proven in 50+ Countries",
-    "titleHighlight": "Quality Certificates",
-    "subtitle": "100% plant-based formulas with international certificates. Over 10,000 satisfied customers worldwide.",
+    "title": "Plant-Based Formulas for Health — International Quality Certificates",
+    "titleHighlight": "International Quality Certificates",
+    "subtitle": "100% plant-based formulas with GMP, ISO, HALAL international quality certificates. Natural supplements for immunity, detox and longevity. Over 10,000 satisfied customers in 50+ countries.",
     "cta": "View catalog",
     "aboutLink": "About us",
     "stat": {
@@ -46,92 +46,92 @@
     "micrystal": {
       "name": "MiCrystal",
       "subtitle": "Vision Care",
-      "description": "Cellular nutrition for eye health. 100% natural composition: elderberry extract, FloraGLO*, lutein and astaxanthin. Reduces eye pressure, relieves redness and discomfort from prolonged screen work."
+      "description": "Cellular nutrition for eye health. 100% natural composition: elderberry extract, FloraGLO*, lutein and astaxanthin. Reduces eye pressure, relieves redness and dryness from prolonged screen work. Prevention of age-related vision changes."
     },
     "greenmax": {
       "name": "GreenMAX",
       "subtitle": "Detox & Cleansing",
-      "description": "Herbal formula 3 in 1: intestinal cleansing, microflora restoration, liver protection. Prebiotics, probiotics, enzymes, fiber, antioxidants."
+      "description": "Herbal formula 3 in 1: intestinal cleansing, microflora restoration, liver protection. Prebiotics, probiotics, enzymes, fiber, antioxidants. Comprehensive body detoxification with natural ingredients."
     },
     "mimax": {
       "name": "MiMAX",
       "subtitle": "Anti-Aging",
-      "description": "Powerful antioxidant #1 with astaxanthin. 6000x more effective than vitamin C. Slows aging, protects cells, strengthens heart and liver."
+      "description": "Powerful antioxidant #1 with astaxanthin. 6000x more effective than vitamin C. Slows cellular aging, protects from free radicals, strengthens heart and liver. Antioxidant protection for active longevity."
     },
     "blumax": {
       "name": "BluMAX",
       "subtitle": "Immunity & Brain",
-      "description": "Blue-green algae AFA + vitamin C. 60+ minerals, neuropeptides, organic iron. Immunity boost, memory and concentration improvement."
+      "description": "Blue-green algae AFA + vitamin C. 60+ minerals, neuropeptides, organic iron. Immunity boost, memory and concentration improvement. Comprehensive brain and vascular support with natural ingredients."
     },
     "nutrimax": {
       "name": "NutriMAX",
       "subtitle": "Protein Shake",
-      "description": "Complete nutrition in one shake. Soy protein + spirulina + chlorella. For energy, post-workout recovery and weight management."
+      "description": "Complete nutrition in one shake. Soy protein + spirulina + chlorella. For energy, post-workout recovery and weight management. Balanced plant protein for the whole family."
     },
     "fleximax": {
       "name": "FlexiMAX",
       "subtitle": "Joint Health",
-      "description": "Comprehensive protection of joints, cartilage and bones. Plant-based glucosamine + turmeric + hyaluronic acid. Relieves pain and inflammation."
+      "description": "Comprehensive protection of joints, cartilage and bones. Plant-based glucosamine + turmeric + hyaluronic acid. Relieves pain and inflammation, restores mobility. Prevention of arthritis and osteoarthritis."
     },
     "machoman": {
       "name": "MachoMAN",
       "subtitle": "Men's Health",
-      "description": "Cellular nutrition for men. Sexual function support, testosterone boost, stamina and energy. Maca + L-arginine + ginseng."
+      "description": "Cellular nutrition for men. Sexual function support, testosterone boost, stamina and energy. Maca + L-arginine + ginseng. Natural support for men's health and vitality."
     },
     "mishroom": {
       "name": "MiSHROOM",
       "subtitle": "Mushroom Nutrition",
-      "description": "Mushroom product for complete nutrition. Meal replacement rich in vitamins and minerals. Immune support and overall body tone."
+      "description": "Mushroom product for complete nutrition. Meal replacement rich in vitamins and minerals. Immune support and overall body tone. Traditional mushroom medicine for modern lifestyle."
     },
     "yekaterina": {
       "name": "Ye-Katerina",
       "subtitle": "Women's Hygiene",
-      "description": "Natural pads with aloe vera extract and silver ions. Antibacterial effect, protection from bacteria and odor. Comfort and safety."
+      "description": "Natural pads with aloe vera extract and silver ions. Antibacterial effect, protection from bacteria and odor. Comfort and safety for women's health every day."
     },
     "mi-mask": {
       "name": "Mi MASK",
       "subtitle": "Ginseng Face Mask",
-      "description": "Ginseng face mask for skin nourishment, hydration and rejuvenation. Natural composition with ginseng extract for skin radiance and elasticity."
+      "description": "Ginseng face mask for skin nourishment, hydration and rejuvenation. Natural composition with ginseng extract for skin radiance, elasticity and youthfulness."
     },
     "mi-serum": {
       "name": "Mi SERUM",
       "subtitle": "Ginseng Cell Serum",
-      "description": "Ginseng steam cell serum for deep skin nourishment and restoration. Activates cell renewal, improves skin texture and tone."
+      "description": "Ginseng steam cell serum for deep skin nourishment and restoration. Activates cell renewal, improves skin texture, tone and elasticity."
     },
     "magicare": {
       "name": "Magicare",
       "subtitle": "Skin Care",
-      "description": "Innovative skin care product. Comprehensive care for skin health and beauty. Coming soon."
+      "description": "Innovative skin care product. Comprehensive care for skin health and beauty with natural ingredients. Coming soon."
     },
     "mifresh": {
       "name": "MiFresh",
       "subtitle": "Freshness & Hygiene",
-      "description": "Daily hygiene product. Freshness and cleanliness all day. Natural composition. Coming soon."
+      "description": "Daily hygiene product. Freshness and cleanliness all day. Natural composition without harsh chemicals. Coming soon."
     },
     "mitown": {
       "name": "MiTOWN",
       "subtitle": "Cordyceps Coffee",
-      "description": "Natural coffee with cordyceps. 100% Arabica with functional ingredients. Energy and vitality without side effects."
+      "description": "Natural coffee with cordyceps. 100% Arabica with functional ingredients. Energy and vitality without side effects. Functional beverage for active lifestyle."
     },
     "essential-oil": {
       "name": "Essential Oil",
       "subtitle": "Aromatherapy Oils",
-      "description": "Essential oils for aromatherapy and wellness. Natural oils for relaxation, recovery and creating a harmonious atmosphere."
+      "description": "Essential oils for aromatherapy and wellness. Natural oils for relaxation, recovery and creating a harmonious atmosphere. Aromatherapy for health and emotional balance."
     },
     "relax": {
       "name": "Relax Tea",
       "subtitle": "Calming Tea",
-      "description": "Relaxing herbal tea. Natural composition for stress relief, sleep improvement and nervous system recovery. Caffeine-free."
+      "description": "Relaxing herbal tea. Natural composition for stress relief, sleep improvement and nervous system recovery. Caffeine-free. Soothing herbal blend for deep sleep."
     },
     "miwellness": {
       "name": "MiWellness",
       "subtitle": "Wellness Product",
-      "description": "Product for a healthy lifestyle. Comprehensive body support for everyday well-being. Coming soon."
+      "description": "Product for a healthy lifestyle. Comprehensive body support for everyday well-being and prevention. Coming soon."
     },
     "shaker": {
       "name": "Shaker",
       "subtitle": "Shaker",
-      "description": "Shaker for preparing cocktails and drinks. Convenient and stylish accessory for healthy nutrition. Coming soon."
+      "description": "Shaker for preparing cocktails and drinks. Convenient and stylish accessory for healthy nutrition and sports diet. Coming soon."
     },
     "features": {
       "natural": "Natural ingredients",
@@ -261,7 +261,7 @@
   },
   "aboutPage": {
     "title": "About M-International",
-    "description": "Learn more about our company, mission and values",
+    "description": "Learn more about M-International — international manufacturer of dietary supplements and wellness products. Our mission, vision and values.",
     "mission": "Mission",
     "vision": "Vision",
     "values": "Values",
@@ -270,12 +270,12 @@
   },
   "businessPage": {
     "title": "Business with M-International",
-    "description": "Discover opportunities for financial freedom",
+    "description": "Discover opportunities for financial freedom with M-International. Hybrid rewards system, training and team support.",
     "howToStart": "How to start"
   },
   "contactsPage": {
     "title": "Contacts",
-    "description": "Contact us for a consultation",
+    "description": "Contact M-International for a consultation on products and business opportunities. We operate in 50+ countries worldwide.",
     "phone": "Phone",
     "email": "Email",
     "instagram": "Instagram",

@@ -15,7 +15,13 @@ interface HomePageProps {
 export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
   const { locale } = await params;
   const baseUrl = SITE_CONFIG.url;
+  const t = await getTranslations({ locale, namespace: "hero" });
   return {
+    title: {
+      default: t("title"),
+      template: `%s | ${SITE_CONFIG.name}`,
+    },
+    description: t("subtitle"),
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {
@@ -24,6 +30,13 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
         "kk": `${baseUrl}/kk`,
         "x-default": `${baseUrl}/ru`,
       },
+    },
+    openGraph: {
+      type: "website",
+      locale: locale === "ru" ? "ru_KZ" : locale === "kk" ? "kk_KZ" : "en_US",
+      siteName: SITE_CONFIG.name,
+      title: t("title"),
+      description: t("subtitle"),
     },
   };
 }
