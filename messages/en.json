@@ -7,6 +7,13 @@
     "open": "Open",
     "menu": "Menu"
   },
+  "errorPage": {
+    "title": "Error",
+    "subtitle": "Something went wrong",
+    "description": "An error occurred while loading the page. Please try again.",
+    "retry": "Try again",
+    "home": "Go to homepage"
+  },
   "nav": {
     "home": "Home",
     "catalog": "Products",
