@@ -24,7 +24,6 @@ export function AboutSection() {
     if (reduce || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Header fade-in
       if (headerRef.current) {
         gsap.fromTo(headerRef.current, { opacity: 0, y: 20 }, {
           opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as unknown as gsap.EaseFunction,
@@ -32,7 +31,6 @@ export function AboutSection() {
         });
       }
 
-      // Timeline line draw
       if (lineRef.current) {
         gsap.fromTo(
           lineRef.current,
@@ -50,7 +48,6 @@ export function AboutSection() {
         );
       }
 
-      // Timeline items stagger
       itemRefs.current.forEach((item) => {
         if (!item) return;
         gsap.fromTo(item, { opacity: 0, x: -20 }, {
@@ -59,7 +56,6 @@ export function AboutSection() {
         });
       });
 
-      // CTA fade-in
       if (ctaRef.current) {
         gsap.fromTo(ctaRef.current, { opacity: 0, y: 16 }, {
           opacity: 1, y: 0, duration: 0.5, ease: EASING.gentle as unknown as gsap.EaseFunction,
@@ -92,7 +88,7 @@ export function AboutSection() {
         </div>
 
         {/* Timeline */}
-        <div className="relative pl-6 md:pl-12 deco-frame">
+        <div className="relative pl-6 md:pl-12">
           {/* Vertical line */}
           <div
             ref={lineRef}
@@ -113,7 +109,7 @@ export function AboutSection() {
 
                 {/* Content */}
                 <div className="flex flex-col gap-1.5 md:gap-2">
-                  <span className="font-mono font-bold text-2xl text-[var(--fg-primary)] opacity-[0.12] leading-none md:text-4xl">
+                  <span className="font-mono font-bold text-2xl text-[var(--fg-primary)] opacity-[0.1] leading-none md:text-4xl">
                     {item.year}
                   </span>
                   <h3 className="font-heading font-semibold text-base md:text-lg text-[var(--fg-primary)] tracking-[-0.01em]">

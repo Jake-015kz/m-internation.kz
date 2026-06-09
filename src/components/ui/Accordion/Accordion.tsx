@@ -32,7 +32,7 @@ export function Accordion({ items, className = "" }: AccordionProps) {
             onClick={() => toggleItem(item.id)}
             aria-expanded={openId === item.id}
           >
-            <span className="font-body font-semibold text-sm text-[var(--fg-primary)] uppercase tracking-[0.05em] md:mb-2">
+            <span className="font-body font-semibold text-sm text-[var(--fg-primary)] uppercase tracking-[0.04em] md:mb-2">
               {item.title}
             </span>
             <ChevronDown

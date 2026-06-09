@@ -58,7 +58,7 @@ export function Footer() {
                 href={CONTACTS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
                 aria-label="Instagram"
               >
                 <svg
@@ -80,7 +80,7 @@ export function Footer() {
                 href={CONTACTS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-[var(--radius-sm)] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
                 aria-label="TikTok"
               >
                 <svg
@@ -113,13 +113,13 @@ export function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t("subscription.placeholder")}
-                className="flex-1 min-w-0 px-3 md:px-4 py-2.5 md:py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-l-[var(--radius-sm)] text-[var(--fg-primary)] font-body text-xs md:text-sm outline-none placeholder:text-[var(--fg-dim)] focus:border-[var(--accent-primary)] transition-colors duration-250"
+                className="flex-1 min-w-0 px-3 md:px-4 py-2.5 md:py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-l-[0.5rem] text-[var(--fg-primary)] font-body text-xs md:text-sm outline-none placeholder:text-[var(--fg-dim)] focus:border-[var(--accent-primary)] transition-colors duration-250"
                 required
                 aria-label="Email address"
               />
               <button
                 type="submit"
-                className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 min-h-[44px] bg-[var(--accent-primary)] text-[var(--bg-base)] border-none rounded-r-[var(--radius-sm)] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
+                className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 min-h-[44px] bg-[var(--accent-primary)] text-[var(--bg-base)] border-none rounded-r-[0.5rem] cursor-pointer transition-all duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
                 aria-label="Subscribe"
               >
                 {isSubscribed ? "✓" : <Send size={14} />}
@@ -142,7 +142,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 mb-10 md:grid-cols-3 md:gap-12">
           {/* Company */}
           <div>
-            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.08em] block mb-4">
+            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
               {t("company")}
             </span>
             <div className="flex flex-col gap-3">
@@ -160,7 +160,7 @@ export function Footer() {
 
           {/* Catalog */}
           <div>
-            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.08em] block mb-4">
+            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
               {t("catalog")}
             </span>
             <div className="flex flex-col gap-3">
@@ -178,7 +178,7 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.08em] block mb-4">
+            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
               {t("contacts")}
             </span>
             <div className="flex flex-col gap-3">

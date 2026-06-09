@@ -40,12 +40,12 @@ export function HeroSectionA() {
         .fromTo(productRef.current, { opacity: 0, y: 50, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, "-=0.5")
         .fromTo(statsRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4 }, "-=0.4");
 
-      // Continuous glow pulse
+      // Subtle glow pulse
       if (glowRef.current) {
         gsap.to(glowRef.current, {
-          opacity: 0.25,
-          scale: 1.08,
-          duration: 2.5,
+          opacity: 0.15,
+          scale: 1.05,
+          duration: 3,
           ease: "sine.inOut",
           yoyo: true,
           repeat: -1,
@@ -77,7 +77,7 @@ export function HeroSectionA() {
 
       {/* Radial glow behind product — hidden on mobile to save GPU */}
       <div
-        className="hidden md:block absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06] blur-3xl pointer-events-none"
+        className="hidden md:block absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] rounded-full opacity-[0.04] blur-3xl pointer-events-none"
         style={{ background: "var(--accent-primary)" }}
         aria-hidden="true"
       />
@@ -88,7 +88,7 @@ export function HeroSectionA() {
           <div className="text-left order-1 lg:order-1">
             <span
               ref={labelRef}
-              className="inline-block mb-4 md:mb-6 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.12em] text-[var(--accent-primary)]"
+              className="inline-block mb-4 md:mb-6 font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] text-[var(--accent-primary)]"
             >
               {t("label")}
             </span>
@@ -111,13 +111,13 @@ export function HeroSectionA() {
             <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-xl)] hover:scale-[1.03] active:scale-[0.97]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("cta")}
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[0.5rem] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
               >
                 {t("aboutLink")}
               </Link>
@@ -130,24 +130,16 @@ export function HeroSectionA() {
             className="relative flex justify-center items-center order-2 lg:order-2"
           >
             <div className="relative w-full" style={{ maxWidth: "400px", aspectRatio: "1 / 1" }}>
-              {/* Animated glow ring */}
+              {/* Animated glow ring — subtler */}
               <div
                 ref={glowRef}
-                className="absolute inset-0 -m-8 md:-m-12 rounded-full opacity-[0.12] blur-3xl"
+                className="absolute inset-0 -m-6 md:-m-10 rounded-full opacity-[0.08] blur-2xl"
                 style={{ background: "var(--accent-primary)" }}
                 aria-hidden="true"
               />
 
               {/* Glass card */}
               <div className="relative glass-card rounded-2xl md:rounded-3xl p-6 md:p-10 h-full flex items-center justify-center">
-                {/* Inner gradient border effect */}
-                <div
-                  className="absolute inset-0 rounded-2xl md:rounded-3xl pointer-events-none"
-                  style={{
-                    background: "linear-gradient(135deg, oklch(0.78 0.22 135 / 0.08), transparent 60%)",
-                  }}
-                />
-
                 <Image
                   src="/products/greenmax/main.png"
                   alt="GreenMAX — flagship product of M-International"
@@ -158,9 +150,9 @@ export function HeroSectionA() {
                   style={{ aspectRatio: "1 / 1" }}
                 />
 
-                {/* Floating badge */}
+                {/* Floating badge — refined */}
                 <div
-                  className="absolute -top-2 -right-2 md:-top-3 md:-right-3 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-[var(--accent-primary)] text-white font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.08em] shadow-[var(--shadow-glow)]"
+                  className="absolute -top-2 -right-2 md:-top-3 md:-right-3 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-[var(--accent-primary)] text-white font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.06em] shadow-[var(--shadow-md)]"
                 >
                   #1 Best Seller
                 </div>
@@ -168,8 +160,8 @@ export function HeroSectionA() {
 
               {/* Shadow under product */}
               <div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2/3 h-8 blur-2xl rounded-full z-0"
-                style={{ background: "var(--accent-primary)", opacity: 0.08 }}
+                className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2/3 h-6 blur-xl rounded-full z-0"
+                style={{ background: "var(--accent-primary)", opacity: 0.06 }}
                 aria-hidden="true"
               />
             </div>

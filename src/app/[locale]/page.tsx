@@ -54,7 +54,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <AboutSection />
       <BusinessSection />
 
-      {/* CTA Section — compact, single column for mobile */}
+      {/* CTA Section */}
       <section className="relative overflow-hidden py-12 md:py-20 bg-[var(--bg-surface)]">
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
           <div className="max-w-[36rem] mx-auto text-center">
@@ -67,13 +67,13 @@ export default async function HomePage({ params }: HomePageProps) {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href={`/${locale}/contacts`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-xl)] hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("cta.contact")}
               </Link>
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
+                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 min-h-[44px] rounded-[0.5rem] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
               >
                 {t("cta.catalog")}
               </Link>
@@ -81,7 +81,6 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
         </div>
 
-        {/* Decorative line */}
         <div className="section-divider mt-12 md:mt-20" />
       </section>
     </main>

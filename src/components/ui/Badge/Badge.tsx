@@ -21,13 +21,13 @@ const variantStyles: Record<BadgeVariant, string> = {
   outline:
     "bg-transparent border border-[var(--border)] text-[var(--fg-primary)]",
   subtle: "bg-[var(--bg-surface)] text-[var(--fg-primary)]",
-  lime: "bg-[oklch(0.82_0.22_135/0.1)] text-[var(--accent-primary)] border border-[oklch(0.82_0.22_135/0.2)]",
+  lime: "bg-[oklch(0.82_0.22_135/0.08)] text-[var(--accent-primary)] border border-[oklch(0.82_0.22_135/0.15)]",
   default:
     "bg-transparent text-[var(--fg-muted)] border border-[var(--border-subtle)]",
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
-  xs: "text-[0.6rem] px-1.5 py-0.5",
+  xs: "text-[0.55rem] px-1.5 py-0.5",
   sm: "text-xs px-2 py-0.5",
   md: "text-sm px-3 py-1",
 };
@@ -41,7 +41,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         className={cn(
-          "inline-flex items-center font-mono font-semibold rounded-[0.375rem] whitespace-nowrap uppercase tracking-[0.05em]",
+          "inline-flex items-center font-mono font-semibold rounded-[0.375rem] whitespace-nowrap uppercase tracking-[0.04em]",
           variantStyles[variant],
           sizeStyles[size],
           className,

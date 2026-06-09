@@ -17,7 +17,6 @@ export function Header() {
   const navLinks = useNavLinks();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -41,7 +40,7 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-[300]",
         "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
         isScrolled ? [
-          "bg-[var(--bg-base)]/95 backdrop-blur-[16px] saturate-[150%]",
+          "bg-[var(--bg-base)]/95 backdrop-blur-[12px] saturate-[140%]",
           "border-b border-[var(--border-subtle)]",
           "shadow-[var(--shadow-sm)]",
         ] : "bg-transparent",
@@ -68,7 +67,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[var(--accent-primary)] after:transition-all after:duration-300 after:rounded-full hover:text-[var(--fg-primary)] hover:after:w-full"
+              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[var(--accent-primary)] after:transition-all after:duration-300 after:rounded-full hover:text-[var(--fg-primary)] hover:after:w-full"
             >
               {link.label}
             </Link>
@@ -83,14 +82,14 @@ export function Header() {
           {/* CTA — desktop only */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--accent-primary-hover)] hover:scale-[1.02] active:scale-[0.95]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("contacts")}
           </Link>
 
           {/* Mobile menu button */}
           <button
-            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[var(--radius-sm)] transition-all duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
+            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-all duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -144,7 +143,7 @@ export function Header() {
           >
             <Link
               href={`/${locale}/contacts`}
-              className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[var(--radius-sm)] w-full shadow-[var(--shadow-glow)]"
+              className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[0.5rem] w-full shadow-[var(--shadow-glow-subtle)]"
               onClick={closeMenu}
             >
               {t("contacts")}

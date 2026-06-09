@@ -28,15 +28,14 @@ export function SocialIcon({
       rel="noopener noreferrer"
       aria-label={config.label}
       className={cn(
-        "flex items-center justify-center w-8 h-8 rounded-[0.375rem] border border-[var(--border)] text-[var(--fg-muted)] bg-[var(--bg-surface)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden",
+        "flex items-center justify-center w-10 h-10 rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] bg-[var(--bg-surface)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden",
         'before:content-[""] before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-250',
         platform === "instagram" &&
           "before:bg-[linear-gradient(135deg,var(--social-instagram),var(--social-instagram-hover))]",
         platform === "tiktok" &&
           "before:bg-[linear-gradient(135deg,var(--social-tiktok),var(--social-tiktok-hover),#fe2c55)]",
-        "hover:border-transparent hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(0_0_0/0.2)] hover:before:opacity-100",
+        "hover:border-transparent hover:text-white hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)] hover:before:opacity-100",
         "active:translate-y-0 active:scale-[0.95]",
-        '[data-theme="light"]_&:bg-[var(--bg-elevated)] [data-theme="light"]_&:hover:shadow-[0_4px_12px_oklch(0_0_0/0.15)]',
         showLabel && "w-auto px-3 py-2 gap-2",
         className,
       )}
@@ -45,8 +44,8 @@ export function SocialIcon({
       <span className="relative z-10 flex items-center transition-all duration-250 hover:scale-110">
         {platform === "instagram" && (
           <svg
-            width="16"
-            height="16"
+            width="14"
+            height="14"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -60,7 +59,7 @@ export function SocialIcon({
           </svg>
         )}
         {platform === "tiktok" && (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
           </svg>
         )}

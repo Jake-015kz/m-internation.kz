@@ -14,12 +14,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--accent-primary)] text-[var(--bg-base)] font-semibold shadow-[0_0_20px_oklch(0.82_0.22_135/0.3),0_0_40px_oklch(0.82_0.22_135/0.15)] hover:bg-[var(--accent-primary-hover)] hover:scale-[1.02] active:scale-[0.98]",
+    "bg-[var(--accent-primary)] text-[var(--bg-base)] font-semibold shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]",
   outline:
-    "bg-transparent border border-[var(--border)] text-[var(--fg-primary)] hover:border-[var(--accent-primary)] hover:bg-[oklch(0.82_0.22_135/0.08)]",
+    "bg-transparent border border-[var(--border)] text-[var(--fg-primary)] hover:border-[var(--accent-primary)] hover:bg-[oklch(0.82_0.22_135/0.06)] hover:shadow-[var(--shadow-sm)]",
   ghost: "bg-transparent text-[var(--fg-primary)] hover:bg-[oklch(1_0_0/0.05)]",
   glass:
-    "bg-[linear-gradient(135deg,oklch(1_0_0/0.08)_0%,oklch(1_0_0/0.03)_100%)] backdrop-blur-[12px] border border-[oklch(1_0_0/0.1)] text-[var(--fg-primary)] hover:border-[oklch(0.82_0.22_135/0.25)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.1)_0%,oklch(1_0_0/0.05)_100%)] hover:shadow-[0_8px_32px_oklch(0_0_0/0.25)]",
+    "bg-[linear-gradient(135deg,oklch(1_0_0/0.06)_0%,oklch(1_0_0/0.02)_100%)] backdrop-blur-[8px] border border-[oklch(1_0_0/0.08)] text-[var(--fg-primary)] hover:border-[oklch(0.82_0.22_135/0.2)] hover:bg-[linear-gradient(135deg,oklch(0.82_0.22_135/0.08)_0%,oklch(1_0_0/0.04)_100%)] hover:shadow-[var(--shadow-sm)]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -45,7 +45,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2 font-body font-medium rounded-[0.375rem] cursor-pointer border-none outline-none no-nowrap tracking-[0.02em] relative overflow-hidden transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed",
+          "inline-flex items-center justify-center gap-2 font-body font-medium rounded-[0.5rem] cursor-pointer border-none outline-none no-nowrap tracking-[0.01em] relative overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed",
           variantStyles[variant],
           sizeStyles[size],
           isLoading && "pointer-events-none",

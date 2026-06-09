@@ -17,21 +17,19 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/${locale}/catalog/${product.slug}`}
-      className="group card-clean flex flex-col p-4 md:p-6 rounded-[var(--radius-lg)] no-underline text-inherit transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer hover:-translate-y-1 relative overflow-hidden"
+      className="group flex flex-col rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] no-underline text-inherit transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer hover:border-[var(--border)] hover:shadow-[var(--shadow-md)] hover:-translate-y-1 relative overflow-hidden"
     >
-      {/* Subtle accent glow on hover */}
+      {/* Top accent line */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 80% 60% at 50% 0%, ${accent}06 0%, transparent 70%)`,
-        }}
+        className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
       />
 
       {/* Product Image */}
       <div
-        className="aspect-square mb-3 md:mb-4 rounded-[var(--radius-md)] overflow-hidden flex items-center justify-center relative"
+        className="aspect-square p-4 md:p-6 flex items-center justify-center relative overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, ${accent}06 0%, var(--bg-surface) 100%)`,
+          background: `linear-gradient(180deg, ${accent}04 0%, transparent 100%)`,
         }}
       >
         {product.images?.[0] ? (
@@ -52,47 +50,53 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      <div className="flex items-baseline justify-between gap-3 mb-2 relative z-10">
-        <h3 className="font-heading font-semibold text-base md:text-lg text-[var(--fg-primary)] leading-[1.1] tracking-[-0.01em]">
+      <div className="flex flex-col flex-1 px-4 md:px-5 pb-4 md:pb-5 pt-1">
+        {/* Category badge */}
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <span
+            className="font-mono font-semibold text-[0.55rem] md:text-[0.6rem] uppercase tracking-[0.06em] px-2 py-0.5 rounded-full"
+            style={{
+              color: accent,
+              backgroundColor: `${accent}0a`,
+              border: `1px solid ${accent}15`,
+            }}
+          >
+            {product.category}
+          </span>
+        </div>
+
+        <h3 className="font-heading font-semibold text-sm md:text-base text-[var(--fg-primary)] leading-[1.2] tracking-[-0.01em] mb-1.5">
           {product.name}
         </h3>
-        <span
-          className="font-mono text-[0.6rem] font-medium uppercase tracking-[0.04em] flex-shrink-0 px-1.5 py-0.5 rounded-full"
-          style={{
-            color: accent,
-            backgroundColor: `${accent}08`,
-          }}
-        >
-          {product.category}
-        </span>
-      </div>
 
-      <p className="font-body text-xs md:text-sm leading-[1.5] text-[var(--fg-muted)] mb-3 flex-1 line-clamp-2 relative z-10">
-        {product.description}
-      </p>
+        <p className="font-body text-xs leading-[1.5] text-[var(--fg-muted)] mb-3 line-clamp-2 flex-1">
+          {product.description}
+        </p>
 
-      <div className="flex items-center justify-between pt-3 border-t border-[var(--border-subtle)] relative z-10">
-        <div className="flex gap-1.5 flex-wrap">
-          {product.certificates.slice(0, 2).map((cert) => (
-            <span
-              key={cert}
-              className="font-mono font-medium text-[0.55rem] uppercase tracking-[0.08em] px-1.5 py-0.5 rounded-full"
-              style={{
-                color: accent,
-                border: `1px solid ${accent}20`,
-                backgroundColor: `${accent}08`,
-              }}
-            >
-              {cert}
-            </span>
-          ))}
+        {/* Certificates + arrow */}
+        <div className="flex items-center justify-between pt-3 border-t border-[var(--border-subtle)]">
+          <div className="flex gap-1.5 flex-wrap">
+            {product.certificates.slice(0, 2).map((cert) => (
+              <span
+                key={cert}
+                className="font-mono font-medium text-[0.5rem] md:text-[0.55rem] uppercase tracking-[0.06em] px-1.5 py-0.5 rounded-full"
+                style={{
+                  color: accent,
+                  border: `1px solid ${accent}18`,
+                  backgroundColor: `${accent}06`,
+                }}
+              >
+                {cert}
+              </span>
+            ))}
+          </div>
+          <span
+            className="text-sm flex-shrink-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+            style={{ color: accent }}
+          >
+            →
+          </span>
         </div>
-        <span
-          className="text-sm flex-shrink-0 transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
-          style={{ color: accent }}
-        >
-          →
-        </span>
       </div>
     </Link>
   );

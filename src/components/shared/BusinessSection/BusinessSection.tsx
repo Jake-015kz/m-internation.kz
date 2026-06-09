@@ -37,7 +37,6 @@ export function BusinessSection() {
       });
     }
 
-    // Mobile: stagger cards in
     if (!reduce) {
       const ctx = gsap.context(() => {
         cardRefs.current.forEach((card) => {
@@ -73,8 +72,8 @@ export function BusinessSection() {
         });
 
         gsap.to(card, {
-          scale: 0.95,
-          opacity: 0.6,
+          scale: 0.96,
+          opacity: 0.7,
           ease: "none",
           scrollTrigger: {
             trigger: cards[i + 1],
@@ -119,7 +118,7 @@ export function BusinessSection() {
               style={{ opacity: 1 }}
             >
               <div
-                className={`rounded-[var(--radius-xl)] p-5 md:p-8 transition-all duration-300 ${
+                className={`rounded-2xl p-5 md:p-8 transition-all duration-300 ${
                   step.featured
                     ? "bg-[var(--accent-primary)] text-[var(--bg-base)] shadow-[var(--shadow-glow)]"
                     : "card-clean"
@@ -156,7 +155,7 @@ export function BusinessSection() {
         <div ref={ctaRef} className="mt-8 md:mt-12 flex justify-start" style={{ opacity: 1 }}>
           <Link
             href={`/${locale}/business`}
-            className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[var(--radius-sm)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-md)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-glow)] hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("cta")}
           </Link>

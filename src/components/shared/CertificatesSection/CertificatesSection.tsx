@@ -40,7 +40,6 @@ function MarqueeRow({
     return () => { anim.kill(); };
   }, [direction, speed]);
 
-  // Duplicate items for seamless loop
   const doubled = [...items, ...items];
 
   return (
@@ -49,7 +48,7 @@ function MarqueeRow({
         {doubled.map((cert, i) => (
           <div
             key={`${cert.id}-${i}`}
-            className="flex-shrink-0 flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 rounded-full border border-[var(--border-subtle)] bg-[var(--glass-bg)] backdrop-blur-sm transition-all duration-300 hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_20px_oklch(0.78_0.22_135_/_0.08)] group"
+            className="flex-shrink-0 flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] backdrop-blur-sm transition-all duration-300 hover:border-[var(--accent-primary)]/20 hover:shadow-[var(--shadow-sm)] group"
           >
             <div className="relative w-7 h-7 md:w-9 md:h-9 flex-shrink-0" style={{ aspectRatio: "1 / 1" }}>
               <Image
@@ -63,10 +62,9 @@ function MarqueeRow({
             <span className="font-heading font-semibold text-[10px] md:text-xs whitespace-nowrap text-[var(--fg-primary)]">
               {cert.name}
             </span>
-            {/* Dot glow */}
             <span
-              className="w-1.5 h-1.5 rounded-full flex-shrink-0 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ background: cert.color, boxShadow: `0 0 8px ${cert.color}` }}
+              className="w-1.5 h-1.5 rounded-full flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: cert.color, boxShadow: `0 0 6px ${cert.color}40` }}
             />
           </div>
         ))}
@@ -94,7 +92,6 @@ export function CertificatesSection() {
         });
       }
 
-      // Subtle parallax on background text
       if (bgTextRef.current && sectionRef.current) {
         gsap.to(bgTextRef.current, {
           y: -30,
@@ -112,7 +109,6 @@ export function CertificatesSection() {
     return () => ctx.revert();
   }, []);
 
-  // Split certificates into two rows
   const mid = Math.ceil(CERTIFICATES.length / 2);
   const row1: readonly (typeof CERTIFICATES)[number][] = CERTIFICATES.slice(0, mid);
   const row2: readonly (typeof CERTIFICATES)[number][] = CERTIFICATES.slice(mid);
@@ -123,14 +119,14 @@ export function CertificatesSection() {
       className="relative py-16 md:py-28 overflow-hidden"
       aria-labelledby="certificates-title"
     >
-      {/* Large background text — "CERTIFICATES" */}
+      {/* Large background text */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden="true"
       >
         <span
           ref={bgTextRef}
-          className="font-heading font-bold text-[clamp(3.5rem,14vw,11rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.035] whitespace-nowrap"
+          className="font-heading font-bold text-[clamp(3.5rem,14vw,11rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.03] whitespace-nowrap"
         >
           {t("title").toUpperCase()}
         </span>
@@ -152,10 +148,10 @@ export function CertificatesSection() {
           <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-muted)] max-w-[34rem] mx-auto">
             {t("description")}
           </p>
-          <div className="mt-5 mx-auto h-[2px] w-20 rounded-full bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-primary)] to-[var(--accent-gold)]" />
+          <div className="mt-5 mx-auto h-[1px] w-16 rounded-full bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
         </div>
 
-        {/* Marquee rows — fixed min-height prevents CLS */}
+        {/* Marquee rows */}
         <div className="space-y-3 md:space-y-5" style={{ minHeight: "clamp(120px, 20vw, 200px)" }}>
           <MarqueeRow items={row1} direction="left" speed={35} />
           {row2.length > 0 && (
@@ -165,7 +161,7 @@ export function CertificatesSection() {
 
         {/* Bottom trust line */}
         <div className="mt-10 md:mt-14 text-center">
-          <p className="font-mono text-[10px] md:text-xs text-[var(--fg-dim)] uppercase tracking-[0.15em]">
+          <p className="font-mono text-[10px] md:text-xs text-[var(--fg-dim)] uppercase tracking-[0.12em]">
             {t("certified")}
           </p>
         </div>

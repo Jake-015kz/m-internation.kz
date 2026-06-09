@@ -91,7 +91,7 @@ function ProductCard({
   return (
     <div
       ref={cardRef}
-      className="group relative flex flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--glass-bg)] backdrop-blur-sm overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--accent-primary)]/20 hover:shadow-[0_8px_40px_oklch(0.78_0.22_135_/_0.08)] hover:-translate-y-1"
+      className="group relative flex flex-col rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--border)] hover:shadow-[var(--shadow-md)] hover:-translate-y-1"
     >
       {/* Color accent line at top */}
       <div
@@ -101,12 +101,7 @@ function ProductCard({
 
       {/* Product image area */}
       <div className="relative flex items-center justify-center p-6 md:p-8 pb-2" style={{ aspectRatio: "4 / 3" }}>
-        {/* Color glow behind product */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500 rounded-full blur-3xl"
-          style={{ background: config.color }}
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 rounded-full blur-3xl" style={{ background: config.color }} aria-hidden="true" />
 
         <div className="relative w-full max-w-[140px] md:max-w-[180px]" style={{ aspectRatio: "1 / 1" }}>
           <Image
@@ -122,7 +117,7 @@ function ProductCard({
       {/* Content */}
       <div className="flex flex-col flex-1 px-5 md:px-6 pb-5 md:pb-6 pt-2">
         <span
-          className="font-mono font-semibold text-[9px] md:text-[10px] uppercase tracking-[0.1em] mb-1.5"
+          className="font-mono font-semibold text-[9px] md:text-[10px] uppercase tracking-[0.08em] mb-1.5"
           style={{ color: config.color }}
         >
           {config.subtitle}
@@ -175,14 +170,6 @@ export function ProductShowcase() {
       ref={sectionRef}
       className="relative py-14 md:py-24 overflow-hidden"
     >
-      {/* Subtle background */}
-      <div
-        className="absolute inset-0 opacity-[0.02] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse 60% 50% at 50% 50%, var(--accent-primary) 0%, transparent 70%)",
-        }}
-      />
-
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-8 md:mb-14">
@@ -192,7 +179,7 @@ export function ProductShowcase() {
           <p className="font-body text-sm md:text-base leading-[1.45] text-[var(--fg-muted)] max-w-[32rem] mx-auto">
             {t("description")}
           </p>
-          <div className="mt-4 mx-auto h-[2px] w-16 rounded-full bg-gradient-to-r from-[var(--accent-gold)] to-[var(--accent-primary)]" />
+          <div className="mt-4 mx-auto h-[1px] w-12 rounded-full bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
         </div>
 
         {/* Product grid — horizontal slider on mobile, grid on desktop */}

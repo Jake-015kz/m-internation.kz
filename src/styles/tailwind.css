@@ -61,11 +61,12 @@
   --header-shadow: 0 4px 32px oklch(0 0 0 / 0.4);
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.3);
-  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
-  --shadow-lg: 0 8px 30px oklch(0 0 0 / 0.4);
-  --shadow-xl: 0 16px 50px oklch(0 0 0 / 0.5);
-  --shadow-glow: 0 0 20px oklch(0.78 0.22 135 / 0.25), 0 0 40px oklch(0.78 0.22 135 / 0.1);
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2), 0 1px 4px oklch(0 0 0 / 0.1);
+  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.25), 0 4px 16px oklch(0 0 0 / 0.12);
+  --shadow-lg: 0 8px 24px oklch(0 0 0 / 0.3), 0 16px 48px oklch(0 0 0 / 0.15);
+  --shadow-xl: 0 12px 40px oklch(0 0 0 / 0.35), 0 24px 80px oklch(0 0 0 / 0.18);
+  --shadow-glow: 0 0 16px oklch(0.78 0.22 135 / 0.15), 0 4px 24px oklch(0 0 0 / 0.2);
+  --shadow-glow-subtle: 0 0 12px oklch(0.78 0.22 135 / 0.08), 0 2px 8px oklch(0 0 0 / 0.15);
 }
 
 /* Light theme */
@@ -123,11 +124,12 @@
   --header-shadow: 0 4px 20px oklch(0 0 0 / 0.06);
 
   /* Shadows — light */
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.08);
-  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.1);
-  --shadow-lg: 0 8px 30px oklch(0 0 0 / 0.12);
-  --shadow-xl: 0 16px 50px oklch(0 0 0 / 0.15);
-  --shadow-glow: 0 0 20px oklch(0.58 0.2 135 / 0.15), 0 0 40px oklch(0.58 0.2 135 / 0.05);
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.06), 0 1px 4px oklch(0 0 0 / 0.03);
+  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.08), 0 4px 16px oklch(0 0 0 / 0.04);
+  --shadow-lg: 0 8px 24px oklch(0 0 0 / 0.1), 0 16px 48px oklch(0 0 0 / 0.05);
+  --shadow-xl: 0 12px 40px oklch(0 0 0 / 0.12), 0 24px 80px oklch(0 0 0 / 0.06);
+  --shadow-glow: 0 0 16px oklch(0.58 0.2 135 / 0.1), 0 4px 24px oklch(0 0 0 / 0.08);
+  --shadow-glow-subtle: 0 0 12px oklch(0.58 0.2 135 / 0.05), 0 2px 8px oklch(0 0 0 / 0.06);
 }
 
 /* ============================================
@@ -417,14 +419,13 @@ html.lenis body {
   0%,
   100% {
     box-shadow:
-      0 0 20px oklch(0.78 0.22 135 / 0.3),
-      0 0 40px oklch(0.78 0.22 135 / 0.1);
+      0 0 12px oklch(0.78 0.22 135 / 0.15),
+      0 4px 20px oklch(0 0 0 / 0.2);
   }
   50% {
     box-shadow:
-      0 0 30px oklch(0.78 0.22 135 / 0.5),
-      0 0 60px oklch(0.78 0.22 135 / 0.2),
-      0 0 90px oklch(0.78 0.22 135 / 0.1);
+      0 0 20px oklch(0.78 0.22 135 / 0.25),
+      0 8px 32px oklch(0 0 0 / 0.25);
   }
 }
 @keyframes noise {
@@ -539,20 +540,20 @@ html.lenis body {
 .liquid-glass {
   background: linear-gradient(
     135deg,
-    oklch(1 0 0 / 0.08) 0%,
+    oklch(1 0 0 / 0.06) 0%,
     oklch(1 0 0 / 0.02) 100%
   );
-  border: 1px solid oklch(1 0 0 / 0.1);
+  border: 1px solid oklch(1 0 0 / 0.08);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.15),
-    0 8px 32px oklch(0 0 0 / 0.3);
-  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    inset 0 1px 0 oklch(1 0 0 / 0.1),
+    0 4px 20px oklch(0 0 0 / 0.2);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .liquid-glass:hover {
-  border-color: oklch(1 0 0 / 0.16);
+  border-color: oklch(1 0 0 / 0.14);
   box-shadow:
-    inset 0 1px 0 oklch(1 0 0 / 0.2),
-    0 12px 40px oklch(0 0 0 / 0.35);
+    inset 0 1px 0 oklch(1 0 0 / 0.15),
+    0 8px 32px oklch(0 0 0 / 0.25);
 }
 @media (min-width: 768px) {
   .liquid-glass {
@@ -632,23 +633,22 @@ html.lenis body {
 }
 
 /* ============================================
- * GLOW EFFECTS (updated for new accent values)
+ * GLOW EFFECTS — refined, less neon
  * ============================================ */
 .glow-lime {
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-glow-subtle);
 }
 
 .glow-lime-strong {
   box-shadow:
-    0 0 30px oklch(0.78 0.22 135 / 0.5),
-    0 0 60px oklch(0.78 0.22 135 / 0.2),
-    0 0 90px oklch(0.78 0.22 135 / 0.1);
+    0 0 20px oklch(0.78 0.22 135 / 0.25),
+    0 4px 32px oklch(0 0 0 / 0.3);
 }
 
 .text-glow-lime {
   text-shadow:
-    0 0 20px oklch(0.78 0.22 135 / 0.5),
-    0 0 40px oklch(0.78 0.22 135 / 0.2);
+    0 0 16px oklch(0.78 0.22 135 / 0.3),
+    0 0 32px oklch(0.78 0.22 135 / 0.1);
 }
 
 /* ============================================
@@ -711,32 +711,33 @@ html.lenis body {
 }
 
 /* ============================================
- * CARD CLEAN (no glass, just surface)
+ * CARD CLEAN — refined surface
  * ============================================ */
 .card-clean {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .card-clean:hover {
   border-color: var(--border);
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 /* ============================================
- * SECTION DIVIDER (fancy)
+ * SECTION DIVIDER — refined
  * ============================================ */
 .section-divider {
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--border-subtle) 20%,
-    var(--accent-primary) 50%,
-    var(--border-subtle) 80%,
+    var(--border-subtle) 15%,
+    var(--border) 50%,
+    var(--border-subtle) 85%,
     transparent 100%
   );
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* ============================================
@@ -850,30 +851,30 @@ html.lenis body {
 }
 
 /* ============================================
- * GLASSMORPHISM 2.0
+ * GLASSMORPHISM 2.0 — refined
  * ============================================ */
 .glass-card {
   position: relative;
-  background: oklch(1 0 0 / 0.03);
-  backdrop-filter: blur(40px) saturate(150%);
-  -webkit-backdrop-filter: blur(40px) saturate(150%);
-  border: 1px solid oklch(1 0 0 / 0.08);
+  background: oklch(1 0 0 / 0.04);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid oklch(1 0 0 / 0.1);
   transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, oklch(1 0 0 / 0.12) 0%, transparent 50%);
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.08) 0%, transparent 60%);
   pointer-events: none;
   border-radius: inherit;
   transition: opacity 300ms ease;
 }
 .glass-card:hover {
-  background: oklch(1 0 0 / 0.06);
-  border-color: oklch(1 0 0 / 0.15);
+  background: oklch(1 0 0 / 0.07);
+  border-color: oklch(1 0 0 / 0.18);
   transform: translateY(-2px);
-  box-shadow: 0 20px 60px oklch(0 0 0 / 0.4);
+  box-shadow: 0 16px 48px oklch(0 0 0 / 0.3);
 }
 
 /* ============================================
