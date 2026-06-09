@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CONTACTS } from "@/lib/constants";
+import { ContactForm } from "@/components/layout/ContactForm";
 
 export async function generateMetadata({
   params,
@@ -110,6 +111,8 @@ export default async function ContactsPage({
           </div>
         </div>
       </section>
+
+      <ContactForm />
     </main>
   );
 }

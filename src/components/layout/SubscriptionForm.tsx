@@ -1,13 +1,15 @@
+// src/components/layout/SubscriptionForm.tsx
 "use client";
 
-import { Send } from "lucide-react";
+import { useActionState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { useSubscription } from "@/hooks";
+import { Send } from "lucide-react";
+import { subscribeEmail } from "@/services/subscriptionService";
 
 export function SubscriptionForm() {
   const t = useTranslations("footer");
-  const { email, setEmail, isSubscribed, error, handleSubscribe } =
-    useSubscription();
+  const [isPending, startTransition] = useTransition();
+  const [state, formAction] = useActionState(subscribeEmail, null);
 
   return (
     <div className="flex-1 max-w-[28rem]">
@@ -19,34 +21,41 @@ export function SubscriptionForm() {
       </p>
       <form
         className="flex gap-0"
-        onSubmit={handleSubscribe}
+        action={(formData) => startTransition(() => formAction(formData))}
         aria-label="Newsletter subscription"
       >
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
           placeholder={t("subscription.placeholder")}
           className="flex-1 min-w-0 px-3 md:px-4 py-2.5 md:py-3 bg-[var(--bg-surface)] border border-[var(--border)] rounded-l-[0.5rem] text-[var(--fg-primary)] font-body text-xs md:text-sm outline-none placeholder:text-[var(--fg-dim)] focus:border-[var(--accent-primary)] transition-colors duration-250"
           required
           aria-label="Email address"
+          disabled={isPending}
         />
         <button
           type="submit"
-          className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 min-h-[44px] bg-[var(--accent-primary)] text-[var(--bg-base)] border-none rounded-r-[0.5rem] cursor-pointer transition-[background-color] duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0"
+          disabled={isPending}
+          className="flex items-center justify-center px-3 md:px-4 py-2.5 md:py-3 min-h-[44px] bg-[var(--accent-primary)] text-[var(--bg-base)] border-none rounded-r-[0.5rem] cursor-pointer transition-[background-color] duration-250 hover:bg-[var(--accent-primary-hover)] flex-shrink-0 disabled:opacity-60 disabled:cursor-wait"
           aria-label="Subscribe"
         >
-          {isSubscribed ? "✓" : <Send size={14} />}
+          {isPending ? (
+            <span className="inline-block w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : state?.success ? (
+            "✓"
+          ) : (
+            <Send size={14} />
+          )}
         </button>
       </form>
-      {isSubscribed && (
+      {state?.success && (
         <p className="mt-2 text-sm text-[var(--success)]" role="alert">
           {t("subscription.success")}
         </p>
       )}
-      {error && (
+      {state && !state.success && (
         <p className="mt-2 text-sm text-[var(--error)]" role="alert">
-          {error}
+          {state.error}
         </p>
       )}
     </div>

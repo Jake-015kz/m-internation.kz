@@ -1,4 +1,5 @@
-import { products, getProductBySlug, getRelatedProducts } from "@/data/products";
+import { products } from "@/data/products";
+import { getProductBySlug, getRelatedProducts } from "@/services/productService";
 import { ProductPageClient } from "./page.client";
 
 export function generateStaticParams() {
@@ -11,7 +12,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   const baseUrl = "https://m-international.kz";
 
   if (!product) return { title: "Product not found" };
@@ -42,6 +43,17 @@ interface ProductPageProps {
   params: Promise<{ slug: string; locale: string }>;
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  return <ProductPageClient params={params} />;
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug, locale } = await params;
+  const [product, relatedProducts] = await Promise.all([
+    getProductBySlug(slug),
+    getRelatedProducts(slug, 4),
+  ]);
+
+  if (!product) {
+    const { notFound } = await import("next/navigation");
+    notFound();
+  }
+
+  return <ProductPageClient locale={locale} product={product as import("@/types").Product} relatedProducts={relatedProducts} />;
 }

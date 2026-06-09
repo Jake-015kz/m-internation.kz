@@ -1,29 +1,23 @@
 "use client";
 
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { use } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { getProductBySlug, getRelatedProducts } from "@/data/products";
+import { useTranslations } from "next-intl";
 import { getProductAccent } from "@/lib/constants/product-colors";
 import { ProductGrid } from "@/components/shared/ProductGrid/ProductGrid";
+import type { Product } from "@/types";
 
 interface ProductPageClientProps {
-  params: Promise<{ slug: string; locale: string }>;
+  locale: string;
+  product: Product;
+  relatedProducts: Product[];
 }
 
-export function ProductPageClient({ params }: ProductPageClientProps) {
-  const { slug, locale } = use(params);
-  const product = getProductBySlug(slug);
+export function ProductPageClient({ locale, product, relatedProducts }: ProductPageClientProps) {
   const t = useTranslations("catalog");
   const tNav = useTranslations("nav");
   const tProducts = useTranslations("products");
-
-  if (!product) notFound();
-
-  const relatedProducts = getRelatedProducts(slug, 4);
-  const accent = getProductAccent(slug);
+  const accent = getProductAccent(product.slug);
 
   // Localized product name/description from i18n if available, fallback to data
   const productName = tProducts(`${product.slug}.name`) !== `products.${product.slug}.name`

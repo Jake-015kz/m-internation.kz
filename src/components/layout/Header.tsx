@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, createContext, useContext } from "react";
 import { Menu, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { SITE_CONFIG } from "@/lib/constants";
@@ -10,29 +10,138 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useScroll, useNavLinks } from "@/hooks";
 import { cn } from "@/lib/utils";
 
+// ── Mobile menu state shared between Header and MobileMenu ──
+interface MobileMenuContextValue {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+}
+
+const MobileMenuContext = createContext<MobileMenuContextValue | null>(null);
+
+export function useMobileMenu() {
+  const ctx = useContext(MobileMenuContext);
+  if (!ctx) throw new Error("useMobileMenu must be used within MobileMenuProvider");
+  return ctx;
+}
+
+export function MobileMenuProvider({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [isOpen]);
+
+  // Close menu on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isOpen]);
+
+  // Close menu on resize to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setIsOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+  const toggle = useCallback(() => setIsOpen((p) => !p), []);
+
+  return (
+    <MobileMenuContext.Provider value={{ isOpen, open, close, toggle }}>
+      {children}
+    </MobileMenuContext.Provider>
+  );
+}
+
+// ── MobileMenu — rendered via Portal-like pattern OUTSIDE header stacking context ──
+export function MobileMenu() {
+  const { isOpen, close } = useMobileMenu();
+  const locale = useLocale();
+  const t = useTranslations("nav");
+  const navLinks = useNavLinks();
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] bg-[var(--bg-base)] md:hidden"
+      style={{ position: "fixed", top: 0, right: 0, bottom: 0, left: 0 }}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation"
+    >
+      {/* Close area — click outside to close */}
+      <div className="absolute inset-0" onClick={close} aria-hidden="true" />
+
+      <nav
+        className="relative flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto overscroll-contain"
+        style={{ touchAction: "auto" }}
+      >
+        {/* Mobile menu close button */}
+        <button
+          className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] z-10"
+          onClick={close}
+          aria-label="Close menu"
+        >
+          <X size={20} />
+        </button>
+
+        <div className="flex flex-col gap-1 flex-1">
+          {navLinks.map((link, i) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-heading font-semibold text-2xl text-[var(--fg-primary)] py-3 transition-[opacity,transform] duration-300 border-b border-[var(--border-subtle)]"
+              style={{ transitionDelay: `${i * 60}ms` }}
+              onClick={close}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="pt-6" style={{ transitionDelay: "300ms" }}>
+          <Link
+            href={`/${locale}/contacts`}
+            className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[0.5rem] w-full shadow-[var(--shadow-glow-subtle)]"
+            onClick={close}
+          >
+            {t("contacts")}
+          </Link>
+        </div>
+      </nav>
+    </div>
+  );
+}
+
+// ── Header — no longer renders MobileMenu inline ──
 export function Header() {
   const locale = useLocale();
   const t = useTranslations("nav");
   const { isScrolled } = useScroll({ threshold: 50 });
   const navLinks = useNavLinks();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [isMenuOpen]);
-
-  const toggleMenu = useCallback(() => {
-    setIsMenuOpen((prev) => !prev);
-  }, []);
-
-  const closeMenu = useCallback(() => {
-    setIsMenuOpen(false);
-  }, []);
+  const mobileMenu = useMobileMenu();
 
   return (
     <header
@@ -90,52 +199,14 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-[0.5rem] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
+            onClick={mobileMenu.toggle}
+            aria-label={mobileMenu.isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenu.isOpen}
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenu.isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu — only render when open to reduce DOM size */}
-      {isMenuOpen && (
-        <div
-          id="mobile-menu"
-          className="fixed inset-0 top-0 z-[299] bg-[var(--bg-base)] transition-opacity duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden"
-        >
-          <nav className="flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto">
-            <div className="flex flex-col gap-1 flex-1">
-              {navLinks.map((link, i) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="font-heading font-semibold text-2xl text-[var(--fg-primary)] py-3 transition-[opacity,transform] duration-300 border-b border-[var(--border-subtle)] opacity-100 translate-x-0"
-                  style={{ transitionDelay: `${i * 60}ms` }}
-                  onClick={closeMenu}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-
-            <div
-              className="pt-6 transition-[opacity,transform] duration-300 opacity-100 translate-y-0"
-              style={{ transitionDelay: "300ms" }}
-            >
-              <Link
-                href={`/${locale}/contacts`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-[0.5rem] w-full shadow-[var(--shadow-glow-subtle)]"
-                onClick={closeMenu}
-              >
-                {t("contacts")}
-              </Link>
-            </div>
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

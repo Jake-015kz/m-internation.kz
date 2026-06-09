@@ -1,38 +1,50 @@
+// src/components/shared/ProductGrid/CatalogFilter.tsx
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { products } from "@/data/products";
 import { ProductGrid } from "./ProductGrid";
-
-const CATEGORIES = [
-  { key: "all", icon: "⊕" },
-  { key: "supplements", icon: "◆", slugs: ["micrystal","greenmax","mimax","blumax","nutrimax","fleximax","machoman","mishroom","lamor","kordymax","promax"] },
-  { key: "personal", icon: "◈", slugs: ["ye-katerina","mi-mask","mi-serum","magicare","mifresh"] },
-  { key: "lifestyle", icon: "●", slugs: ["mitown","essential-oil","relax","miwellness","shaker","ebooster","chai-relax","energy-card"] },
-];
-
-function getCategoryFilter(key: string) {
-  const cat = CATEGORIES.find(c => c.key === key);
-  if (!cat || key === "all") return () => true;
-  const slugSet = new Set(cat.slugs || []);
-  return (p: typeof products[0]) => slugSet.has(p.slug);
-}
+import {
+  filterProductsByCategory,
+  type CategoryKey,
+} from "@/services/catalogService";
+import { CATEGORIES, categoryLabels } from "@/services/catalogService";
+import type { Product } from "@/types";
 
 export function CatalogFilter() {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>("all");
+  const [filtered, setFiltered] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const t = useTranslations("footer");
 
-  const filtered = useMemo(
-    () => products.filter(getCategoryFilter(activeCategory)),
-    [activeCategory]
-  );
+  const loadProducts = useCallback(async (category: CategoryKey) => {
+    setLoading(true);
+    const result = await filterProductsByCategory(category);
+    setFiltered(result);
+    setLoading(false);
+  }, []);
 
-  const categoryLabels: Record<string, string> = {
+  useEffect(() => {
+    loadProducts(activeCategory);
+  }, [activeCategory, loadProducts]);
+
+  const handleCategoryChange = useCallback((key: CategoryKey) => {
+    setActiveCategory(key);
+  }, []);
+
+  // Synchronous count for all categories (use static data)
+  const getCount = (key: CategoryKey) => {
+    if (key === "all") return filtered.length;
+    const cat = CATEGORIES.find(c => c.key === key);
+    if (!cat?.slugs) return 0;
+    return cat.slugs.length;
+  };
+
+  const labels: Record<CategoryKey, string> = {
     all: t("allProducts"),
-    supplements: "БАДы",
-    personal: "Уход",
-    lifestyle: "Образ жизни",
+    supplements: categoryLabels.supplements,
+    personal: categoryLabels.personal,
+    lifestyle: categoryLabels.lifestyle,
   };
 
   return (
@@ -57,9 +69,9 @@ export function CatalogFilter() {
               `}
             >
               <span className="text-[10px] md:text-xs opacity-60">{cat.icon}</span>
-              <span>{categoryLabels[cat.key]}</span>
+              <span>{labels[cat.key]}</span>
               <span className={`text-[10px] ml-0.5 ${activeCategory === cat.key ? "text-white/60" : "text-[var(--fg-dim)]"}`}>
-                ({cat.key === "all" ? products.length : products.filter(getCategoryFilter(cat.key)).length})
+              ({getCount(cat.key)})
               </span>
             </button>
           ))}
