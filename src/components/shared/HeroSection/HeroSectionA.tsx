@@ -107,12 +107,12 @@ export function HeroSectionA() {
       />
 
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 gap-6 md:gap-8 items-center lg:grid-cols-2 lg:gap-12">
+        <div className="grid grid-cols-1 gap-4 md:gap-8 items-center lg:grid-cols-2 lg:gap-12">
 
           {/* Left — Text */}
           <div
             ref={textRef}
-            className="text-left opacity-0 order-2 lg:order-1"
+            className="text-left opacity-0 order-1 lg:order-1"
             style={{ transform: "translateY(30px)" }}
           >
             {/* Eyebrow */}
@@ -154,7 +154,7 @@ export function HeroSectionA() {
           {/* Right — Product image */}
           <div
             ref={imageRef}
-            className="relative flex justify-center items-center opacity-0 order-1 lg:order-2"
+            className="relative flex justify-center items-center opacity-0 order-2 lg:order-2"
             style={{ transform: "scale(0.95)" }}
           >
             <div className="relative">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
@@ -30,6 +30,21 @@ const SHOWCASE_CONFIG: Record<
     descriptionKey: "greenmax.description",
     color: "#5a9e3a",
   },
+  mitown: {
+    subtitle: "Lifestyle",
+    descriptionKey: "mitown.description",
+    color: "#4a90d9",
+  },
+  blumax: {
+    subtitle: "Immunity",
+    descriptionKey: "blumax.description",
+    color: "#3a8ab5",
+  },
+  kordymax: {
+    subtitle: "Cardio",
+    descriptionKey: "kordymax.description",
+    color: "#b53a3a",
+  },
 };
 
 const showcaseProducts = products.filter((p) => SHOWCASE_CONFIG[p.slug]);
@@ -40,12 +55,144 @@ const features = [
   { key: "tested", icon: "flask" },
 ];
 
-export function ProductShowcase() {
+function SlideContent({
+  product,
+  isActive,
+}: {
+  product: (typeof showcaseProducts)[0];
+  isActive: boolean;
+}) {
   const locale = useLocale();
   const t = useTranslations("products");
+  const config = SHOWCASE_CONFIG[product.slug];
+  const contentRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isActive || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: EASING.gentle as unknown as gsap.EaseFunction } });
+      if (imageRef.current) {
+        tl.fromTo(imageRef.current, { opacity: 0, scale: 0.9, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.7 });
+      }
+      if (contentRef.current) {
+        const children = contentRef.current.children;
+        tl.fromTo(children, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
+      }
+    });
+
+    return () => ctx.revert();
+  }, [isActive]);
+
+  if (!config) return null;
+
+  return (
+    <div className="grid grid-cols-1 gap-4 items-center lg:grid-cols-2 lg:gap-8 h-full">
+      {/* Image */}
+      <div ref={imageRef} className="flex justify-center items-center opacity-0">
+        <div className="relative w-full max-w-[180px] sm:max-w-[240px] md:max-w-[300px] lg:max-w-[380px]">
+          {/* Color glow behind product */}
+          <div
+            className="absolute inset-0 -m-8 rounded-full opacity-[0.1] blur-3xl"
+            style={{ background: config.color }}
+            aria-hidden="true"
+          />
+          <Image
+            src={product.images[0] ?? ""}
+            alt={`${product.name} — ${config.subtitle}`}
+            width={380}
+            height={380}
+            className="w-full h-auto object-contain relative z-10"
+          />
+          {/* Shadow under product */}
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-4 bg-[var(--fg-primary)] opacity-[0.06] blur-xl rounded-full z-0"
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+
+      {/* Info */}
+      <div ref={contentRef} className="flex flex-col gap-2 md:gap-3 text-center lg:text-left">
+        <span
+          className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em] opacity-0"
+          style={{ color: config.color }}
+        >
+          {config.subtitle}
+        </span>
+
+        <h3 className="font-heading font-bold leading-[1.1] md:leading-[1.05] tracking-[-0.01em] md:tracking-[-0.03em] text-xl md:text-3xl lg:text-4xl text-[var(--fg-primary)] opacity-0">
+          {product.name}
+        </h3>
+
+        <p className="font-body text-sm md:text-base leading-[1.5] md:leading-[1.6] text-[var(--fg-secondary)] mt-0 md:mt-1 max-w-[400px] mx-auto lg:mx-0 opacity-0">
+          {t(config.descriptionKey)}
+        </p>
+
+        <div className="flex flex-col gap-1.5 md:gap-2 mt-2 md:mt-3 items-center lg:items-start opacity-0">
+          {features.map((feature) => (
+            <div
+              key={feature.key}
+              className="flex items-center gap-2 md:gap-3 text-[var(--fg-primary)] font-body text-xs md:text-sm"
+            >
+              <span
+                className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full text-[10px] md:text-xs flex-shrink-0"
+                style={{
+                  backgroundColor: `${config.color}18`,
+                  color: config.color,
+                }}
+              >
+                ✓
+              </span>
+              <span>{t(`features.${feature.key}`)}</span>
+            </div>
+          ))}
+        </div>
+
+        <Link
+          href={`/${locale}/catalog/${product.slug}`}
+          className="inline-flex items-center gap-2 mt-3 md:mt-4 font-body font-medium text-xs md:text-sm text-[var(--accent-primary)] transition-all duration-250 hover:gap-3 opacity-0"
+        >
+          {t("learnMore")} →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export function ProductShowcase() {
+  const t = useTranslations("products");
   const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Intersection observer for active slide
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleScroll = useCallback(() => {
+    const viewportCenter = window.innerHeight / 2;
+    let closest = 0;
+    let closestDist = Infinity;
+
+    slideRefs.current.forEach((ref, i) => {
+      if (!ref) return;
+      const rect = ref.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const dist = Math.abs(center - viewportCenter);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = i;
+      }
+    });
+
+    setActiveIndex(closest);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   useEffect(() => {
     const reduce = prefersReducedMotion();
@@ -57,45 +204,16 @@ export function ProductShowcase() {
         scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
       });
     }
-
-    if (reduce || !sectionRef.current || !trackRef.current) return;
-    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
-
-    const ctx = gsap.context(() => {
-      const track = trackRef.current!;
-      const slides = gsap.utils.toArray<HTMLElement>(".product-slide");
-      const totalWidth = slides.reduce(
-        (acc, slide) => acc + slide.offsetWidth + 24, 0,
-      );
-      const distance = totalWidth - window.innerWidth;
-
-      if (distance <= 0) return;
-
-      gsap.to(track, {
-        x: -distance,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${distance}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[var(--bg-elevated)]"
+      className="relative bg-[var(--bg-elevated)]"
     >
-      {/* Header */}
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 pt-10 md:pt-20 pb-6 md:pb-10">
-        <div ref={headerRef} className="text-left max-w-[36rem]" style={{ opacity: 1 }}>
+      {/* Fixed header that stays above slides */}
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 pt-10 md:pt-16 pb-4 md:pb-6">
+        <div ref={headerRef} className="text-center lg:text-left max-w-[36rem]" style={{ opacity: 1 }}>
           <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-2 md:mb-4 md:text-3xl lg:text-4xl">
             {t("title")}
           </h2>
@@ -105,83 +223,40 @@ export function ProductShowcase() {
         </div>
       </div>
 
-      {/* Product cards */}
-      <div
-        ref={trackRef}
-        className="lg:flex lg:gap-6 px-4 md:px-6 lg:px-8 pb-10 md:pb-20 flex flex-col gap-6"
-      >
-        {showcaseProducts.map((product) => {
+      {/* Full-screen snap slides */}
+      <div>
+        {showcaseProducts.map((product, index) => {
           const config = SHOWCASE_CONFIG[product.slug];
-          if (!config) return null;
           return (
             <div
               key={product.slug}
-              className="product-slide flex-shrink-0 w-full lg:w-[60vw]"
+              ref={(el) => { slideRefs.current[index] = el; }}
+              className="min-h-[100dvh] flex items-center justify-center px-4 md:px-6 lg:px-8 py-8 md:py-12 relative"
+              style={{
+                background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${config?.color}08 0%, transparent 70%)`,
+              }}
             >
-              <div className="grid grid-cols-1 gap-5 items-center lg:grid-cols-2 lg:gap-12 card-clean rounded-[var(--radius-xl)] p-4 md:p-8">
-                {/* Image */}
-                <div className="flex justify-center items-center">
-                  <div className="relative w-full max-w-[200px] md:max-w-[300px] lg:max-w-[350px]">
-                    {/* Color glow behind product */}
-                    <div
-                      className="absolute inset-0 -m-8 rounded-full opacity-[0.08] blur-2xl"
-                      style={{ background: config.color }}
-                      aria-hidden="true"
-                    />
-                    <Image
-                      src={product.images[0] ?? ""}
-                      alt={`${product.name} — ${config.subtitle}`}
-                      width={350}
-                      height={350}
-                      className="w-full h-auto object-contain relative z-10"
-                    />
-                  </div>
-                </div>
+              <div className="mx-auto max-w-[80rem] w-full">
+                <SlideContent
+                  product={product}
+                  isActive={activeIndex === index}
+                />
+              </div>
 
-                {/* Info */}
-                <div className="flex flex-col gap-2 md:gap-3 text-left">
-                  <span
-                    className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em]"
-                    style={{ color: config.color }}
-                  >
-                    {config.subtitle}
-                  </span>
-
-                  <h3 className="font-heading font-bold leading-[1.1] md:leading-[1.05] tracking-[-0.01em] md:tracking-[-0.03em] text-xl md:text-[clamp(1.5rem,3.5vw,2.5rem)] text-[var(--fg-primary)]">
-                    {product.name}
-                  </h3>
-
-                  <p className="font-body text-sm md:text-base leading-[1.5] md:leading-[1.6] text-[var(--fg-secondary)] mt-0 md:mt-1 max-w-[400px]">
-                    {t(config.descriptionKey)}
-                  </p>
-
-                  <div className="flex flex-col gap-1.5 md:gap-2 mt-2 md:mt-3">
-                    {features.map((feature) => (
-                      <div
-                        key={feature.key}
-                        className="flex items-center gap-2 md:gap-3 text-[var(--fg-primary)] font-body text-xs md:text-sm"
-                      >
-                        <span
-                          className="w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full text-[10px] md:text-xs flex-shrink-0"
-                          style={{
-                            backgroundColor: `${config.color}18`,
-                            color: config.color,
-                          }}
-                        >
-                          ✓
-                        </span>
-                        <span>{t(`features.${feature.key}`)}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link
-                    href={`/${locale}/catalog/${product.slug}`}
-                    className="inline-flex items-center gap-2 mt-3 md:mt-4 font-body font-medium text-xs md:text-sm text-[var(--accent-primary)] transition-all duration-250 hover:gap-3"
-                  >
-                    {t("learnMore")} →
-                  </Link>
-                </div>
+              {/* Slide counter */}
+              <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2">
+                {showcaseProducts.map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-1 rounded-full transition-all duration-300"
+                    style={{
+                      width: i === activeIndex ? "24px" : "8px",
+                      backgroundColor: i === activeIndex
+                        ? "var(--accent-primary)"
+                        : "var(--border)",
+                    }}
+                  />
+                ))}
               </div>
             </div>
           );

@@ -10,39 +10,90 @@ import { CERTIFICATES } from "@/lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function MarqueeRow({
+  items,
+  direction = "left",
+  speed = 30,
+}: {
+  items: typeof CERTIFICATES;
+  direction?: "left" | "right";
+  speed?: number;
+}) {
+  const rowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion() || !rowRef.current) return;
+
+    const el = rowRef.current;
+    const width = el.scrollWidth / 2;
+
+    const anim = gsap.to(el, {
+      x: direction === "left" ? -width : width,
+      duration: speed,
+      ease: "none",
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize((val) => parseFloat(val) % width),
+      },
+    });
+
+    return () => { anim.kill(); };
+  }, [direction, speed]);
+
+  // Duplicate items for seamless loop
+  const doubled = [...items, ...items];
+
+  return (
+    <div className="overflow-hidden marquee-container">
+      <div ref={rowRef} className="flex items-center gap-4 md:gap-6 will-change-transform">
+        {doubled.map((cert, i) => (
+          <div
+            key={`${cert.id}-${i}`}
+            className="flex-shrink-0 flex items-center gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-3 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
+          >
+            <div className="relative w-6 h-6 md:w-8 md:h-8 flex-shrink-0">
+              <Image
+                src={cert.image}
+                alt={cert.name}
+                width={32}
+                height={32}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span className="font-heading font-semibold text-[10px] md:text-xs whitespace-nowrap text-[var(--fg-primary)]">
+              {cert.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function CertificatesSection() {
   const t = useTranslations("certificates");
+  const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const trustRef = useRef<HTMLDivElement>(null);
+  const bgTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const reduce = prefersReducedMotion();
     if (reduce) return;
 
     const ctx = gsap.context(() => {
-      // Header fade-in
       if (headerRef.current) {
         gsap.fromTo(headerRef.current, { opacity: 0, y: 24 }, {
-          opacity: 1, y: 0, duration: 0.6, ease: EASING.gentle as unknown as gsap.EaseFunction,
+          opacity: 1, y: 0, duration: 0.6,
+          ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
         });
       }
 
-      // Cards stagger
-      if (cardsRef.current) {
-        const cards = cardsRef.current.children;
-        gsap.fromTo(cards, { opacity: 0, y: 20 }, {
-          opacity: 1, y: 0, duration: 0.45, stagger: 0.06, ease: EASING.gentle as unknown as gsap.EaseFunction,
-          scrollTrigger: { trigger: cardsRef.current, start: "top 90%" },
-        });
-      }
-
-      // Trust line fade
-      if (trustRef.current) {
-        gsap.fromTo(trustRef.current, { opacity: 0 }, {
-          opacity: 1, duration: 0.5, delay: 0.3,
-          scrollTrigger: { trigger: trustRef.current, start: "top 90%" },
+      // Background text parallax
+      if (bgTextRef.current && sectionRef.current) {
+        gsap.fromTo(bgTextRef.current, { opacity: 0 }, {
+          opacity: 1, duration: 0.8,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
         });
       }
     });
@@ -50,90 +101,56 @@ export function CertificatesSection() {
     return () => ctx.revert();
   }, []);
 
+  // Split certificates into two rows
+  const mid = Math.ceil(CERTIFICATES.length / 2);
+  const row1 = CERTIFICATES.slice(0, mid);
+  const row2 = CERTIFICATES.slice(mid);
+
   return (
     <section
-      className="relative py-16 md:py-24 overflow-hidden"
+      ref={sectionRef}
+      className="relative py-12 md:py-20 overflow-hidden"
       aria-labelledby="certificates-title"
     >
-      {/* Subtle background glow — desktop only */}
+      {/* Large background text */}
       <div
-        className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[oklch(0.52_0.14_145/0.04)] blur-3xl pointer-events-none"
+        ref={bgTextRef}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-0"
         aria-hidden="true"
-      />
+      >
+        <span
+          className="font-heading font-bold text-[clamp(3rem,12vw,10rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.03] whitespace-nowrap"
+          style={{ WebkitTextStroke: "1px var(--border-subtle)" }}
+        >
+          {t("title").toUpperCase()}
+        </span>
+      </div>
 
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-12 md:mb-16" style={{ opacity: 1 }}>
+        <div ref={headerRef} className="text-center mb-8 md:mb-12" style={{ opacity: 1 }}>
           <h2
             id="certificates-title"
-            className="font-heading font-semibold text-2xl leading-[1.15] text-[var(--fg-primary)] tracking-[-0.02em] mb-4 md:text-3xl lg:text-4xl"
+            className="font-heading font-semibold text-2xl leading-[1.15] text-[var(--fg-primary)] tracking-[-0.02em] mb-3 md:text-3xl lg:text-4xl"
           >
             {t("title")}
           </h2>
           <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-muted)] max-w-[32rem] mx-auto">
             {t("description")}
           </p>
-          {/* Gold accent line */}
-          <div className="mt-6 mx-auto h-[2px] w-16 rounded-full bg-gradient-to-r from-[var(--accent-gold)] to-[var(--accent-primary)]" />
+          <div className="mt-4 mx-auto h-[2px] w-16 rounded-full bg-gradient-to-r from-[var(--accent-gold)] to-[var(--accent-primary)]" />
         </div>
 
-        {/* Certificates Grid */}
-        <div ref={cardsRef} className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 md:gap-4 lg:gap-5">
-          {CERTIFICATES.map((cert) => (
-            <div
-              key={cert.id}
-              className="group relative flex flex-col items-center text-center p-3 md:p-6 rounded-[var(--radius-lg)] bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border)] transition-all duration-300 cursor-default h-full"
-              style={{
-                // @ts-expect-error CSS custom property
-                "--cert-color": cert.color,
-                opacity: 1,
-              }}
-            >
-              {/* Hover glow */}
-              <div
-                className="absolute inset-0 rounded-[var(--radius-lg)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at 50% 50%, ${cert.color}08 0%, transparent 70%)`,
-                }}
-                aria-hidden="true"
-              />
-
-              {/* Certificate icon */}
-              <div className="relative w-10 h-10 md:w-20 md:h-20 mb-2 md:mb-4 flex-shrink-0">
-                <Image
-                  src={cert.image}
-                  alt={cert.name}
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              {/* Name */}
-              <span
-                className="font-heading font-semibold text-xs md:text-base leading-[1.2] tracking-[-0.01em] mb-0.5 md:mb-1"
-                style={{ color: "var(--fg-primary)" }}
-              >
-                {cert.name}
-              </span>
-
-              {/* Description */}
-              <span className="font-body text-[9px] md:text-xs leading-[1.3] md:leading-[1.4] text-[var(--fg-muted)]">
-                {t(cert.descriptionKey)}
-              </span>
-
-              {/* Bottom accent line on hover */}
-              <div
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-1/2 rounded-full transition-all duration-300"
-                style={{ backgroundColor: cert.color }}
-                aria-hidden="true"
-              />
-            </div>
-          ))}
+        {/* Marquee rows */}
+        <div className="space-y-3 md:space-y-4">
+          <MarqueeRow items={row1} direction="left" speed={35} />
+          {row2.length > 0 && (
+            <MarqueeRow items={row2} direction="right" speed={40} />
+          )}
         </div>
 
         {/* Bottom trust line */}
-        <div ref={trustRef} className="mt-10 md:mt-14 text-center opacity-1">
+        <div className="mt-8 md:mt-12 text-center">
           <p className="font-mono text-[10px] md:text-xs text-[var(--fg-dim)] uppercase tracking-[0.15em]">
             {t("certified")}
           </p>

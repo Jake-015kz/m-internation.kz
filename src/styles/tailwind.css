@@ -1110,3 +1110,34 @@ html.lenis body {
     scroll-behavior: auto;
   }
 }
+
+/* ============================================
+ * PRODUCT SLIDER — Full-screen slides
+ * ============================================ */
+.product-slider-nav {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+@media (max-width: 1023px) {
+  .product-slider-nav {
+    display: none;
+  }
+}
+.product-slider-nav .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.product-slider-nav .dot.active {
+  background: var(--accent-primary);
+  transform: scale(1.5);
+}
