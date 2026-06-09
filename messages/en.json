@@ -45,8 +45,8 @@
     "description": "Innovative natural products for your health",
     "micrystal": {
       "name": "MiCrystal",
-      "subtitle": "Vision & Energy",
-      "description": "Cellular nutrition for eye health. 100% natural composition: elderberry extract, FloraGLO*, lutein and astaxanthin. Reduces eye pressure, relieves redness and discomfort from screen work."
+      "subtitle": "Vision Care",
+      "description": "Cellular nutrition for eye health. 100% natural composition: elderberry extract, FloraGLO*, lutein and astaxanthin. Reduces eye pressure, relieves redness and discomfort from prolonged screen work."
     },
     "greenmax": {
       "name": "GreenMAX",
@@ -57,6 +57,11 @@
       "name": "MiMAX",
       "subtitle": "Anti-Aging",
       "description": "Powerful antioxidant #1 with astaxanthin. 6000x more effective than vitamin C. Slows aging, protects cells, strengthens heart and liver."
+    },
+    "blumax": {
+      "name": "BluMAX",
+      "subtitle": "Immunity & Brain",
+      "description": "Blue-green algae AFA + vitamin C. 60+ minerals, neuropeptides, organic iron. Immunity boost, memory and concentration improvement."
     },
     "nutrimax": {
       "name": "NutriMAX",
@@ -73,15 +78,60 @@
       "subtitle": "Men's Health",
       "description": "Cellular nutrition for men. Sexual function support, testosterone boost, stamina and energy. Maca + L-arginine + ginseng."
     },
-    "blumax": {
-      "name": "BluMAX",
-      "subtitle": "Immunity & Brain",
-      "description": "Blue-green algae AFA + vitamin C. 60+ minerals, neuropeptides, organic iron. Immunity boost, memory and concentration improvement."
+    "mishroom": {
+      "name": "MiSHROOM",
+      "subtitle": "Mushroom Nutrition",
+      "description": "Mushroom product for complete nutrition. Meal replacement rich in vitamins and minerals. Immune support and overall body tone."
     },
     "yekaterina": {
       "name": "Ye-Katerina",
       "subtitle": "Women's Hygiene",
-      "description": "Natural pads with aloe vera extract and silver ions. Antibacterial effect, protection from bacteria and odor."
+      "description": "Natural pads with aloe vera extract and silver ions. Antibacterial effect, protection from bacteria and odor. Comfort and safety."
+    },
+    "mi-mask": {
+      "name": "Mi MASK",
+      "subtitle": "Ginseng Face Mask",
+      "description": "Ginseng face mask for skin nourishment, hydration and rejuvenation. Natural composition with ginseng extract for skin radiance and elasticity."
+    },
+    "mi-serum": {
+      "name": "Mi SERUM",
+      "subtitle": "Ginseng Cell Serum",
+      "description": "Ginseng steam cell serum for deep skin nourishment and restoration. Activates cell renewal, improves skin texture and tone."
+    },
+    "magicare": {
+      "name": "Magicare",
+      "subtitle": "Skin Care",
+      "description": "Innovative skin care product. Comprehensive care for skin health and beauty. Coming soon."
+    },
+    "mifresh": {
+      "name": "MiFresh",
+      "subtitle": "Freshness & Hygiene",
+      "description": "Daily hygiene product. Freshness and cleanliness all day. Natural composition. Coming soon."
+    },
+    "mitown": {
+      "name": "MiTOWN",
+      "subtitle": "Cordyceps Coffee",
+      "description": "Natural coffee with cordyceps. 100% Arabica with functional ingredients. Energy and vitality without side effects."
+    },
+    "essential-oil": {
+      "name": "Essential Oil",
+      "subtitle": "Aromatherapy Oils",
+      "description": "Essential oils for aromatherapy and wellness. Natural oils for relaxation, recovery and creating a harmonious atmosphere."
+    },
+    "relax": {
+      "name": "Relax Tea",
+      "subtitle": "Calming Tea",
+      "description": "Relaxing herbal tea. Natural composition for stress relief, sleep improvement and nervous system recovery. Caffeine-free."
+    },
+    "miwellness": {
+      "name": "MiWellness",
+      "subtitle": "Wellness Product",
+      "description": "Product for a healthy lifestyle. Comprehensive body support for everyday well-being. Coming soon."
+    },
+    "shaker": {
+      "name": "Shaker",
+      "subtitle": "Shaker",
+      "description": "Shaker for preparing cocktails and drinks. Convenient and stylish accessory for healthy nutrition. Coming soon."
     },
     "features": {
       "natural": "Natural ingredients",
@@ -91,8 +141,16 @@
   },
   "about": {
     "title": "ABOUT THE COMPANY",
-    "description": "M-International is an international company specializing in the production of dietary supplements and wellness products of the highest quality.",
-    "mission": "Our mission is to make health accessible to everyone by providing natural products with international quality certificates.",
+    "description": "M International is an innovative multi-national healthcare company based on the health ecosystem to build a quality life, a healthy environment, and a prosperous life for the community.",
+    "motto": "Our Motto",
+    "mottoText": "Let Us Be The Bridge To Your Dreams — originated from a touching conversation between the founder and a young leader. It symbolizes the company's commitment to becoming a bridge that helps others realize their dreams.",
+    "slogan": "The Slogan",
+    "sloganText": "HURRAY! HURRAY! HURRAY! — is more than just a cheer. It represents a powerful energy of happiness, success, and abundance.",
+    "vision": "Our Vision Is To Become World's No.1 MLM Company",
+    "visionSubtext": "By revolutionizing the industry through cutting-edge technologies of the 21st century, science-backed premium products, an intelligent hybrid rewards system, and a member-centric strategy.",
+    "mission": "We are committed to creating a new identity and standard within the MLM sector — reshaping its image, pioneering innovation, and contributing to the industry's credibility and social value on a global scale.",
+    "coreValue": "Our Core Value",
+    "coreValueText": "What we value most — beyond measure and beyond comparison — is the time we've invested, the memories we've created, and the journey we've built together.",
     "learnMore": "Learn more",
     "team": "OUR TEAM",
     "timeline": {
@@ -104,6 +162,10 @@
         "title": "Growth in Mongolia",
         "description": "Diamond Director Title Ceremony and 1-Year Anniversary Celebration in Ulaanbaatar."
       },
+      "2021": {
+        "title": "Triple Diamond",
+        "description": "Triple Diamond Director Title Ceremony in Mongolia."
+      },
       "2022": {
         "title": "Kazakhstan Market Entry",
         "description": "Crown Diamond International Recognition Event in Kazakhstan. Expanding presence in Central Asia."
@@ -112,6 +174,10 @@
         "title": "Global Expansion",
         "description": "Official launch in Turkey and China. Global Leadership Tour across 30 countries. Diamond Summit in Dubai."
       },
+      "2024": {
+        "title": "International Summits",
+        "description": "M Travel: International Diamond Directors Summit and International Directors Summit."
+      },
       "2025": {
         "title": "Top Leaders Summit",
         "description": "10 incentive events over 6 months in Malaysia. International Directors Summit in Almaty."
@@ -119,22 +185,30 @@
     }
   },
   "business": {
-    "title": "START YOUR BUSINESS WITH US",
-    "description": "Join the M-International team and discover opportunities for financial freedom",
-    "steps": {
-      "register": {
-        "title": "Registration",
-        "description": "Simple and quick registration in the M-International system. Get access to your personal account and start your journey to financial freedom."
-      },
-      "training": {
-        "title": "Training",
-        "description": "Get knowledge and support from an experienced team. We provide all the necessary materials and tools for a successful start."
-      },
-      "income": {
-        "title": "Income",
-        "description": "Start earning from day one. Build a stable income source using our proven business model."
-      }
+    "title": "THE BUSINESS LANDSCAPE",
+    "description": "In today's rapidly evolving global economy — driven by globalization, the explosive growth of the internet, and unprecedented technological advancement — the way we do business has fundamentally transformed.",
+    "intro": "M International stands at the forefront of this new era, offering a cutting-edge hybrid rewards system that empowers members with some of the highest earning opportunities in the industry. Our innovative system distributes 9 types of rewards.",
+    "rewardsTitle": "Key Advantages Of Our Reward System",
+    "reward1": {
+      "title": "Equal opportunity for all",
+      "description": "Whether you're a new or existing member, rewards are distributed based on performance, not seniority."
     },
+    "reward2": {
+      "title": "Hybrid smart system",
+      "description": "Combining multiple layers of rewards, including dual binary structures."
+    },
+    "reward3": {
+      "title": "Based on the principle of Win & Win",
+      "description": "When you succeed, your team succeeds too."
+    },
+    "memberTitle": "Becoming Member Of M International",
+    "memberDescription": "Over the past five years, thousands of people across the globe have taken advantage of these real, life-changing opportunities.",
+    "memberQuote": "In today's world, M International is the only company that can help you become a self-made dollar millionaire in the shortest time possible.",
+    "centricTitle": "Member-Centric Policy",
+    "centricDescription": "M International's member-centric policy highlights the role of emotional intelligence (EQ) in developing talent and leadership. We empower growth through personal potential, emotional drive, and strong relationships.",
+    "joinTitle": "Welcoming You",
+    "joinSubtitle": "Be Part Of Us",
+    "joinButton": "JOIN NOW",
     "cta": "Learn more about business"
   },
   "cta": {
@@ -176,8 +250,8 @@
     "mission": "Mission",
     "vision": "Vision",
     "values": "Values",
-    "visionText": "Create a global community of people who care about their health and help others",
-    "valuesText": "Quality, honesty, innovation and care for people are the foundation of everything we do"
+    "visionText": "Become the world's No.1 MLM company by revolutionizing the industry through cutting-edge technologies, science-backed premium products, and an intelligent hybrid rewards system.",
+    "valuesText": "Quality, honesty, innovation and care for people are the foundation of everything we do. We value the time invested, memories created, and the journey we've built together."
   },
   "businessPage": {
     "title": "Business with M-International",
@@ -190,6 +264,11 @@
     "phone": "Phone",
     "email": "Email",
     "instagram": "Instagram",
-    "tiktok": "TikTok"
+    "tiktok": "TikTok",
+    "address": "Address",
+    "addressText": "No. 9-1, Jalan Tasik Utama 3, Medan Niaga Tasik Damai, Lakefields Sungai Besi, 57100 Kuala Lumpur, Malaysia.",
+    "officeHours": "Office Hours",
+    "officeHoursText": "MON-FRI 10:00-18:00. Closed on weekends and public holidays.",
+    "note": "We do not accept walk-in customers. Please contact us in advance for assistance."
   }
 }

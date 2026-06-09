@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="static" mediaPresentationDuration="PT31.5S" minBufferTime="PT8S">
+  <Period id="0">
+    <AdaptationSet id="907322448" mimeType="video/mp4" segmentAlignment="true" >
+    <Representation id="1356058159" bandwidth="486964" codecs="avc1.42c015" frameRate="30/1" height="240" width="568">
+  <SegmentTemplate duration="120000" initialization="../../a97ca274064c0ca00509866efa69e7f1/video/240/init.mp4?p=eyJ0eXBlIjoiaW5pdCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI4OGEyNjMzMDNjYWUzODFhOTQ4N2JjYjE4ZTQyMDUwYSIsInJlbmRpdGlvbiI6IjEzNTYwNTgxNTkiLCJtdXhpbmciOiIxNDE1MDM4MzM3In0&amp;s=DDtpB8OWw4rDrULDk3oIRMOXwqgjfwPDvsK9w7rDpl1wwrRmw4lnw68WAcK4w7g" media="../../a97ca274064c0ca00509866efa69e7f1/video/240/seg_$Number$.mp4?p=eyJ0eXBlIjoic2VnbWVudCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInNlZ21lbnREdXJhdGlvblNlY3MiOjQsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI4OGEyNjMzMDNjYWUzODFhOTQ4N2JjYjE4ZTQyMDUwYSIsInJlbmRpdGlvbiI6IjEzNTYwNTgxNTkiLCJtdXhpbmciOiIxNDE1MDM4MzM3In0&amp;s=QmLDn8OCX8O3wqdhwqvCm8KDPnohw71vW8KIawwEY8K8NXZSw7nDhcOcH8OHw5M" startNumber="1" timescale="30000"></SegmentTemplate>
+</Representation>
+<Representation id="1356058171" bandwidth="705022" codecs="avc1.4d401e" frameRate="30/1" height="360" width="852">
+  <SegmentTemplate duration="120000" initialization="../../a97ca274064c0ca00509866efa69e7f1/video/360/init.mp4?p=eyJ0eXBlIjoiaW5pdCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI4OGEyNjMzMDNjYWUzODFhOTQ4N2JjYjE4ZTQyMDUwYSIsInJlbmRpdGlvbiI6IjEzNTYwNTgxNzEiLCJtdXhpbmciOiIxNDE1MDM4MzQ5In0&amp;s=MsKdwqBEGiBXY0nCvsOFwpwowqTDkhRJw6gVVMOHH8OvSgPCpcK7woFuC8OMPg" media="../../a97ca274064c0ca00509866efa69e7f1/video/360/seg_$Number$.mp4?p=eyJ0eXBlIjoic2VnbWVudCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInNlZ21lbnREdXJhdGlvblNlY3MiOjQsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI4OGEyNjMzMDNjYWUzODFhOTQ4N2JjYjE4ZTQyMDUwYSIsInJlbmRpdGlvbiI6IjEzNTYwNTgxNzEiLCJtdXhpbmciOiIxNDE1MDM4MzQ5In0&amp;s=EFsrdMKTwoZcw67CocOnw6HDjxsIMAXCvDfChQfCq2DChsK4UEbCtCzCoxFFwrg" startNumber="1" timescale="30000"></SegmentTemplate>
+</Representation>
+<Representation id="1356058183" bandwidth="1083850" codecs="avc1.4d401f" frameRate="30/1" height="480" width="1136">
+  <SegmentTemplate duration="120000" initialization="../../a97ca274064c0ca00509866efa69e7f1/video/480/init.mp4?p=eyJ0eXBlIjoiaW5pdCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI4OGEyNjMzMDNjYWUzODFhOTQ4N2JjYjE4ZTQyMDUwYSIsInJlbmRpdGlvbiI6IjEzNTYwNTgxODMiLCJtdXhpbmciOiIxNDE1MDM4MzYxIn0&amp;s=SRdJwqHCjsKAYsKTTcKIdsOReMObdx3CiFA0wo3Cp0PDgArCjMKKE20Ewr_CikY" media="../../a97ca274064c0ca00509866efa69e7f1/video/480/seg_$Number$.mp4?p=eyJ0eXBlIjoic2VnbWVudCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInNlZ21lbnREdXJhdGlvblNlY3MiOjQsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI4OGEyNjMzMDNjYWUzODFhOTQ4N2JjYjE4ZTQyMDUwYSIsInJlbmRpdGlvbiI6IjEzNTYwNTgxODMiLCJtdXhpbmciOiIxNDE1MDM4MzYxIn0&amp;s=csOKwr9AfsO8w5rDs3tBwrZTAyfDlMK1fFHDoXPCgsOewqwRw6HCsw06JSUnCw" startNumber="1" timescale="30000"></SegmentTemplate>
+</Representation>
+</AdaptationSet>
+
+<AdaptationSet id="1001582504" mimeType="audio/mp4" segmentAlignment="true" lang="original">
+    <Representation id="1356058169" audioSamplingRate="44100" bandwidth="130870" codecs="mp4a.40.2">
+  <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+
+  <SegmentTemplate duration="176896" initialization="../../a97ca274064c0ca00509866efa69e7f1/audio/130/init.mp4?p=eyJ0eXBlIjoiaW5pdCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI5NGYyZTQxMDFhYTNjODYyN2NkYzE0MDQ2ZTdmYWFlMiIsInJlbmRpdGlvbiI6IjEzNTYwNTgxNjkiLCJtdXhpbmciOiIxNDE1MDM4MzQ3In0&amp;s=wrAdfcKCEcKvwrLDtDBCbMK4UBNcw41hLS5TNBvDmcKbSRw1dwXDosKPZg" media="../../a97ca274064c0ca00509866efa69e7f1/audio/130/seg_$Number$.mp4?p=eyJ0eXBlIjoic2VnbWVudCIsInZpZGVvSUQiOiJhOTdjYTI3NDA2NGMwY2EwMDUwOTg2NmVmYTY5ZTdmMSIsIm93bmVySUQiOjEwNDc3NjMsImNyZWF0b3JJRCI6IiIsInNlZ21lbnREdXJhdGlvblNlY3MiOjQuMDExMjQ3MTY1NTMyODgsInN0b3JhZ2VQcm92aWRlciI6NCwidHJhY2siOiI5NGYyZTQxMDFhYTNjODYyN2NkYzE0MDQ2ZTdmYWFlMiIsInJlbmRpdGlvbiI6IjEzNTYwNTgxNjkiLCJtdXhpbmciOiIxNDE1MDM4MzQ3In0&amp;s=YADDoToswqt6AyfChToBw64hw682w6vDj1kTHQjCkcKlwqBGw4ZETsK8QcK_" startNumber="1" timescale="44100"></SegmentTemplate>
+</Representation>
+  
+</AdaptationSet>
+
+  </Period>
+</MPD>
+    
