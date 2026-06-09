@@ -174,8 +174,8 @@ export function HeroSectionA() {
               <div className="absolute inset-0 -m-3 md:-m-6 glass-card rounded-2xl md:rounded-3xl" />
 
               <Image
-                src="/products/greenmax/main.png"
-                alt="GreenMAX — flagship product of M-International"
+                src="/products/micrystal/main.png"
+                alt="MiCrystal — флагманский продукт M-International"
                 width={420}
                 height={420}
                 priority

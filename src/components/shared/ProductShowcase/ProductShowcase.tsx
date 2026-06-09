@@ -15,20 +15,20 @@ const SHOWCASE_CONFIG: Record<
   string,
   { subtitle: string; descriptionKey: string; color: string }
 > = {
+  micrystal: {
+    subtitle: "Health & Energy",
+    descriptionKey: "micrystal.description",
+    color: "#c4a035",
+  },
+  "ye-katerina": {
+    subtitle: "Personal Care",
+    descriptionKey: "yekaterina.description",
+    color: "#8a4a7a",
+  },
   greenmax: {
     subtitle: "Antioxidant & Detox",
     descriptionKey: "greenmax.description",
     color: "#5a9e3a",
-  },
-  blumax: {
-    subtitle: "Immunity & Vitality",
-    descriptionKey: "blumax.description",
-    color: "#3a6ea5",
-  },
-  "ye-katerina": {
-    subtitle: "Women's Health",
-    descriptionKey: "yekaterina.description",
-    color: "#8a4a7a",
   },
 };
 

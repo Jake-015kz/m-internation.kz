@@ -2,6 +2,42 @@ import type { Product } from '@/types';
 
 export const products: Product[] = [
   {
+    slug: 'micrystal',
+    name: 'MiCrystal',
+    description: 'Поддерживает общее здоровье, повышает энергию, укрепляет иммунитет и восполняет дефицит питательных веществ для ежедневного благополучия.',
+    images: ['/products/micrystal/main.png'],
+    category: 'Supplement',
+    specifications: {
+      'Форма выпуска': 'Порошок',
+      'Упаковка': '30 порций',
+    },
+    certificates: ['GMP', 'ISO', 'HALAL'],
+  },
+  {
+    slug: 'ye-katerina',
+    name: 'Ye-Katerina',
+    description: 'Продукт для женского здоровья. Ежедневная поддержка гигиены, здоровья и уверенности в себе.',
+    images: ['/products/ye-katerina/main.png'],
+    category: 'Personal Care',
+    specifications: {
+      'Форма выпуска': 'Капсулы',
+      'Упаковка': '60 капсул',
+    },
+    certificates: ['GMP', 'ISO', 'HALAL'],
+  },
+  {
+    slug: 'mitown',
+    name: 'MiTown',
+    description: 'Для обогащения повседневной жизни, сочетая функциональность с личным самовыражением. Комфорт, благополучие и индивидуальный стиль.',
+    images: ['/products/mitown/main.png'],
+    category: 'Lifestyle',
+    specifications: {
+      'Форма выпуска': 'Капсулы',
+      'Упаковка': '60 капсул',
+    },
+    certificates: ['GMP', 'ISO', 'HALAL'],
+  },
+  {
     slug: 'greenmax',
     name: 'GreenMAX',
     description: 'Детокс, иммунитет, энергия. Содержит пребиотики, пробиотики, ферменты, клетчатку, антиоксиданты.',
@@ -22,18 +58,6 @@ export const products: Product[] = [
     specifications: {
       'Форма выпуска': 'Жидкость',
       'Упаковка': '100 мл',
-    },
-    certificates: ['GMP', 'ISO', 'HALAL'],
-  },
-  {
-    slug: 'ye-katerina',
-    name: 'Ye-Katerina',
-    description: 'Продукт для женского здоровья.',
-    images: ['/products/ye-katerina/main.png'],
-    category: 'Женское здоровье',
-    specifications: {
-      'Форма выпуска': 'Капсулы',
-      'Упаковка': '60 капсул',
     },
     certificates: ['GMP', 'ISO', 'HALAL'],
   },
@@ -74,18 +98,6 @@ export const products: Product[] = [
     certificates: ['GMP', 'ISO', 'HALAL'],
   },
   {
-    slug: 'ebooster',
-    name: 'Ebooster',
-    description: 'Энергетический активатор воды. Основан на концепции Ци (ТКМ). Дальнее инфракрасное излучение.',
-    images: ['/products/ebooster/main.png'],
-    category: 'Аксессуары',
-    specifications: {
-      'Тип': 'Активационный стержень',
-      'Срок службы': '2 года',
-    },
-    certificates: ['GMP', 'ISO'],
-  },
-  {
     slug: 'fleximax',
     name: 'FlexiMAX',
     description: 'Для гибкости суставов и связок.',
@@ -122,16 +134,16 @@ export const products: Product[] = [
     certificates: ['GMP', 'ISO', 'HALAL'],
   },
   {
-    slug: 'mitown',
-    name: 'MiTown',
-    description: 'Городской продукт. Позиционирование для жителей городов.',
-    images: ['/products/mitown/main.png'],
-    category: 'Городская жизнь',
+    slug: 'ebooster',
+    name: 'Ebooster',
+    description: 'Энергетический активатор воды. Основан на концепции Ци (ТКМ). Дальнее инфракрасное излучение.',
+    images: ['/products/ebooster/main.png'],
+    category: 'Аксессуары',
     specifications: {
-      'Форма выпуска': 'Капсулы',
-      'Упаковка': '60 капсул',
+      'Тип': 'Активационный стержень',
+      'Срок службы': '2 года',
     },
-    certificates: ['GMP', 'ISO', 'HALAL'],
+    certificates: ['GMP', 'ISO'],
   },
   {
     slug: 'chai-relax',

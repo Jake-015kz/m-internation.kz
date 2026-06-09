@@ -6,11 +6,6 @@ export interface TimelineItem {
 
 export const TIMELINE_ITEMS: TimelineItem[] = [
   {
-    year: "2018",
-    titleKey: "timeline.2018.title",
-    descriptionKey: "timeline.2018.description",
-  },
-  {
     year: "2019",
     titleKey: "timeline.2019.title",
     descriptionKey: "timeline.2019.description",
@@ -26,8 +21,13 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     descriptionKey: "timeline.2022.description",
   },
   {
-    year: "2024",
-    titleKey: "timeline.2024.title",
-    descriptionKey: "timeline.2024.description",
+    year: "2023",
+    titleKey: "timeline.2023.title",
+    descriptionKey: "timeline.2023.description",
+  },
+  {
+    year: "2025",
+    titleKey: "timeline.2025.title",
+    descriptionKey: "timeline.2025.description",
   },
 ] as const;
