@@ -1,9 +1,18 @@
 import { products } from "@/data/products";
+import { routing } from "@/i18n/routing";
 import { getProductBySlug, getRelatedProducts } from "@/services/productService";
 import { ProductPageClient } from "./page.client";
 
 export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+  // Generate params for all locale + slug combinations
+  const slugs = products.map((product) => product.slug);
+  const params: { slug: string; locale: string }[] = [];
+  for (const locale of routing.locales) {
+    for (const slug of slugs) {
+      params.push({ slug, locale });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({
