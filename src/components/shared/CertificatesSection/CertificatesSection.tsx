@@ -44,7 +44,7 @@ function MarqueeRow({
   const doubled = [...items, ...items];
 
   return (
-    <div className="overflow-hidden marquee-container">
+    <div className="overflow-hidden">
       <div ref={rowRef} className="flex items-center gap-4 md:gap-6 will-change-transform">
         {doubled.map((cert, i) => (
           <div
@@ -74,7 +74,6 @@ export function CertificatesSection() {
   const t = useTranslations("certificates");
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const bgTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const reduce = prefersReducedMotion();
@@ -86,14 +85,6 @@ export function CertificatesSection() {
           opacity: 1, y: 0, duration: 0.6,
           ease: EASING.gentle as unknown as gsap.EaseFunction,
           scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
-        });
-      }
-
-      // Background text parallax
-      if (bgTextRef.current && sectionRef.current) {
-        gsap.fromTo(bgTextRef.current, { opacity: 0 }, {
-          opacity: 1, duration: 0.8,
-          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
         });
       }
     });
@@ -112,15 +103,13 @@ export function CertificatesSection() {
       className="relative py-12 md:py-20 overflow-hidden"
       aria-labelledby="certificates-title"
     >
-      {/* Large background text */}
+      {/* Large background text — always visible, no GSAP dependency */}
       <div
-        ref={bgTextRef}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-0"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden="true"
       >
         <span
-          className="font-heading font-bold text-[clamp(3rem,12vw,10rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.03] whitespace-nowrap"
-          style={{ WebkitTextStroke: "1px var(--border-subtle)" }}
+          className="font-heading font-bold text-[clamp(3rem,12vw,10rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.04] whitespace-nowrap"
         >
           {t("title").toUpperCase()}
         </span>
@@ -128,7 +117,7 @@ export function CertificatesSection() {
 
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-8 md:mb-12" style={{ opacity: 1 }}>
+        <div ref={headerRef} className="text-center mb-8 md:mb-12">
           <h2
             id="certificates-title"
             className="font-heading font-semibold text-2xl leading-[1.15] text-[var(--fg-primary)] tracking-[-0.02em] mb-3 md:text-3xl lg:text-4xl"

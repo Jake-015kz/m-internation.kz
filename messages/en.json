@@ -16,9 +16,9 @@
   },
   "hero": {
     "label": "International company",
-    "title": "HEALTH IS WEALTH",
-    "titleHighlight": "WEALTH",
-    "subtitle": "Innovative natural products for your health and longevity from M-International",
+    "title": "Natural Products with International Quality Certificates",
+    "titleHighlight": "Quality Certificates",
+    "subtitle": "Helping you stay healthy without chemicals — 100% plant-based formulas, proven in 50+ countries",
     "cta": "View catalog",
     "aboutLink": "About us",
     "stat": {
@@ -242,7 +242,8 @@
     "related": "Related products",
     "specifications": "Specifications",
     "certificates": "Certificates",
-    "backToCatalog": "Back to catalog"
+    "backToCatalog": "Back to catalog",
+    "contact": "Contact us"
   },
   "aboutPage": {
     "title": "About M-International",

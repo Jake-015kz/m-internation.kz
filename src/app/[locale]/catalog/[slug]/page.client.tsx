@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { use } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { ProductGrid } from "@/components/shared/ProductGrid/ProductGrid";
 
@@ -47,11 +47,22 @@ interface ProductPageClientProps {
 export function ProductPageClient({ params }: ProductPageClientProps) {
   const { slug, locale } = use(params);
   const product = getProductBySlug(slug);
+  const t = useTranslations("catalog");
+  const tNav = useTranslations("nav");
+  const tProducts = useTranslations("products");
 
   if (!product) notFound();
 
   const relatedProducts = getRelatedProducts(slug, 4);
   const accent = getAccent(slug);
+
+  // Localized product name/description from i18n if available, fallback to data
+  const productName = tProducts(`${product.slug}.name`) !== `products.${product.slug}.name`
+    ? tProducts(`${product.slug}.name`)
+    : product.name;
+  const productDescription = tProducts(`${product.slug}.description`) !== `products.${product.slug}.description`
+    ? tProducts(`${product.slug}.description`)
+    : product.description;
 
   return (
     <main className="min-h-screen pt-16 pb-20 relative">
@@ -72,24 +83,24 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
             href={`/${locale}`}
             className="font-body text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--fg-primary)]"
           >
-            Главная
+            {tNav("home")}
           </Link>
           <span className="font-body text-[var(--border)]">/</span>
           <Link
             href={`/${locale}/catalog`}
             className="font-body text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--fg-primary)]"
           >
-            Продукция
+            {tNav("catalog")}
           </Link>
           <span className="font-body text-[var(--border)]">/</span>
           <span className="font-body text-[var(--fg-primary)] font-semibold">
-            {product.name}
+            {productName}
           </span>
         </nav>
 
-        {/* Product hero — image + info side by side, NO sticky */}
+        {/* Product hero — image + info side by side */}
         <div className="grid grid-cols-1 gap-6 md:gap-10 mb-12 md:mb-16 lg:grid-cols-2 lg:gap-12">
-          {/* Image — NOT sticky, just a normal block */}
+          {/* Image */}
           <div className="relative">
             <div
               className="aspect-square rounded-[var(--radius-lg)] overflow-hidden flex items-center justify-center relative"
@@ -99,37 +110,22 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
               }}
             >
               {/* Decorative corner accents */}
-              <div
-                className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 rounded-tl-sm opacity-20"
-                style={{ borderColor: accent }}
-              />
-              <div
-                className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 rounded-tr-sm opacity-20"
-                style={{ borderColor: accent }}
-              />
-              <div
-                className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 rounded-bl-sm opacity-20"
-                style={{ borderColor: accent }}
-              />
-              <div
-                className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 rounded-br-sm opacity-20"
-                style={{ borderColor: accent }}
-              />
+              <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 rounded-tl-sm opacity-20" style={{ borderColor: accent }} />
+              <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 rounded-tr-sm opacity-20" style={{ borderColor: accent }} />
+              <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 rounded-bl-sm opacity-20" style={{ borderColor: accent }} />
+              <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 rounded-br-sm opacity-20" style={{ borderColor: accent }} />
 
               {product.images?.[0] ? (
                 <Image
                   src={product.images[0]}
-                  alt={product.name}
+                  alt={productName}
                   width={500}
                   height={500}
                   className="w-full h-full object-contain p-6 md:p-10"
                 />
               ) : (
-                <span
-                  className="font-heading font-bold text-6xl"
-                  style={{ color: `${accent}40` }}
-                >
-                  {product.name.charAt(0)}
+                <span className="font-heading font-bold text-6xl" style={{ color: `${accent}40` }}>
+                  {productName.charAt(0)}
                 </span>
               )}
 
@@ -159,11 +155,11 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
               </div>
 
               <h1 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] md:text-3xl lg:text-4xl">
-                {product.name}
+                {productName}
               </h1>
 
               <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-secondary)]">
-                {product.description}
+                {productDescription}
               </p>
             </div>
 
@@ -171,20 +167,13 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
             {Object.keys(product.specifications).length > 0 && (
               <div className="pb-6 border-b border-[var(--border-subtle)]">
                 <h2 className="font-heading font-semibold text-base md:text-lg leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-4">
-                  Характеристики
+                  {t("specifications")}
                 </h2>
                 <dl className="flex flex-col gap-0">
                   {Object.entries(product.specifications).map(([key, value]) => (
-                    <div
-                      key={key}
-                      className="flex justify-between py-2.5 border-b border-[var(--border-subtle)] last:border-b-0"
-                    >
-                      <dt className="font-body text-sm text-[var(--fg-muted)]">
-                        {key}
-                      </dt>
-                      <dd className="font-body text-sm text-[var(--fg-primary)] font-medium">
-                        {value}
-                      </dd>
+                    <div key={key} className="flex justify-between py-2.5 border-b border-[var(--border-subtle)] last:border-b-0">
+                      <dt className="font-body text-sm text-[var(--fg-muted)]">{key}</dt>
+                      <dd className="font-body text-sm text-[var(--fg-primary)] font-medium">{value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -195,7 +184,7 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
             {product.certificates.length > 0 && (
               <div className="pb-6 border-b border-[var(--border-subtle)]">
                 <h2 className="font-heading font-semibold text-base md:text-lg leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-4">
-                  Сертификаты
+                  {t("certificates")}
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {product.certificates.map((cert) => (
@@ -225,13 +214,13 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
                   boxShadow: `0 0 20px ${accent}30, 0 0 40px ${accent}10`,
                 }}
               >
-                Связаться с нами
+                {t("contact")}
               </Link>
               <Link
                 href={`/${locale}/catalog`}
                 className="inline-flex items-center justify-center bg-transparent border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--accent-primary)]"
               >
-                ← Назад к каталогу
+                ← {t("backToCatalog")}
               </Link>
             </div>
           </div>
@@ -241,7 +230,7 @@ export function ProductPageClient({ params }: ProductPageClientProps) {
         {relatedProducts.length > 0 && (
           <div className="pt-12 md:pt-16 border-t border-[var(--border-subtle)]">
             <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-8 md:text-2xl lg:text-3xl">
-              Похожие продукты
+              {t("related")}
             </h2>
             <ProductGrid products={relatedProducts} />
           </div>

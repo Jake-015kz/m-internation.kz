@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { products } from "@/data/products";
 import { ProductGrid } from "./ProductGrid";
 
 const CATEGORIES = [
-  { key: "all", label: "Все", icon: "⊕" },
-  { key: "supplements", label: "БАДы", icon: "◆", slugs: ["micrystal","greenmax","mimax","blumax","nutrimax","fleximax","machoman","mishroom","lamor","kordymax","promax"] },
-  { key: "personal", label: "Уход", icon: "◈", slugs: ["ye-katerina","mi-mask","mi-serum","magicare","mifresh"] },
-  { key: "lifestyle", label: "Образ жизни", icon: "●", slugs: ["mitown","essential-oil","relax","miwellness","shaker","ebooster","chai-relax","energy-card"] },
+  { key: "all", icon: "⊕" },
+  { key: "supplements", icon: "◆", slugs: ["micrystal","greenmax","mimax","blumax","nutrimax","fleximax","machoman","mishroom","lamor","kordymax","promax"] },
+  { key: "personal", icon: "◈", slugs: ["ye-katerina","mi-mask","mi-serum","magicare","mifresh"] },
+  { key: "lifestyle", icon: "●", slugs: ["mitown","essential-oil","relax","miwellness","shaker","ebooster","chai-relax","energy-card"] },
 ];
 
 function getCategoryFilter(key: string) {
@@ -20,11 +21,19 @@ function getCategoryFilter(key: string) {
 
 export function CatalogFilter() {
   const [activeCategory, setActiveCategory] = useState("all");
+  const t = useTranslations("footer");
 
   const filtered = useMemo(
     () => products.filter(getCategoryFilter(activeCategory)),
     [activeCategory]
   );
+
+  const categoryLabels: Record<string, string> = {
+    all: t("allProducts"),
+    supplements: "БАДы",
+    personal: "Уход",
+    lifestyle: "Образ жизни",
+  };
 
   return (
     <div>
@@ -48,12 +57,8 @@ export function CatalogFilter() {
               `}
             >
               <span className="text-[10px] md:text-xs opacity-60">{cat.icon}</span>
-              <span>{cat.label}</span>
-              <span
-                className={`text-[10px] ml-0.5 ${
-                  activeCategory === cat.key ? "text-white/60" : "text-[var(--fg-dim)]"
-                }`}
-              >
+              <span>{categoryLabels[cat.key]}</span>
+              <span className={`text-[10px] ml-0.5 ${activeCategory === cat.key ? "text-white/60" : "text-[var(--fg-dim)]"}`}>
                 ({cat.key === "all" ? products.length : products.filter(getCategoryFilter(cat.key)).length})
               </span>
             </button>
@@ -64,7 +69,7 @@ export function CatalogFilter() {
       {/* Results count */}
       <div className="flex items-center gap-2 mb-6">
         <span className="font-mono text-[10px] md:text-xs text-[var(--fg-dim)] uppercase tracking-[0.08em]">
-          Найдено: {filtered.length}
+          {filtered.length} {filtered.length === 1 ? "product" : "products"}
         </span>
         <div className="flex-1 h-px bg-[var(--border-subtle)]" />
       </div>
@@ -75,7 +80,7 @@ export function CatalogFilter() {
       ) : (
         <div className="text-center py-20">
           <p className="font-body text-sm text-[var(--fg-muted)]">
-            Нет продуктов в этой категории
+            No products in this category
           </p>
         </div>
       )}
