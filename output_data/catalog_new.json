@@ -1,0 +1,105 @@
+[
+  {
+    "id": "greenmax",
+    "url": "/product/greenmax",
+    "name": "GreenMAX",
+    "price": "",
+    "description": "Растительная формула 3 в 1: очищение кишечника, восстановление микрофлоры, защита печени",
+    "images": [
+      "/images/greenmax/s_31l95g0061_a91abe2ff0bf64ab0b4491c02b42fcb2.jpg",
+      "/images/greenmax/e0966b7a3093e4a8666bbdc2e9b95597.jpg",
+      "/images/greenmax/2203cede4658b5606f1a6601395ec558.jpg",
+      "/images/greenmax/048ef85b99b8895c3cf0d29235667e2a.jpg",
+      "/images/greenmax/s_2snlbp051_6713041a047e14901484a70dd21a36b0.jpg",
+      "/images/greenmax/s_214d330061_d7054b3ea41833c4a80137ceb7e4c621.jpg",
+      "/images/greenmax/s_215j0di061_69a57e4c21b1576171e486b021c15ce6.jpg",
+      "/images/greenmax/s_215j128061_5a69b2931f81e16e034b6bf7bb220c02.jpg"
+    ],
+    "images_directory": "images/greenmax",
+    "specifications": {},
+    "category": "detox"
+  },
+  {
+    "id": "mimax",
+    "url": "/product/mimax",
+    "name": "MiMAX",
+    "price": "",
+    "description": "Антиоксидант №1 с астаксантином. Действие в 6000 раз мощнее витамина С",
+    "images": [
+      "/images/mimax/s_31legc0061_68ff01c6087912a66003f61076429dcb.jpg",
+      "/images/mimax/481d370a71fbda209007fad6e9bafc48.jpg",
+      "/images/mimax/s_21a8b37061_cdd3f3eb691ed5bb4a2c17b43a2187ae.png",
+      "/images/mimax/s_31fdqo9061_6561e843724afeb476058f21b1568525.jpg",
+      "/images/mimax/s_215j0id061_590a32d3a3662ba81179b29ebc135b87.jpg"
+    ],
+    "images_directory": "images/mimax",
+    "specifications": {},
+    "category": "anti-aging"
+  },
+  {
+    "id": "nutrimax",
+    "url": "/product/nutrimax",
+    "name": "NutriMAX",
+    "price": "",
+    "description": "Полноценное питание в одном коктейле. Соевый протеин + спирулина + хлорелла",
+    "images": [
+      "/images/nutrimax/s_31lef9s061_a6472fa701b14e1cf5dd24779c18daa4.jpg",
+      "/images/nutrimax/s_31lef0h061_e6d461632be0b802b26f2d37b0e40c24.png",
+      "/images/nutrimax/s_31lef7m061_759e4655a0082217933eb24945094663.jpg",
+      "/images/nutrimax/s_212bsi0061_368c2ae0a48932e5320b0a05330074be.jpg"
+    ],
+    "images_directory": "images/nutrimax",
+    "specifications": {},
+    "category": "nutrition"
+  },
+  {
+    "id": "fleximax",
+    "url": "/product/fleximax",
+    "name": "FlexiMAX",
+    "price": "",
+    "description": "Комплексная защита суставов, хрящей и костей",
+    "images": [
+      "/images/fleximax/s_31l95g0061_ce8020342606846f491c679a163cab19.jpg",
+      "/images/fleximax/s_31l95g0061_6efe139fa5a581e780ce6c8d99842df9.jpg",
+      "/images/fleximax/s_31l95g0061_51c03a274af0cd0b4a6d5c566afe480d.jpg",
+      "/images/fleximax/s_31lege2061_2186c76dcabadd1d7789e9bab8fa38a8.jpg",
+      "/images/fleximax/s_31lef9s061_0f544e64bbfafd58ef04a6c176689deb.jpg"
+    ],
+    "images_directory": "images/fleximax",
+    "specifications": {},
+    "category": "joints"
+  },
+  {
+    "id": "machoman",
+    "url": "/product/machoman",
+    "name": "MachoMAN",
+    "price": "",
+    "description": "Клеточное питание для мужчин. Поддержка половой функции, повышение тестостерона",
+    "images": [
+      "/images/machoman/s_31gmfn7061_7dba25f77c98490785d236d2354825ac.jpg",
+      "/images/machoman/0ff4a6583cf1b23568c712fc9c504625.png",
+      "/images/machoman/s_31lef9s061_6e548555c4dffb6aed45c8b07213abef.jpg",
+      "/images/machoman/s_31gh4rj061_e76f19bd400b7620819a25738bb85429.jpg",
+      "/images/machoman/s_31lefjq061_ae7d06d369d93faa2b18de9a0d66af21.jpg"
+    ],
+    "images_directory": "images/machoman",
+    "specifications": {},
+    "category": "men"
+  },
+  {
+    "id": "blumax",
+    "url": "/product/blumax",
+    "name": "BluMAX",
+    "price": "",
+    "description": "Сине-зелёные водоросли AFA + витамин С. 60+ минералов, нейропептиды",
+    "images": [
+      "/images/blumax/s_31lef9s061_8d217f7def0efdeb9f38b144653739c0.jpg",
+      "/images/blumax/s_210o8n0061_b444b8ea04194a4b7ae24a88617dba94.jpg",
+      "/images/blumax/s_216jhcl061_d82d48f17b5358129fef3ca87cc31592.jpg",
+      "/images/blumax/s_219d7i8061_9d104958ebf50ebdaf61b1eb0c2c7336.jpg"
+    ],
+    "images_directory": "images/blumax",
+    "specifications": {},
+    "category": "immunity"
+  }
+]
