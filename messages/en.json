@@ -7,6 +7,11 @@
     "open": "Open",
     "menu": "Menu"
   },
+  "errors": {
+    "title": "An error occurred",
+    "description": "Try refreshing the page",
+    "retry": "Try again"
+  },
   "errorPage": {
     "title": "Error",
     "subtitle": "Something went wrong",

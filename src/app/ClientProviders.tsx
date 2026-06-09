@@ -1,12 +1,42 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { useEffect, useState, type ReactNode } from "react";
 
-const ProvidersWrapper = dynamic(
-  () => import("@shared/ProvidersWrapper").then((m) => m.ProvidersWrapper),
-  { ssr: false }
-);
+interface ClientProvidersProps {
+  children: ReactNode;
+}
 
-export function ClientProviders({ children }: { children: React.ReactNode }) {
-  return <ProvidersWrapper>{children}</ProvidersWrapper>;
+export function ClientProviders({ children }: ClientProvidersProps) {
+  const [effects, setEffects] = useState<ReactNode>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    // Dynamically import effects only on client after mount
+    Promise.all([
+      import("@shared/NoiseOverlay").then((m) => m.NoiseOverlay),
+      import("@shared/ClickSpark").then((m) => m.ClickSpark),
+    ]).then(([NoiseOverlay, ClickSpark]) => {
+      setEffects(
+        <>
+          <NoiseOverlay />
+          <ClickSpark />
+        </>
+      );
+    }).catch((err) => {
+      console.error("[ClientProviders] Failed to load effects:", err);
+    });
+  }, [isMounted]);
+
+  return (
+    <>
+      {effects}
+      {children}
+    </>
+  );
 }

@@ -1,10 +1,29 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-base)]" role="status" aria-label="Loading">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-8 h-8 border-2 border-[var(--border)] border-t-[var(--accent-primary)] rounded-full animate-spin" />
-        <span className="text-sm text-[var(--fg-muted)]">Loading...</span>
-      </div>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        fontFamily: "system-ui, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          width: "2rem",
+          height: "2rem",
+          border: "3px solid oklch(0.78 0.22 135 / 0.2)",
+          borderTopColor: "oklch(0.78 0.22 135)",
+          borderRadius: "50%",
+          animation: "spin 0.8s linear infinite",
+        }}
+      />
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

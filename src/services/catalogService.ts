@@ -20,7 +20,7 @@ export async function filterProductsByCategory(categoryKey: CategoryKey): Promis
 
   try {
     if (!Array.isArray(products)) {
-      console.error("[catalogService] CRITICAL: products is not an array!", typeof products);
+      console.error("[catalogService] CRITICAL: products is not an array!", typeof products, products);
       return [];
     }
 
@@ -34,7 +34,7 @@ export async function filterProductsByCategory(categoryKey: CategoryKey): Promis
     console.log("[catalogService] filtered count:", filtered.length);
     return filtered;
   } catch (e) {
-    console.error("[catalogService] ERROR in filterProductsByCategory:", e);
+    console.error("[catalogService] ERROR in filterProductsByCategory:", e instanceof Error ? e.message : JSON.stringify(e));
     return [];
   }
 }

@@ -2,14 +2,8 @@
 
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import dynamic from "next/dynamic";
 import { SITE_CONFIG, CONTACTS } from "@/lib/constants";
-
-// Subscription form — dynamic to avoid loading subscription logic on every page
-const SubscriptionForm = dynamic(
-  () => import("./SubscriptionForm").then((m) => m.SubscriptionForm),
-  { ssr: false }
-);
+import { SubscriptionForm } from "./SubscriptionForm";
 
 export function Footer() {
   const locale = useLocale();

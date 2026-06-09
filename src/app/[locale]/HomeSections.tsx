@@ -1,25 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
-
-// Below-fold sections — dynamically imported with ssr: false to reduce main bundle
-const CertificatesSection = dynamic(
-  () => import("@shared/CertificatesSection").then((m) => m.CertificatesSection),
-  { ssr: false }
-);
-const ProductShowcase = dynamic(
-  () => import("@shared/ProductShowcase").then((m) => m.ProductShowcase),
-  { ssr: false }
-);
-const AboutSection = dynamic(
-  () => import("@shared/AboutSection").then((m) => m.AboutSection),
-  { ssr: false }
-);
-const BusinessSection = dynamic(
-  () => import("@shared/BusinessSection").then((m) => m.BusinessSection),
-  { ssr: false }
-);
+import { CertificatesSection } from "@shared/CertificatesSection";
+import { ProductShowcase } from "@shared/ProductShowcase";
+import { AboutSection } from "@shared/AboutSection";
+import { BusinessSection } from "@shared/BusinessSection";
 
 interface HomeSectionsProps {
   locale: string;
