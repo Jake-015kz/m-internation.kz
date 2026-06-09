@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -77,13 +78,26 @@ function SlideContent({
     if (!isActive || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: EASING.gentle as unknown as gsap.EaseFunction } });
+      const tl = gsap.timeline({
+        defaults: {
+          ease: EASING.gentle as unknown as gsap.EaseFunction,
+        },
+      });
       if (imageRef.current) {
-        tl.fromTo(imageRef.current, { opacity: 0, scale: 0.9, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.7 });
+        tl.fromTo(
+          imageRef.current,
+          { opacity: 0, scale: 0.9, y: 30 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.7 }
+        );
       }
       if (contentRef.current) {
         const children = contentRef.current.children;
-        tl.fromTo(children, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
+        tl.fromTo(
+          children,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
+          "-=0.4"
+        );
       }
     });
 
@@ -95,7 +109,10 @@ function SlideContent({
   return (
     <div className="grid grid-cols-1 gap-4 items-center lg:grid-cols-2 lg:gap-8 h-full">
       {/* Image */}
-      <div ref={imageRef} className="flex justify-center items-center opacity-0">
+      <div
+        ref={imageRef}
+        className="flex justify-center items-center opacity-0"
+      >
         <div className="relative w-full max-w-[180px] sm:max-w-[240px] md:max-w-[300px] lg:max-w-[380px]">
           {/* Color glow behind product */}
           <div
@@ -119,7 +136,10 @@ function SlideContent({
       </div>
 
       {/* Info */}
-      <div ref={contentRef} className="flex flex-col gap-2 md:gap-3 text-center lg:text-left">
+      <div
+        ref={contentRef}
+        className="flex flex-col gap-2 md:gap-3 text-center lg:text-left"
+      >
         <span
           className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em] opacity-0"
           style={{ color: config.color }}
@@ -170,55 +190,88 @@ export function ProductShowcase() {
   const t = useTranslations("products");
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Intersection observer for active slide
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
+  const goTo = useCallback((index: number) => {
+    const clamped = Math.max(0, Math.min(index, showcaseProducts.length - 1));
+    setActiveIndex(clamped);
+    if (trackRef.current) {
+      const slideWidth = trackRef.current.scrollWidth / showcaseProducts.length;
+      trackRef.current.scrollTo({
+        left: slideWidth * clamped,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
+  const goNext = useCallback(() => {
+    goTo(activeIndex + 1);
+  }, [activeIndex, goTo]);
+
+  const goPrev = useCallback(() => {
+    goTo(activeIndex - 1);
+  }, [activeIndex, goTo]);
+
+  // Update active index on scroll
   const handleScroll = useCallback(() => {
-    const viewportCenter = window.innerHeight / 2;
-    let closest = 0;
-    let closestDist = Infinity;
-
-    slideRefs.current.forEach((ref, i) => {
-      if (!ref) return;
-      const rect = ref.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
-      const dist = Math.abs(center - viewportCenter);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closest = i;
-      }
-    });
-
-    setActiveIndex(closest);
+    if (!trackRef.current) return;
+    const slideWidth = trackRef.current.scrollWidth / showcaseProducts.length;
+    const index = Math.round(trackRef.current.scrollLeft / slideWidth);
+    setActiveIndex(index);
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const track = trackRef.current;
+    if (!track) return;
+    track.addEventListener("scroll", handleScroll, { passive: true });
+    return () => track.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   useEffect(() => {
     const reduce = prefersReducedMotion();
 
     if (!reduce && headerRef.current) {
-      gsap.fromTo(headerRef.current, { opacity: 0, y: 20 }, {
-        opacity: 1, y: 0, duration: 0.6,
-        ease: EASING.gentle as unknown as gsap.EaseFunction,
-        scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
-      });
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: EASING.gentle as unknown as gsap.EaseFunction,
+          scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
+        }
+      );
     }
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[var(--bg-elevated)]"
+      className="relative bg-[var(--bg-elevated)] overflow-hidden"
     >
-      {/* Fixed header that stays above slides */}
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 pt-10 md:pt-16 pb-4 md:pb-6">
-        <div ref={headerRef} className="text-center lg:text-left max-w-[36rem]" style={{ opacity: 1 }}>
+      {/* Decorative background */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 50% 60% at 30% 50%, ${SHOWCASE_CONFIG[showcaseProducts[activeIndex]?.slug]?.color || "var(--accent-primary)"} 0%, transparent 70%)`,
+          transition: "background 600ms ease",
+        }}
+      />
+
+      {/* Header */}
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 pt-10 md:pt-16 pb-4 md:pb-6 relative z-10">
+        <div
+          ref={headerRef}
+          className="text-center lg:text-left max-w-[36rem]"
+          style={{ opacity: 1 }}
+        >
           <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-2 md:mb-4 md:text-3xl lg:text-4xl">
             {t("title")}
           </h2>
@@ -228,44 +281,69 @@ export function ProductShowcase() {
         </div>
       </div>
 
-      {/* Full-screen snap slides */}
-      <div>
-        {showcaseProducts.map((product, index) => {
-          const config = SHOWCASE_CONFIG[product.slug];
-          return (
-            <div
-              key={product.slug}
-              ref={(el) => { slideRefs.current[index] = el; }}
-              className="min-h-[100dvh] flex items-center justify-center px-4 md:px-6 lg:px-8 py-8 md:py-12 relative"
-              style={{
-                background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${config?.color}08 0%, transparent 70%)`,
-              }}
-            >
-              <div className="mx-auto max-w-[80rem] w-full">
-                <SlideContent
-                  product={product}
-                  isActive={activeIndex === index}
-                />
-              </div>
-
-              {/* Slide counter */}
-              <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2">
-                {showcaseProducts.map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-1 rounded-full transition-all duration-300"
-                    style={{
-                      width: i === activeIndex ? "24px" : "8px",
-                      backgroundColor: i === activeIndex
-                        ? "var(--accent-primary)"
-                        : "var(--border)",
-                    }}
+      {/* Horizontal slider */}
+      <div className="relative z-10">
+        <div
+          ref={trackRef}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {showcaseProducts.map((product, index) => {
+            const config = SHOWCASE_CONFIG[product.slug];
+            return (
+              <div
+                key={product.slug}
+                className="flex-shrink-0 w-full snap-start flex items-center justify-center px-4 md:px-6 lg:px-8 py-6 md:py-10"
+              >
+                <div className="mx-auto max-w-[80rem] w-full">
+                  <SlideContent
+                    product={product}
+                    isActive={activeIndex === index}
                   />
-                ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center justify-center gap-4 pb-8 md:pb-12">
+          <button
+            onClick={goPrev}
+            disabled={activeIndex === 0}
+            className="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--border)] text-[var(--fg-secondary)] hover:text-[var(--fg-primary)] hover:border-[var(--accent-primary)] transition-all duration-250 disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Предыдущий"
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            {showcaseProducts.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className="h-1.5 rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{
+                  width: i === activeIndex ? "28px" : "8px",
+                  backgroundColor:
+                    i === activeIndex
+                      ? "var(--accent-primary)"
+                      : "var(--border)",
+                }}
+                aria-label={`Слайд ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={goNext}
+            disabled={activeIndex === showcaseProducts.length - 1}
+            className="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--border)] text-[var(--fg-secondary)] hover:text-[var(--fg-primary)] hover:border-[var(--accent-primary)] transition-all duration-250 disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Следующий"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
       </div>
     </section>
   );

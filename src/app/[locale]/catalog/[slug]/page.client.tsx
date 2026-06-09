@@ -1,0 +1,252 @@
+"use client";
+
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { use } from "react";
+import { useLocale } from "next-intl";
+import { getProductBySlug, getRelatedProducts } from "@/data/products";
+import { ProductGrid } from "@/components/shared/ProductGrid/ProductGrid";
+
+// Product-specific accent colors
+const PRODUCT_COLORS: Record<string, string> = {
+  micrystal: "oklch(0.78 0.22 135)",
+  greenmax: "oklch(0.55 0.16 155)",
+  mimax: "oklch(0.55 0.2 25)",
+  blumax: "oklch(0.55 0.16 250)",
+  nutrimax: "oklch(0.55 0.14 140)",
+  fleximax: "oklch(0.6 0.14 65)",
+  machoman: "oklch(0.5 0.15 15)",
+  mishroom: "oklch(0.55 0.12 90)",
+  "ye-katerina": "oklch(0.6 0.18 340)",
+  "mi-mask": "oklch(0.6 0.12 280)",
+  "mi-serum": "oklch(0.6 0.12 280)",
+  magicare: "oklch(0.55 0.15 200)",
+  mifresh: "oklch(0.55 0.15 200)",
+  mitown: "oklch(0.5 0.12 40)",
+  "essential-oil": "oklch(0.6 0.16 280)",
+  relax: "oklch(0.55 0.14 155)",
+  miwellness: "oklch(0.55 0.15 135)",
+  shaker: "oklch(0.5 0.05 265)",
+  lamor: "oklch(0.55 0.14 140)",
+  kordymax: "oklch(0.55 0.18 25)",
+  promax: "oklch(0.55 0.16 135)",
+  ebooster: "oklch(0.55 0.15 250)",
+  "chai-relax": "oklch(0.55 0.14 155)",
+  "energy-card": "oklch(0.55 0.15 250)",
+};
+
+function getAccent(slug: string) {
+  return PRODUCT_COLORS[slug] || "var(--accent-primary)";
+}
+
+interface ProductPageClientProps {
+  params: Promise<{ slug: string; locale: string }>;
+}
+
+export function ProductPageClient({ params }: ProductPageClientProps) {
+  const { slug, locale } = use(params);
+  const product = getProductBySlug(slug);
+
+  if (!product) notFound();
+
+  const relatedProducts = getRelatedProducts(slug, 4);
+  const accent = getAccent(slug);
+
+  return (
+    <main className="min-h-screen pt-16 pb-20 relative">
+      {/* Decorative background orbs */}
+      <div
+        className="fixed top-20 -right-40 w-[500px] h-[500px] rounded-full opacity-[0.03] pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${accent}, transparent 70%)` }}
+      />
+      <div
+        className="fixed bottom-20 -left-40 w-[400px] h-[400px] rounded-full opacity-[0.02] pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${accent}, transparent 70%)` }}
+      />
+
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
+        {/* Breadcrumbs */}
+        <nav className="flex items-center gap-2 py-4 md:py-6 text-[13px]">
+          <Link
+            href={`/${locale}`}
+            className="font-body text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--fg-primary)]"
+          >
+            Главная
+          </Link>
+          <span className="font-body text-[var(--border)]">/</span>
+          <Link
+            href={`/${locale}/catalog`}
+            className="font-body text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--fg-primary)]"
+          >
+            Продукция
+          </Link>
+          <span className="font-body text-[var(--border)]">/</span>
+          <span className="font-body text-[var(--fg-primary)] font-semibold">
+            {product.name}
+          </span>
+        </nav>
+
+        {/* Product hero — image + info side by side, NO sticky */}
+        <div className="grid grid-cols-1 gap-6 md:gap-10 mb-12 md:mb-16 lg:grid-cols-2 lg:gap-12">
+          {/* Image — NOT sticky, just a normal block */}
+          <div className="relative">
+            <div
+              className="aspect-square rounded-[var(--radius-lg)] overflow-hidden flex items-center justify-center relative"
+              style={{
+                background: `linear-gradient(135deg, ${accent}08 0%, var(--bg-surface) 100%)`,
+                border: `1px solid ${accent}15`,
+              }}
+            >
+              {/* Decorative corner accents */}
+              <div
+                className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 rounded-tl-sm opacity-20"
+                style={{ borderColor: accent }}
+              />
+              <div
+                className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 rounded-tr-sm opacity-20"
+                style={{ borderColor: accent }}
+              />
+              <div
+                className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 rounded-bl-sm opacity-20"
+                style={{ borderColor: accent }}
+              />
+              <div
+                className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 rounded-br-sm opacity-20"
+                style={{ borderColor: accent }}
+              />
+
+              {product.images?.[0] ? (
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-contain p-6 md:p-10"
+                />
+              ) : (
+                <span
+                  className="font-heading font-bold text-6xl"
+                  style={{ color: `${accent}40` }}
+                >
+                  {product.name.charAt(0)}
+                </span>
+              )}
+
+              {/* Glow under product */}
+              <div
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 w-1/2 h-8 blur-2xl rounded-full"
+                style={{ background: accent, opacity: 0.08 }}
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          {/* Info */}
+          <div className="flex flex-col gap-6 md:gap-8">
+            <div className="flex flex-col gap-3 pb-6 border-b border-[var(--border-subtle)]">
+              <div className="flex items-center gap-2">
+                <span
+                  className="font-mono font-semibold text-[10px] md:text-xs uppercase tracking-[0.12em] px-2 py-0.5 rounded-full"
+                  style={{
+                    color: accent,
+                    backgroundColor: `${accent}12`,
+                    border: `1px solid ${accent}20`,
+                  }}
+                >
+                  {product.category}
+                </span>
+              </div>
+
+              <h1 className="font-heading font-semibold text-2xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.02em] md:text-3xl lg:text-4xl">
+                {product.name}
+              </h1>
+
+              <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-secondary)]">
+                {product.description}
+              </p>
+            </div>
+
+            {/* Specifications */}
+            {Object.keys(product.specifications).length > 0 && (
+              <div className="pb-6 border-b border-[var(--border-subtle)]">
+                <h2 className="font-heading font-semibold text-base md:text-lg leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-4">
+                  Характеристики
+                </h2>
+                <dl className="flex flex-col gap-0">
+                  {Object.entries(product.specifications).map(([key, value]) => (
+                    <div
+                      key={key}
+                      className="flex justify-between py-2.5 border-b border-[var(--border-subtle)] last:border-b-0"
+                    >
+                      <dt className="font-body text-sm text-[var(--fg-muted)]">
+                        {key}
+                      </dt>
+                      <dd className="font-body text-sm text-[var(--fg-primary)] font-medium">
+                        {value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
+
+            {/* Certificates */}
+            {product.certificates.length > 0 && (
+              <div className="pb-6 border-b border-[var(--border-subtle)]">
+                <h2 className="font-heading font-semibold text-base md:text-lg leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-4">
+                  Сертификаты
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {product.certificates.map((cert) => (
+                    <span
+                      key={cert}
+                      className="font-mono font-semibold text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.1em] px-2.5 py-1 border rounded-full"
+                      style={{
+                        color: accent,
+                        borderColor: `${accent}25`,
+                        backgroundColor: `${accent}08`,
+                      }}
+                    >
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href={`/${locale}/contacts`}
+                className="inline-flex items-center justify-center font-body font-semibold text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] text-white hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  background: accent,
+                  boxShadow: `0 0 20px ${accent}30, 0 0 40px ${accent}10`,
+                }}
+              >
+                Связаться с нами
+              </Link>
+              <Link
+                href={`/${locale}/catalog`}
+                className="inline-flex items-center justify-center bg-transparent border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm px-6 py-3 rounded-[var(--radius-sm)] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--accent-primary)]"
+              >
+                ← Назад к каталогу
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <div className="pt-12 md:pt-16 border-t border-[var(--border-subtle)]">
+            <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-8 md:text-2xl lg:text-3xl">
+              Похожие продукты
+            </h2>
+            <ProductGrid products={relatedProducts} />
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}

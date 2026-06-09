@@ -1111,6 +1111,15 @@ html.lenis body {
   }
 }
 
+/* Hide scrollbar for horizontal slider */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ============================================
  * PRODUCT SLIDER — Full-screen slides
  * ============================================ */
