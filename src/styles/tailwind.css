@@ -367,6 +367,10 @@ html.lenis, html.lenis body { height: auto; }
   0%, 100% { box-shadow: 0 0 10px oklch(0.72 0.18 145 / 0.1), 0 2px 12px oklch(0 0 0 / 0.15); }
   50% { box-shadow: 0 0 16px oklch(0.72 0.18 145 / 0.15), 0 4px 20px oklch(0 0 0 / 0.18); }
 }
+@keyframes badge-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* CSS-only marquee — GPU composited, no JS */

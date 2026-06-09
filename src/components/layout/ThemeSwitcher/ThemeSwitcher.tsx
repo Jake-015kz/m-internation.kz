@@ -97,7 +97,7 @@ export function ThemeSwitcher() {
 
   return (
     <button
-      className="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-lg border border-[var(--border)] bg-[var(--bg-surface)] text-[var(--fg-primary)] cursor-pointer transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2"
+      className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 min-w-[44px] min-h-[44px] md:min-w-[36px] md:min-h-[36px] rounded-lg border border-[var(--border)] bg-[var(--bg-surface)] text-[var(--fg-secondary)] cursor-pointer transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden hover:border-[var(--accent-primary)] hover:text-[var(--fg-primary)] active:scale-[0.95] focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2"
       onClick={toggle}
       aria-label={
         theme === "dark" ? "Switch to light mode" : "Switch to dark mode"

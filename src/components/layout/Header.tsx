@@ -155,28 +155,28 @@ export function Header() {
         ] : "bg-transparent",
       )}
     >
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-14 md:h-16 flex items-center justify-between">
-        {/* Logo — premium wordmark with leaf icon */}
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-14 md:h-16 flex items-center gap-2 md:gap-4">
+        {/* Logo — premium wordmark with leaf icon, never wraps */}
         <Link
           href={`/${locale}`}
-          className="flex items-center gap-2 no-underline z-[301] relative group"
+          className="flex items-center gap-1 md:gap-1.5 no-underline z-[301] relative group shrink min-w-0"
         >
           <div
-            className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300"
+            className="flex items-center justify-center w-7 h-7 rounded-lg transition-colors duration-300 shrink-0"
             style={{
               background: "var(--accent-primary)",
             }}
           >
-            <Leaf size={16} className="text-white" strokeWidth={2.5} />
+            <Leaf size={14} className="text-white" strokeWidth={2.5} />
           </div>
-          <span className="font-heading font-bold text-base md:text-lg text-[var(--fg-primary)] tracking-[-0.01em]">
+          <span className="font-heading font-bold text-[11px] sm:text-[13px] text-[var(--fg-primary)] tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis">
             {SITE_CONFIG.name}
           </span>
         </Link>
 
         {/* Desktop nav */}
         <nav
-          className="hidden md:flex items-center gap-6 lg:gap-8"
+          className="hidden md:flex items-center gap-6 lg:gap-8 flex-1 justify-center"
           role="navigation"
           aria-label="Main navigation"
         >
@@ -191,8 +191,8 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Right side — unified icon style */}
-        <div className="flex items-center gap-1.5 md:gap-2">
+        {/* Right side — unified icon style, never shrinks */}
+        <div className="flex items-center gap-1 md:gap-1.5 shrink-0">
           <LanguageSwitcher />
           <ThemeSwitcher />
 

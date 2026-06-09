@@ -2,7 +2,6 @@
 
 import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
-import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher() {
@@ -10,64 +9,32 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
 
   const switchLocale = (newLocale: string) => {
-    // Убираем текущий префикс локали из пути и добавляем новый
     const pathWithoutLocale = pathname.replace(/^\/(ru|en|kk)/, "") || "/";
     const newPath = `/${newLocale}${pathWithoutLocale}`;
-    // Используем window.location для полной перезагрузки с новой локалью
     window.location.href = newPath;
   };
 
   return (
-    <div
+    <button
+      onClick={() => {
+        const next = locale === "ru" ? "en" : locale === "en" ? "kk" : "ru";
+        switchLocale(next);
+      }}
       className={cn(
-        "flex items-center gap-2",
-        "px-3 py-1.5",
-        "border border-[var(--border)] rounded-lg",
-        "bg-[var(--glass-bg)] backdrop-blur-[20px]",
+        "flex items-center justify-center",
+        "h-8 px-2.5 md:h-9 md:px-3",
+        "rounded-lg",
+        "border border-[var(--border)]",
+        "bg-[var(--bg-surface)]",
+        "text-[var(--fg-secondary)] font-mono text-xs md:text-sm font-bold",
         "cursor-pointer transition-all duration-250",
-        "hover:border-[var(--accent-primary)]",
+        "hover:border-[var(--accent-primary)] hover:text-[var(--fg-primary)]",
+        "focus-visible:outline-2 focus-visible:outline-[var(--accent-primary)] focus-visible:outline-offset-2",
+        "min-w-[44px] min-h-[44px] md:min-w-[36px] md:min-h-[36px]",
       )}
+      aria-label="Switch language"
     >
-      <Globe
-        className={cn(
-          "text-[var(--accent-primary)] flex-shrink-0 pointer-events-none",
-          "absolute left-3 z-10",
-        )}
-        size={18}
-      />
-      <select
-        value={locale}
-        onChange={(e) => switchLocale(e.target.value)}
-        className={cn(
-          "bg-transparent border-none",
-          "text-[var(--fg-primary)] font-mono text-sm font-semibold",
-          "cursor-pointer outline-none",
-          "pl-6 pr-2",
-          "appearance-none -webkit-appearance-none -moz-appearance-none",
-          "relative z-20 pointer-events-auto",
-          "min-w-[50px] h-6",
-        )}
-        aria-label="Select language"
-      >
-        <option
-          value="ru"
-          className="bg-[var(--bg-base)] text-[var(--fg-primary)] px-3 py-2"
-        >
-          RU
-        </option>
-        <option
-          value="en"
-          className="bg-[var(--bg-base)] text-[var(--fg-primary)] px-3 py-2"
-        >
-          EN
-        </option>
-        <option
-          value="kk"
-          className="bg-[var(--bg-base)] text-[var(--fg-primary)] px-3 py-2"
-        >
-          KZ
-        </option>
-      </select>
-    </div>
+      {locale.toUpperCase()}
+    </button>
   );
 }
