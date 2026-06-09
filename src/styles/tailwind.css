@@ -584,10 +584,6 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 /* Cursor glow — GPU-composited via translate3d */
-@keyframes cursor-glow-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.5; }
-}
 .cursor-glow {
   position: fixed;
   width: 300px;
@@ -600,7 +596,7 @@ html.lenis, html.lenis body { height: auto; }
   left: 0;
   transform: translate3d(-50%, -50%, 0);
   transition: opacity 300ms ease;
-  will-change: transform;
+  contain: layout style paint;
 }
 
 /* Floating product animation — replaces GSAP, pure CSS */
@@ -610,7 +606,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 .floating-product {
   animation: floating-product var(--float-duration, 6s) ease-in-out infinite;
-  will-change: transform;
+  contain: layout style paint;
 }
 
 /* ============================================

@@ -5,111 +5,29 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { BUSINESS_STEPS } from "@/lib/constants";
 
-// GSAP-only animation hook — lazy loads GSAP only on desktop
-function useGsapAnimations(sectionRef: React.RefObject<HTMLElement | null>) {
-  const [gsapReady, setGsapReady] = useState(false);
-
-  useEffect(() => {
-    // Skip on mobile or reduced motion
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.innerWidth < 1024) return;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let ctx: any = null;
-    let cancelled = false;
-
-    import("gsap").then((gsapMod) => {
-      const gsap = gsapMod.gsap;
-      return import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-        return import("gsap/CustomEase").then(({ CustomEase }) => {
-          if (cancelled) return;
-          gsap.registerPlugin(ScrollTrigger, CustomEase);
-
-          const gentleEase = CustomEase.create("gentle", "M0,0 C0.16,0.5 0.3,1 1,1");
-          const EASING = { gentle: "gentle" as string };
-
-          const section = sectionRef.current;
-          if (!section) return;
-
-          ctx = gsap.context(() => {
-            // Sticky stack cards
-            const cards = gsap.utils.toArray<HTMLElement>(".stack-card");
-            if (cards.length >= 2) {
-              cards.forEach((card, i) => {
-                if (i === cards.length - 1) return;
-                ScrollTrigger.create({
-                  trigger: card,
-                  start: "top top",
-                  endTrigger: cards[cards.length - 1],
-                  end: "top top",
-                  pin: true,
-                  pinSpacing: false,
-                });
-                gsap.to(card, {
-                  scale: 0.96,
-                  opacity: 0.7,
-                  ease: "none",
-                  scrollTrigger: {
-                    trigger: cards[i + 1],
-                    start: "top bottom",
-                    end: "top top",
-                    scrub: true,
-                  },
-                });
-              });
-            }
-
-            // Header fade-in
-            const header = section.querySelector("[data-anim-header]") as HTMLElement;
-            if (header) {
-              gsap.fromTo(header, { opacity: 0, y: 20 }, {
-                opacity: 1, y: 0, duration: 0.6,
-                ease: EASING.gentle as unknown as gsap.EaseFunction,
-                scrollTrigger: { trigger: header, start: "top 85%" },
-              });
-            }
-
-            // CTA fade-in
-            const cta = section.querySelector("[data-anim-cta]") as HTMLElement;
-            if (cta) {
-              gsap.fromTo(cta, { opacity: 0, y: 16 }, {
-                opacity: 1, y: 0, duration: 0.5,
-                ease: EASING.gentle as unknown as gsap.EaseFunction,
-                scrollTrigger: { trigger: cta, start: "top 90%" },
-              });
-            }
-
-            // Card stagger
-            const cardEls = section.querySelectorAll("[data-anim-card]");
-            cardEls.forEach((card) => {
-              gsap.fromTo(card, { opacity: 0, y: 24 }, {
-                opacity: 1, y: 0, duration: 0.5,
-                ease: EASING.gentle as unknown as gsap.EaseFunction,
-                scrollTrigger: { trigger: card, start: "top 90%" },
-              });
-            });
-          }, section);
-
-          setGsapReady(true);
-        });
-      });
-    });
-
-    return () => {
-      cancelled = true;
-      if (ctx) ctx.revert();
-    };
-  }, [sectionRef]);
-
-  return gsapReady;
-}
-
 export function BusinessSection() {
   const locale = useLocale();
   const t = useTranslations("business");
   const sectionRef = useRef<HTMLElement>(null);
-  useGsapAnimations(sectionRef);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -119,7 +37,13 @@ export function BusinessSection() {
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
         {/* Header */}
-        <div data-anim-header className="mb-10 md:mb-16 text-left max-w-[36rem]" style={{ opacity: 1 }}>
+        <div
+          className="mb-10 md:mb-16 text-left max-w-[36rem] transition-all duration-700 ease-out"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(20px)",
+          }}
+        >
           <h2
             id="business-title"
             className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-2 md:mb-4 md:text-3xl lg:text-4xl"
@@ -131,51 +55,57 @@ export function BusinessSection() {
           </p>
         </div>
 
-        {/* Cards — mobile: vertical stack, desktop: sticky stack */}
-        <div className="relative flex flex-col gap-4 md:gap-6 lg:block">
-          {BUSINESS_STEPS.map((step, i) => (
-            <div
-              key={step.id}
-              data-anim-card
-              className={`stack-card lg:sticky lg:top-24 ${i > 0 ? "lg:mb-6" : ""}`}
-              style={{ opacity: 1 }}
-            >
+        {/* Cards — vertical stack, no GSAP sticky */}
+        <div className="relative flex flex-col gap-4 md:gap-6">
+          {BUSINESS_STEPS.map((step, i) => {
+            const cardBg = step.featured
+              ? "bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary-hover)] text-[var(--bg-base)] shadow-[var(--shadow-glow)]"
+              : "bg-gradient-to-br from-[var(--bg-surface)] to-[var(--bg-elevated)] border border-[var(--border-subtle)]";
+            const labelColor = step.featured ? "text-[var(--bg-base)]/60" : "text-[var(--fg-muted)]";
+            const lineBg = step.featured ? "bg-[var(--bg-base)]/20" : "bg-[var(--border-subtle)]";
+            const titleColor = step.featured ? "text-[var(--bg-base)]" : "text-[var(--fg-primary)]";
+            const descColor = step.featured ? "text-[var(--bg-base)]/80" : "text-[var(--fg-secondary)]";
+
+            return (
               <div
-                className={`rounded-2xl p-8 md:p-10 lg:p-12 transition-all duration-300 ${
-                  step.featured
-                    ? "bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary-hover)] text-[var(--bg-base)] shadow-[var(--shadow-glow)]"
-                    : "bg-gradient-to-br from-[var(--bg-surface)] to-[var(--bg-elevated)] border border-[var(--border-subtle)]"
-                }`}
+                key={step.id}
+                className="transition-all duration-500 ease-out"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0)" : "translateY(24px)",
+                  transitionDelay: `${150 + i * 80}ms`,
+                }}
               >
-                <div className="flex flex-col gap-2 md:gap-3 max-w-[480px]">
-                  <div className="flex items-center gap-3">
-                    <span className={`font-mono text-[10px] md:text-xs font-semibold tracking-[0.06em] ${step.featured ? "text-[var(--bg-base)]/60" : "text-[var(--fg-muted)]"}`}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div className={`h-[1px] flex-1 ${step.featured ? "bg-[var(--bg-base)]/20" : "bg-[var(--border-subtle)]"}`} />
+                <div className={`rounded-2xl p-8 md:p-10 lg:p-12 transition-shadow duration-300 ${cardBg}`}>
+                  <div className="flex flex-col gap-2 md:gap-3 max-w-[480px]">
+                    <div className="flex items-center gap-3">
+                      <span className={`font-mono text-[10px] md:text-xs font-semibold tracking-[0.06em] ${labelColor}`}>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div className={`h-[1px] flex-1 ${lineBg}`} />
+                    </div>
+                    <h3 className={`font-heading font-semibold text-base md:text-xl tracking-[-0.01em] ${titleColor}`}>
+                      {t(step.titleKey)}
+                    </h3>
+                    <p className={`font-body text-xs md:text-sm leading-[1.5] md:leading-[1.6] ${descColor}`}>
+                      {t(step.descriptionKey)}
+                    </p>
                   </div>
-                  <h3
-                    className={`font-heading font-semibold text-base md:text-xl tracking-[-0.01em] ${
-                      step.featured ? "text-[var(--bg-base)]" : "text-[var(--fg-primary)]"
-                    }`}
-                  >
-                    {t(step.titleKey)}
-                  </h3>
-                  <p
-                    className={`font-body text-xs md:text-sm leading-[1.5] md:leading-[1.6] ${
-                      step.featured ? "text-[var(--bg-base)]/80" : "text-[var(--fg-secondary)]"
-                    }`}
-                  >
-                    {t(step.descriptionKey)}
-                  </p>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* CTA */}
-        <div data-anim-cta className="mt-8 md:mt-12 flex justify-start" style={{ opacity: 1 }}>
+        <div
+          className="mt-8 md:mt-12 flex justify-start transition-all duration-500 ease-out"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(16px)",
+            transitionDelay: "600ms",
+          }}
+        >
           <Link
             href={`/${locale}/business`}
             className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-[var(--bg-base)] font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-[0.5rem] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"

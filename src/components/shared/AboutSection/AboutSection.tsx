@@ -5,88 +5,29 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { TIMELINE_ITEMS } from "@/lib/constants";
 
-function useAboutAnimations(sectionRef: React.RefObject<HTMLElement | null>) {
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let ctx: any = null;
-    let cancelled = false;
-
-    import("gsap").then((gsapMod) => {
-      const gsap = gsapMod.gsap;
-      return import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-        return import("gsap/CustomEase").then(({ CustomEase }) => {
-          if (cancelled) return;
-          gsap.registerPlugin(ScrollTrigger, CustomEase);
-
-          const section = sectionRef.current;
-          if (!section) return;
-
-          ctx = gsap.context(() => {
-            // Vertical line scale
-            const line = section.querySelector("[data-timeline-line]") as HTMLElement;
-            if (line) {
-              gsap.fromTo(
-                line,
-                { scaleY: 0 },
-                {
-                  scaleY: 1,
-                  ease: "none",
-                  scrollTrigger: {
-                    trigger: section,
-                    start: "top 70%",
-                    end: "bottom 60%",
-                    scrub: 1,
-                  },
-                },
-              );
-            }
-
-            // Header fade-in
-            const header = section.querySelector("[data-anim-header]") as HTMLElement;
-            if (header) {
-              gsap.fromTo(header, { opacity: 0, y: 20 }, {
-                opacity: 1, y: 0, duration: 0.6, ease: "power2.out" as unknown as gsap.EaseFunction,
-                scrollTrigger: { trigger: header, start: "top 85%" },
-              });
-            }
-
-            // Timeline items stagger
-            const items = section.querySelectorAll("[data-anim-item]");
-            items.forEach((item) => {
-              gsap.fromTo(item, { opacity: 0, x: -20 }, {
-                opacity: 1, x: 0, duration: 0.5, ease: "power2.out" as unknown as gsap.EaseFunction,
-                scrollTrigger: { trigger: item, start: "top 90%" },
-              });
-            });
-
-            // CTA
-            const cta = section.querySelector("[data-anim-cta]") as HTMLElement;
-            if (cta) {
-              gsap.fromTo(cta, { opacity: 0, y: 16 }, {
-                opacity: 1, y: 0, duration: 0.5, ease: "power2.out" as unknown as gsap.EaseFunction,
-                scrollTrigger: { trigger: cta, start: "top 90%" },
-              });
-            }
-          }, section);
-        });
-      });
-    });
-
-    return () => {
-      cancelled = true;
-      if (ctx) ctx.revert();
-    };
-  }, [sectionRef]);
-}
-
 export function AboutSection() {
   const locale = useLocale();
   const t = useTranslations("about");
   const sectionRef = useRef<HTMLElement>(null);
-  useAboutAnimations(sectionRef);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -96,7 +37,13 @@ export function AboutSection() {
     >
       <div className="mx-auto max-w-[80rem] px-3 md:px-6 lg:px-8">
         {/* Header */}
-        <div data-anim-header className="mb-12 md:mb-20 text-left max-w-[36rem]" style={{ opacity: 1 }}>
+        <div
+          className="mb-12 md:mb-20 text-left max-w-[36rem] transition-all duration-700 ease-out"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(20px)",
+          }}
+        >
           <h2
             id="about-title"
             className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-[-0.01em] mb-3 md:text-3xl lg:text-4xl"
@@ -112,18 +59,23 @@ export function AboutSection() {
         <div className="relative pl-6 md:pl-12">
           {/* Vertical line */}
           <div
-            data-timeline-line
-            className="absolute left-1.5 top-0 bottom-0 w-[1px] bg-[var(--border-subtle)] origin-top md:left-3"
+            className="absolute left-1.5 top-0 bottom-0 w-[1px] bg-[var(--border-subtle)] origin-top md:left-3 transition-transform duration-1000 ease-out"
+            style={{
+              transform: visible ? "scaleY(1)" : "scaleY(0)",
+            }}
           />
 
           {/* Timeline items */}
           <div className="flex flex-col gap-8 md:gap-16">
-            {TIMELINE_ITEMS.map((item) => (
+            {TIMELINE_ITEMS.map((item, i) => (
               <div
                 key={item.year}
-                data-anim-item
-                className="relative"
-                style={{ opacity: 1 }}
+                className="relative transition-all duration-500 ease-out"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateX(0)" : "translateX(-20px)",
+                  transitionDelay: `${150 + i * 100}ms`,
+                }}
               >
                 {/* Dot */}
                 <div className="absolute -left-6 top-1 w-2.5 h-2.5 bg-[var(--bg-base)] border-2 border-[var(--accent-primary)] rounded-full md:-left-12 md:w-3 md:h-3" />
@@ -146,7 +98,14 @@ export function AboutSection() {
         </div>
 
         {/* CTA */}
-        <div data-anim-cta className="mt-10 md:mt-16" style={{ opacity: 1 }}>
+        <div
+          className="mt-10 md:mt-16 transition-all duration-500 ease-out"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(16px)",
+            transitionDelay: "600ms",
+          }}
+        >
           <Link
             href={`/${locale}/about`}
             className="inline-flex items-center gap-2 font-body font-medium text-xs md:text-sm text-[var(--accent-primary)] transition-all duration-250 hover:gap-3"
