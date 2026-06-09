@@ -23,7 +23,6 @@ export function HeroSectionA() {
   const ctaRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -39,18 +38,6 @@ export function HeroSectionA() {
         .fromTo(ctaRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.3")
         .fromTo(productRef.current, { opacity: 0, y: 50, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, "-=0.5")
         .fromTo(statsRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4 }, "-=0.4");
-
-      // Subtle glow pulse
-      if (glowRef.current) {
-        gsap.to(glowRef.current, {
-          opacity: 0.15,
-          scale: 1.05,
-          duration: 3,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
-      }
     });
 
     return () => ctx.revert();
@@ -64,16 +51,6 @@ export function HeroSectionA() {
     >
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-base)] via-[var(--bg-surface)] to-[var(--bg-base)]" />
-
-      {/* Subtle grid — hidden on mobile */}
-      <div
-        className="hidden md:block absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
 
       {/* Radial glow behind product — hidden on mobile to save GPU */}
       <div
@@ -117,7 +94,7 @@ export function HeroSectionA() {
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[0.5rem] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
+                className="inline-flex items-center justify-center backdrop-blur-sm border border-white/20 text-[var(--fg-primary)] font-body font-medium text-sm md:text-base px-7 py-3.5 min-h-[44px] md:min-h-[48px] md:px-9 md:py-4 rounded-[0.5rem] transition-all duration-300 hover:border-[var(--accent-primary)]/40 hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-md)] bg-white/[0.04]"
               >
                 {t("aboutLink")}
               </Link>
@@ -130,24 +107,19 @@ export function HeroSectionA() {
             className="relative flex justify-center items-center order-2 lg:order-2"
           >
             <div className="relative w-full" style={{ maxWidth: "400px", aspectRatio: "1 / 1" }}>
-              {/* Animated glow ring — subtler */}
-              <div
-                ref={glowRef}
-                className="absolute inset-0 -m-6 md:-m-10 rounded-full opacity-[0.08] blur-2xl"
-                style={{ background: "var(--accent-primary)" }}
-                aria-hidden="true"
-              />
-
-              {/* Glass card */}
-              <div className="relative glass-card rounded-2xl md:rounded-3xl p-6 md:p-10 h-full flex items-center justify-center">
-                <Image
+            {/* Glass card */}
+            <div className="relative glass-card rounded-2xl md:rounded-3xl p-6 md:p-10 h-full flex items-center justify-center">
+              <Image
                   src="/products/greenmax/main.png"
                   alt="GreenMAX — flagship product of M-International"
                   width={420}
                   height={420}
                   priority
-                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-2xl"
-                  style={{ aspectRatio: "1 / 1" }}
+                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10"
+                  style={{ 
+                    aspectRatio: "1 / 1",
+                    filter: "drop-shadow(0 20px 40px oklch(0 0 0 / 0.5)) drop-shadow(0 8px 16px oklch(0 0 0 / 0.3))",
+                  }}
                 />
 
                 {/* Floating badge — refined */}

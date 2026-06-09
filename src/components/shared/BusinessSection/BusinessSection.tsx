@@ -118,10 +118,10 @@ export function BusinessSection() {
               style={{ opacity: 1 }}
             >
               <div
-                className={`rounded-2xl p-5 md:p-8 transition-all duration-300 ${
+                className={`rounded-2xl p-10 md:p-10 transition-all duration-300 ${
                   step.featured
-                    ? "bg-[var(--accent-primary)] text-[var(--bg-base)] shadow-[var(--shadow-glow)]"
-                    : "card-clean"
+                    ? "bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary-hover)] text-[var(--bg-base)] shadow-[var(--shadow-glow)]"
+                    : "bg-gradient-to-br from-[var(--bg-surface)] to-[var(--bg-elevated)] card-clean"
                 }`}
               >
                 <div className="flex flex-col gap-2 md:gap-3 max-w-[480px]">

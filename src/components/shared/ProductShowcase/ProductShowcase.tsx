@@ -91,7 +91,7 @@ function ProductCard({
   return (
     <div
       ref={cardRef}
-      className="group relative flex flex-col rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--border)] hover:shadow-[var(--shadow-md)] hover:-translate-y-1"
+      className="group relative flex flex-col h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--border)] hover:shadow-[var(--shadow-lg)] hover:-translate-y-[5px]"
     >
       {/* Color accent line at top */}
       <div
@@ -183,12 +183,16 @@ export function ProductShowcase() {
         </div>
 
         {/* Product grid — horizontal slider on mobile, grid on desktop */}
-        <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 scrollbar-hide snap-x snap-mandatory md:snap-none">
-          {showcaseProducts.map((product, index) => (
-            <div key={product.slug} className="flex-shrink-0 w-[85vw] max-w-[320px] md:w-auto md:max-w-none snap-center md:snap-align-none">
-              <ProductCard product={product} index={index} />
-            </div>
-          ))}
+        <div className="relative">
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 scrollbar-hide snap-x snap-mandatory md:snap-none">
+            {showcaseProducts.map((product, index) => (
+              <div key={product.slug} className="flex-shrink-0 w-[80vw] max-w-[300px] md:w-auto md:max-w-none snap-center md:snap-align-none">
+                <ProductCard product={product} index={index} />
+              </div>
+            ))}
+          </div>
+          {/* Right fade hint on mobile */}
+          <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-12 bg-gradient-to-l from-[var(--bg-base)] to-transparent md:hidden" aria-hidden="true" />
         </div>
       </div>
     </section>

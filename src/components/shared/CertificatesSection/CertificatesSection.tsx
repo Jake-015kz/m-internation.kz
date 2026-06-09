@@ -126,7 +126,7 @@ export function CertificatesSection() {
       >
         <span
           ref={bgTextRef}
-          className="font-heading font-bold text-[clamp(3.5rem,14vw,11rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.03] whitespace-nowrap"
+          className="font-heading font-bold text-[clamp(4rem,15vw,9.5rem)] leading-none tracking-[-0.04em] text-[var(--fg-primary)]/[0.03] whitespace-nowrap"
         >
           {t("title").toUpperCase()}
         </span>

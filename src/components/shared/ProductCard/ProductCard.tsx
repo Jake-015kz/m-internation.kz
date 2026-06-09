@@ -17,7 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/${locale}/catalog/${product.slug}`}
-      className="group flex flex-col rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] no-underline text-inherit transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer hover:border-[var(--border)] hover:shadow-[var(--shadow-md)] hover:-translate-y-1 relative overflow-hidden"
+      className="group flex flex-col h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] no-underline text-inherit transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer hover:border-[var(--border)] hover:shadow-[var(--shadow-lg)] hover:-translate-y-[5px] relative overflow-hidden"
     >
       {/* Top accent line */}
       <div
