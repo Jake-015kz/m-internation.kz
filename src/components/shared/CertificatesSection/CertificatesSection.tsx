@@ -38,6 +38,11 @@ function MarqueeRow({
           <div
             key={`${cert.id}-${i}`}
             className="flex-shrink-0 flex items-center gap-2.5 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-all duration-300 hover:border-[var(--accent-primary)]/25 hover:shadow-[var(--shadow-sm)] group cursor-default"
+            style={{
+              background: "oklch(1 0 0 / 0.04)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+            }}
           >
             <div className="relative w-7 h-7 md:w-8 md:h-8 flex-shrink-0" style={{ aspectRatio: "1 / 1" }}>
               <Image
@@ -72,21 +77,41 @@ export function CertificatesSection() {
 
   return (
     <section
-      className="relative py-14 md:py-22 overflow-hidden"
+      className="relative py-16 md:py-24 overflow-hidden"
       aria-labelledby="certificates-title"
     >
+      {/* ===== GIANT OUTLINE TEXT: TRUSTED QUALITY ===== */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
+        <span
+          className="font-heading font-black text-[8rem] md:text-[14rem] lg:text-[18rem] whitespace-nowrap select-none"
+          style={{
+            color: "transparent",
+            WebkitTextStroke: "1px oklch(0.72 0.19 148 / 0.04)",
+            opacity: 1,
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+          }}
+        >
+          TRUSTED QUALITY
+        </span>
+      </div>
+
       {/* Subtle gradient overlays */}
-      <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
 
       {/* Side fades for marquee */}
-      <div className="absolute top-0 left-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
-      <div className="absolute top-0 right-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 left-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 right-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
 
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4 md:mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4 md:mb-6"
+               style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
             <Shield className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
             <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
               Certified Quality

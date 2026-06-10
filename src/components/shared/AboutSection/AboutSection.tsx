@@ -45,7 +45,8 @@ export function AboutSection() {
             transform: visible ? "translateY(0)" : "translateY(20px)",
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4"
+               style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
             <Sparkles className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
             <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
               Our Story

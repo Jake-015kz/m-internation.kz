@@ -22,10 +22,10 @@ export function HomeSections({ locale }: HomeSectionsProps) {
       <section className="relative overflow-hidden py-16 md:py-24">
         {/* Background glow */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-[0.06] pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.08] pointer-events-none"
           style={{
             background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
-            filter: "blur(60px)",
+            filter: "blur(80px)",
           }}
           aria-hidden="true"
         />
@@ -41,13 +41,13 @@ export function HomeSections({ locale }: HomeSectionsProps) {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href={`/${locale}/contacts`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-sm px-8 py-3.5 min-h-[48px] rounded-xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md),0_0_20px_oklch(0.72_0.19_148_/0.15)] hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-sm px-8 py-3.5 min-h-[48px] rounded-2xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md),0_0_20px_oklch(0.72_0.19_148_/0.15)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 Связаться с нами
               </Link>
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center hero-glass-btn font-body font-medium text-sm px-8 py-3.5 min-h-[48px] rounded-xl transition-all duration-300"
+                className="inline-flex items-center justify-center hero-glass-btn font-body font-medium text-sm px-8 py-3.5 min-h-[48px] rounded-2xl transition-all duration-300"
               >
                 Каталог продукции
               </Link>

@@ -39,97 +39,99 @@ export function HeroSectionA() {
       style={{ minHeight: "calc(100dvh - 64px)" }}
       aria-labelledby="hero-title"
     >
-      {/* ===== MESH GRADIENT BACKGROUND ===== */}
+      {/* ===== ELITE MESH GRADIENT BACKGROUND ===== */}
       <div className="absolute inset-0" aria-hidden="true">
         {/* Base layer */}
         <div className="absolute inset-0" style={{ background: "var(--bg-base)" }} />
 
-        {/* Mesh gradient orbs — soft, organic, premium */}
+        {/* Premium mesh gradient — larger, more visible */}
         <div
           className="absolute inset-0 hero-mesh-gradient"
           style={{
             background: `
-              radial-gradient(ellipse 60% 50% at 10% 20%, oklch(0.72 0.19 148 / 0.12) 0%, transparent 50%),
-              radial-gradient(ellipse 50% 40% at 85% 75%, oklch(0.82 0.12 82 / 0.08) 0%, transparent 45%),
-              radial-gradient(ellipse 40% 35% at 50% 50%, oklch(0.65 0.16 250 / 0.04) 0%, transparent 50%)
+              radial-gradient(ellipse 65% 55% at 8% 15%, oklch(0.72 0.19 148 / 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse 55% 45% at 88% 78%, oklch(0.82 0.12 82 / 0.10) 0%, transparent 45%),
+              radial-gradient(ellipse 45% 40% at 45% 55%, oklch(0.65 0.16 250 / 0.06) 0%, transparent 50%)
             `,
           }}
         />
 
-        {/* Animated mesh blobs — GPU-composited */}
+        {/* Animated mesh blobs — larger, more organic */}
         <div
-          className="absolute top-[10%] left-[5%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.07] hero-blob-1"
+          className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.10] hero-blob-1"
           style={{
             background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
-            filter: "blur(60px)",
+            filter: "blur(80px)",
           }}
         />
         <div
-          className="absolute bottom-[10%] right-[5%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.05] hero-blob-2"
+          className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.07] hero-blob-2"
           style={{
             background: "radial-gradient(circle, var(--accent-gold), transparent 70%)",
-            filter: "blur(50px)",
+            filter: "blur(70px)",
           }}
         />
         <div
-          className="absolute top-[40%] right-[20%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full opacity-[0.04] hero-blob-3"
+          className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.05] hero-blob-3"
           style={{
             background: "radial-gradient(circle, oklch(0.65 0.16 250), transparent 70%)",
-            filter: "blur(40px)",
+            filter: "blur(60px)",
           }}
         />
 
         {/* Subtle grid pattern overlay */}
         <div
-          className="absolute inset-0 opacity-[0.015]"
+          className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `
-              linear-gradient(oklch(1 0 0 / 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, oklch(1 0 0 / 0.1) 1px, transparent 1px)
+              linear-gradient(oklch(1 0 0 / 0.15) 1px, transparent 1px),
+              linear-gradient(90deg, oklch(1 0 0 / 0.15) 1px, transparent 1px)
             `,
-            backgroundSize: "60px 60px",
+            backgroundSize: "80px 80px",
           }}
         />
       </div>
 
       <div
-        className="mx-auto max-w-[80rem] px-5 md:px-8 lg:px-10 w-full pt-10 pb-12 md:pt-16 md:pb-20 relative z-10"
+        className="mx-auto max-w-[80rem] px-5 md:px-8 lg:px-10 w-full pt-8 pb-12 md:pt-12 md:pb-16 relative z-10"
         style={{ paddingBottom: "max(48px, env(safe-area-inset-bottom))" }}
       >
-        <div className="grid grid-cols-1 gap-10 md:gap-14 items-center lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 gap-8 md:gap-12 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text content */}
           <div className="text-left order-1 lg:order-1">
-            {/* Trust badge — glassmorphism */}
+            {/* Trust badge — enhanced glassmorphism */}
             <span
-              className="inline-flex items-center gap-2 mb-6 md:mb-8 px-4 py-2 rounded-full font-mono font-bold text-[10px] md:text-[11px] tracking-[0.03em] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hero-glass-badge"
+              className="inline-flex items-center gap-2 mb-5 md:mb-7 px-5 py-2.5 rounded-full font-mono font-bold text-[10px] md:text-[11px] tracking-[0.03em] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(16px)",
                 color: "var(--accent-primary)",
-                background: "oklch(0.72 0.19 148 / 0.08)",
-                border: "1px solid oklch(0.72 0.19 148 / 0.15)",
-                backdropFilter: "blur(12px) saturate(140%)",
-                WebkitBackdropFilter: "blur(12px) saturate(140%)",
+                background: "oklch(0.72 0.19 148 / 0.10)",
+                border: "1px solid oklch(0.72 0.19 148 / 0.20)",
+                backdropFilter: "blur(20px) saturate(150%)",
+                WebkitBackdropFilter: "blur(20px) saturate(150%)",
                 ...sectionStyles.label,
               }}
             >
               {CERTIFICATES.join(" • ")}
             </span>
 
-            {/* H1 — gradient text, tight, premium */}
+            {/* H1 — GIANT, gradient text, tight letter-spacing */}
             <h1
               id="hero-title"
-              className="font-heading font-extrabold mb-4 md:mb-5 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hero-gradient-text"
+              className="font-heading font-extrabold mb-4 md:mb-5 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(24px)",
-                fontSize: "clamp(2.4rem, 6.5vw, 4rem)",
-                lineHeight: 1.05,
+                fontSize: "clamp(2.75rem, 7vw, 5rem)",
+                lineHeight: 1.02,
                 letterSpacing: "-0.04em",
-                background: "linear-gradient(135deg, var(--fg-primary) 0%, var(--accent-primary) 50%, var(--accent-gold) 100%)",
+                background: "linear-gradient(135deg, var(--fg-primary) 0%, #4ADE80 40%, #22C55E 70%, var(--accent-gold) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                backgroundSize: "200% 200%",
+                animation: "gradient-shift 6s ease-in-out infinite",
                 ...sectionStyles.title,
               }}
             >
@@ -161,7 +163,7 @@ export function HeroSectionA() {
               {t("subtitle")}
             </p>
 
-            {/* CTA buttons */}
+            {/* CTA buttons — premium glow */}
             <div
               className="flex flex-col sm:flex-row gap-3 md:gap-4 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
@@ -185,7 +187,7 @@ export function HeroSectionA() {
             </div>
           </div>
 
-          {/* Right — Product with premium glass card */}
+          {/* Right — FLOATING Product with premium glass card */}
           <div
             className="relative flex justify-center items-center order-2 lg:order-2 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
             style={{
@@ -194,44 +196,35 @@ export function HeroSectionA() {
               ...sectionStyles.product,
             }}
           >
-            <div className="relative w-full" style={{ maxWidth: "400px", aspectRatio: "1 / 1" }}>
+            <div className="relative w-full floating-product" style={{ maxWidth: "420px", aspectRatio: "1 / 1", ["--float-duration" as string]: "6s", ["--float-distance" as string]: "16px" }}>
               {/* Animated conic glow ring */}
               <div
                 className="absolute inset-0 rounded-3xl hero-conic-glow"
                 style={{
                   background: "conic-gradient(from 0deg, var(--accent-primary), var(--accent-gold), var(--accent-primary))",
-                  opacity: 0.1,
-                  filter: "blur(24px)",
-                  transform: "scale(1.1)",
+                  opacity: 0.12,
+                  filter: "blur(30px)",
+                  transform: "scale(1.15)",
                 }}
                 aria-hidden="true"
               />
 
-              {/* Glass card — enhanced */}
-              <div className="relative glass-card-premium rounded-2xl md:rounded-3xl p-6 md:p-10 h-full flex items-center justify-center overflow-hidden">
+              {/* Glass card — enhanced premium */}
+              <div className="relative glass-card-premium rounded-3xl p-6 md:p-10 h-full flex items-center justify-center overflow-hidden">
                 {/* Inner glow spots */}
                 <div
-                  className="absolute top-0 left-0 w-24 h-24 opacity-30"
+                  className="absolute top-0 left-0 w-32 h-32 opacity-40"
                   style={{
                     background: "radial-gradient(circle at 0% 0%, var(--accent-primary), transparent 70%)",
                   }}
                   aria-hidden="true"
                 />
                 <div
-                  className="absolute bottom-0 right-0 w-32 h-32 opacity-20"
+                  className="absolute bottom-0 right-0 w-40 h-40 opacity-25"
                   style={{
                     background: "radial-gradient(circle at 100% 100%, var(--accent-gold), transparent 70%)",
                   }}
                   aria-hidden="true"
-                />
-
-                {/* Glass shine overlay */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: "linear-gradient(135deg, oklch(1 0 0 / 0.08) 0%, transparent 50%)",
-                    borderRadius: "inherit",
-                  }}
                 />
 
                 <Image
@@ -241,12 +234,12 @@ export function HeroSectionA() {
                   height={420}
                   priority
                   sizes="(max-width: 640px) 220px, (max-width: 1024px) 280px, 400px"
-                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-[0_8px_24px_oklch(0.42_0.18_148_/0.15)]"
+                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-[0_12px_40px_oklch(0.42_0.18_148_/0.25)]"
                 />
 
                 {/* Floating badge */}
                 <div
-                  className="absolute -top-2 -right-2 md:-top-3 md:-right-3 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.06em] shadow-[var(--shadow-md)]"
+                  className="absolute -top-2 -right-2 md:-top-3 md:-right-3 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.06em] shadow-[var(--shadow-lg)]"
                   style={{
                     background: "linear-gradient(135deg, var(--accent-gold), oklch(0.88 0.14 82))",
                     color: "var(--bg-base)",
@@ -256,13 +249,13 @@ export function HeroSectionA() {
                 </div>
               </div>
 
-              {/* Soft glow under product */}
+              {/* Deep soft glow under product */}
               <div
-                className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-2/3 h-8 rounded-full z-0"
+                className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/4 h-12 rounded-full z-0"
                 style={{
                   background: "var(--accent-primary)",
-                  opacity: 0.08,
-                  filter: "blur(20px)",
+                  opacity: 0.12,
+                  filter: "blur(30px)",
                 }}
                 aria-hidden="true"
               />
@@ -270,9 +263,9 @@ export function HeroSectionA() {
           </div>
         </div>
 
-        {/* Stats row — glassmorphism cards */}
+        {/* Stats row — enhanced glassmorphism */}
         <div
-          className="mt-14 md:mt-20 pt-8 md:pt-10 border-t border-[var(--border-subtle)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="mt-12 md:mt-16 pt-8 md:pt-10 border-t border-[var(--border-subtle)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(12px)",
@@ -283,15 +276,17 @@ export function HeroSectionA() {
             {STATS.map((stat) => (
               <div
                 key={stat.key}
-                className="relative text-center md:text-left rounded-xl md:rounded-2xl px-2 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
+                className="relative text-center md:text-left rounded-2xl px-2 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
                 style={{
-                  background: "linear-gradient(135deg, var(--bg-surface), var(--bg-elevated))",
+                  background: "linear-gradient(135deg, oklch(1 0 0 / 0.04), oklch(1 0 0 / 0.01))",
                   borderColor: "var(--border-subtle)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
                   transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.boxShadow = "var(--shadow-glow)";
+                  e.currentTarget.style.transform = "translateY(-6px)";
+                  e.currentTarget.style.boxShadow = "0 16px 48px oklch(0 0 0 / 0.15), 0 0 30px oklch(0.72 0.19 148 / 0.10)";
                   e.currentTarget.style.borderColor = "var(--accent-primary)";
                 }}
                 onMouseLeave={(e) => {
@@ -313,7 +308,7 @@ export function HeroSectionA() {
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{
-                    background: "radial-gradient(circle at 50% 0%, oklch(0.72 0.19 148 / 0.06), transparent 70%)",
+                    background: "radial-gradient(circle at 50% 0%, oklch(0.72 0.19 148 / 0.08), transparent 70%)",
                   }}
                   aria-hidden="true"
                 />

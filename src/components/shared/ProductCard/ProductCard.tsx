@@ -26,14 +26,14 @@ export function ProductCard({ product }: ProductCardProps) {
       <div
         className="aspect-square p-4 md:p-6 flex items-center justify-center relative overflow-hidden"
         style={{
-          background: `linear-gradient(180deg, ${accent}06 0%, transparent 100%)`,
+          background: `linear-gradient(180deg, ${accent}08 0%, transparent 100%)`,
         }}
       >
         {/* Inner glow on hover */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at 50% 50%, ${accent}10 0%, transparent 70%)`,
+            background: `radial-gradient(circle at 50% 50%, ${accent}15 0%, transparent 70%)`,
           }}
         />
 
@@ -43,7 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             width={200}
             height={200}
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative z-10"
+            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative z-10"
           />
         ) : (
           <span

@@ -9,10 +9,10 @@ import { products } from "@/data/products";
 
 const SHOWCASE_CONFIG: Record<
   string,
-  { subtitle: string; descriptionKey: string; color: string; icon: React.ReactNode }
+  { subtitle: string; descriptionKey: string; color: string; icon: React.ReactNode; featured?: boolean }
 > = {
+  greenmax: { subtitle: "Детокс", descriptionKey: "greenmax.description", color: "#4a8e30", icon: <Leaf className="w-4 h-4" />, featured: true },
   micrystal: { subtitle: "Зрение", descriptionKey: "micrystal.description", color: "#b8942e", icon: <Droplets className="w-4 h-4" /> },
-  greenmax: { subtitle: "Детокс", descriptionKey: "greenmax.description", color: "#4a8e30", icon: <Leaf className="w-4 h-4" /> },
   mimax: { subtitle: "Антиоксидант", descriptionKey: "mimax.description", color: "#c85020", icon: <Shield className="w-4 h-4" /> },
   blumax: { subtitle: "Иммунитет", descriptionKey: "blumax.description", color: "#2e7aa8", icon: <Heart className="w-4 h-4" /> },
   nutrimax: { subtitle: "Питание", descriptionKey: "nutrimax.description", color: "#6a8e30", icon: <Apple className="w-4 h-4" /> },
@@ -22,17 +22,20 @@ const SHOWCASE_CONFIG: Record<
 
 const showcaseProducts = products.filter((p) => SHOWCASE_CONFIG[p.slug]);
 
-function ProductCard({
+function BentoCard({
   product,
   index,
+  featured = false,
 }: {
   product: (typeof showcaseProducts)[0];
   index: number;
+  featured?: boolean;
 }) {
   const locale = useLocale();
   const t = useTranslations("products");
   const config = SHOWCASE_CONFIG[product.slug];
   const [isVisible, setIsVisible] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ function ProductCard({
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     observer.observe(el);
@@ -58,44 +61,55 @@ function ProductCard({
   return (
     <div
       ref={cardRef}
-      className="group relative flex flex-col h-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden transition-all duration-500 hover:border-[var(--accent-primary)]/20 hover:shadow-[var(--shadow-lg)] hover:-translate-y-2 product-card-hover"
+      className="group relative flex flex-col h-full overflow-hidden transition-all duration-500 bento-card"
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.6s ease ${index * 0.08}s, transform 0.6s ease ${index * 0.08}s, box-shadow 0.4s ease, border-color 0.4s ease`,
+        transform: isVisible ? "translateY(0)" : "translateY(30px)",
+        transition: `opacity 0.7s ease ${index * 0.1}s, transform 0.7s ease ${index * 0.1}s, box-shadow 0.4s ease, border-color 0.4s ease`,
+        borderRadius: "1.25rem",
+        background: "oklch(1 0 0 / 0.04)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid var(--border-subtle)",
+        boxShadow: isHovered
+          ? `0 20px 60px oklch(0 0 0 / 0.18), 0 0 40px ${config.color}15`
+          : "none",
+        ...(isHovered ? { borderColor: `${config.color}30`, transform: "translateY(-8px)" } : {}),
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top accent line */}
       <div
-        className="h-[2px] w-full opacity-60"
-        style={{ background: `linear-gradient(90deg, transparent, ${config.color}, transparent)` }}
+        className="h-[2px] w-full"
+        style={{ background: `linear-gradient(90deg, transparent, ${config.color}, transparent)`, opacity: 0.6 }}
         aria-hidden="true"
       />
 
-      {/* Inner glow on hover */}
+      {/* Glow effect on hover */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
         style={{
-          background: `radial-gradient(ellipse at 50% 30%, ${config.color}12 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse at 50% 30%, ${config.color}10 0%, transparent 70%)`,
         }}
         aria-hidden="true"
       />
 
       {/* Product image area */}
-      <div className="relative flex items-center justify-center p-5 md:p-7 pb-1" style={{ aspectRatio: "4 / 3" }}>
-        <div className="relative w-full max-w-[130px] md:max-w-[170px]" style={{ aspectRatio: "1 / 1" }}>
+      <div className={`relative flex items-center justify-center ${featured ? "p-6 md:p-8" : "p-4 md:p-5"} pb-1`} style={{ aspectRatio: featured ? "16 / 10" : "4 / 3" }}>
+        <div className={`relative ${featured ? "w-full max-w-[200px] md:max-w-[260px]" : "w-full max-w-[130px] md:max-w-[170px]"}`} style={{ aspectRatio: "1 / 1" }}>
           <Image
             src={product.images[0] ?? ""}
             alt={`${product.name} — ${config.subtitle}`}
-            width={200}
-            height={200}
-            className="w-full h-full object-contain relative z-10 group-hover:scale-105 transition-transform duration-500"
+            width={260}
+            height={260}
+            className="w-full h-full object-contain relative z-10 group-hover:scale-110 transition-transform duration-500"
           />
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 px-4 md:px-5 pb-4 md:pb-5 pt-1 relative z-10">
+      <div className={`flex flex-col flex-1 ${featured ? "px-6 md:px-8 pb-6 md:pb-8" : "px-4 md:px-5 pb-4 md:pb-5"} pt-1 relative z-10`}>
         <div className="flex items-center gap-1.5 mb-2">
           <span style={{ color: config.color }}>{config.icon}</span>
           <span
@@ -106,11 +120,11 @@ function ProductCard({
           </span>
         </div>
 
-        <h3 className="font-heading font-bold text-sm md:text-lg leading-[1.2] tracking-normal text-[var(--fg-primary)] mb-1.5">
+        <h3 className={`font-heading font-bold ${featured ? "text-lg md:text-2xl" : "text-sm md:text-lg"} leading-[1.2] tracking-normal text-[var(--fg-primary)] mb-1.5`}>
           {product.name}
         </h3>
 
-        <p className="font-body text-xs leading-[1.55] text-[var(--fg-secondary)] mb-4 line-clamp-2 flex-1">
+        <p className={`font-body text-xs leading-[1.55] text-[var(--fg-secondary)] ${featured ? "mb-5 line-clamp-3" : "mb-4 line-clamp-2"} flex-1`}>
           {t(config.descriptionKey)}
         </p>
 
@@ -149,14 +163,18 @@ export function ProductShowcase() {
     return () => observer.disconnect();
   }, []);
 
+  // Split products: featured (first) + rest
+  const featuredProduct = showcaseProducts.find((p) => SHOWCASE_CONFIG[p.slug]?.featured);
+  const otherProducts = showcaseProducts.filter((p) => !SHOWCASE_CONFIG[p.slug]?.featured);
+
   return (
-    <section className="relative py-14 md:py-22 overflow-hidden">
+    <section className="relative py-16 md:py-24 overflow-hidden">
       {/* Subtle background glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.03] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.04] pointer-events-none"
         style={{
           background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
-          filter: "blur(80px)",
+          filter: "blur(100px)",
         }}
         aria-hidden="true"
       />
@@ -171,7 +189,8 @@ export function ProductShowcase() {
             transform: headerVisible ? "translateY(0)" : "translateY(20px)",
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4 hero-glass-badge">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4"
+               style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
             <Leaf className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
             <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
               Premium Products
@@ -186,10 +205,20 @@ export function ProductShowcase() {
           <div className="mt-4 mx-auto h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-[var(--accent-primary)] to-transparent opacity-40" />
         </div>
 
-        {/* Product grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {showcaseProducts.map((product, index) => (
-            <ProductCard key={product.slug} product={product} index={index} />
+        {/* BENTO GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 auto-rows-[minmax(280px,auto)]">
+          {/* Featured product — spans 2 cols + 2 rows on desktop */}
+          {featuredProduct && (
+            <div className="sm:col-span-2 sm:row-span-2">
+              <BentoCard product={featuredProduct} index={0} featured />
+            </div>
+          )}
+
+          {/* Other products */}
+          {otherProducts.map((product, index) => (
+            <div key={product.slug} className="col-span-1 row-span-1">
+              <BentoCard product={product} index={index + 1} />
+            </div>
           ))}
         </div>
       </div>

@@ -51,17 +51,29 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <main className="min-h-screen relative">
-      {/* Decorative background orbs — desktop only to reduce mobile paint */}
+      {/* Decorative background orbs — desktop only, glassmorphism style */}
       <div
-        className="hidden md:block deco-orb deco-orb-1 top-20 -left-40 fixed"
+        className="hidden md:block fixed top-20 -left-40 w-[400px] h-[400px] rounded-full opacity-[0.06] pointer-events-none z-0"
+        style={{
+          background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
+          filter: "blur(80px)",
+        }}
         aria-hidden="true"
       />
       <div
-        className="hidden md:block deco-orb deco-orb-2 top-[40vh] -right-20 fixed"
+        className="hidden md:block fixed top-[40vh] -right-20 w-[350px] h-[350px] rounded-full opacity-[0.04] pointer-events-none z-0"
+        style={{
+          background: "radial-gradient(circle, var(--accent-gold), transparent 70%)",
+          filter: "blur(70px)",
+        }}
         aria-hidden="true"
       />
       <div
-        className="hidden md:block deco-orb deco-orb-1 bottom-20 left-1/3 fixed"
+        className="hidden md:block fixed bottom-20 left-1/3 w-[500px] h-[500px] rounded-full opacity-[0.03] pointer-events-none z-0"
+        style={{
+          background: "radial-gradient(circle, oklch(0.65 0.16 250), transparent 70%)",
+          filter: "blur(90px)",
+        }}
         aria-hidden="true"
       />
 

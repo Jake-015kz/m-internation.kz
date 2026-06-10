@@ -39,7 +39,7 @@ export function BusinessSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-14 md:py-22 bg-[var(--bg-elevated)]"
+      className="py-16 md:py-24 bg-[var(--bg-elevated)]"
       aria-labelledby="business-title"
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
@@ -51,7 +51,8 @@ export function BusinessSection() {
             transform: visible ? "translateY(0)" : "translateY(20px)",
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4"
+               style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
             <TrendingUp className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
             <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
               Business Opportunity
@@ -68,13 +69,13 @@ export function BusinessSection() {
           </p>
         </div>
 
-        {/* Steps grid */}
+        {/* Steps grid — glassmorphism cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {BUSINESS_STEPS.map((step, i) => {
             const isFeatured = step.featured;
             const cardBg = isFeatured
               ? "bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary-hover)] text-white shadow-[var(--shadow-glow)]"
-              : "bg-gradient-to-br from-[var(--bg-surface)] to-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/20";
+              : "border border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/25";
             const labelColor = isFeatured ? "text-white/60" : "text-[var(--fg-muted)]";
             const iconBg = isFeatured ? "bg-white/15" : "bg-[var(--accent-primary)]/8";
             const iconColor = isFeatured ? "text-white" : "text-[var(--accent-primary)]";
@@ -92,7 +93,18 @@ export function BusinessSection() {
                   transitionDelay: `${150 + i * 100}ms`,
                 }}
               >
-                <div className={`rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-[var(--shadow-md)] hover:-translate-y-1 ${cardBg}`}>
+                <div
+                  className={`rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-[var(--shadow-lg)] hover:-translate-y-2 ${cardBg}`}
+                  style={
+                    !isFeatured
+                      ? {
+                          background: "oklch(1 0 0 / 0.04)",
+                          backdropFilter: "blur(20px)",
+                          WebkitBackdropFilter: "blur(20px)",
+                        }
+                      : undefined
+                  }
+                >
                   {/* Step number + icon */}
                   <div className="flex items-center justify-between mb-5">
                     <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
@@ -109,11 +121,6 @@ export function BusinessSection() {
                   <p className={`font-body text-xs md:text-sm leading-[1.55] md:leading-[1.6] ${descColor}`}>
                     {t(step.descriptionKey)}
                   </p>
-
-                  {/* Connector line (not on last item) */}
-                  {i < BUSINESS_STEPS.length - 1 && (
-                    <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-[1px] bg-[var(--border-subtle)]" />
-                  )}
                 </div>
               </div>
             );
