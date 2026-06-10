@@ -30,24 +30,28 @@ export function Footer() {
 
   return (
     <footer
-      className="relative border-t border-[var(--border-subtle)] pt-12 pb-6 bg-[var(--bg-elevated)] md:pt-16 md:pb-8"
+      className="relative border-t border-[var(--border-subtle)] pt-16 pb-8 md:pt-20 md:pb-10"
+      style={{ background: "linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-base) 100%)" }}
       role="contentinfo"
     >
+      {/* Gold top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "linear-gradient(90deg, transparent, var(--accent-gold), transparent)", opacity: 0.3 }} />
+
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
-        {/* Top section: Brand + Subscription */}
-        <div className="flex flex-col gap-6 pb-8 mb-8 border-b border-[var(--border-subtle)] lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+        {/* Top section */}
+        <div className="flex flex-col gap-8 pb-10 mb-10 border-b border-[var(--border-subtle)] lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           {/* Brand */}
-          <div className="flex-1 max-w-[20rem]">
+          <div className="flex-1 max-w-[22rem]">
             <Link
               href={`/${locale}`}
-              className="inline-flex items-center gap-2 mb-3 no-underline"
+              className="inline-flex items-center gap-2 mb-4 no-underline"
               aria-label={`${SITE_CONFIG.name} - Home`}
             >
-              <span className="font-heading font-semibold text-base md:text-lg text-[var(--fg-primary)] tracking-normal">
+              <span className="font-heading font-semibold text-lg md:text-xl gold-shimmer-text">
                 {SITE_CONFIG.name}
               </span>
             </Link>
-            <p className="text-xs md:text-sm text-[var(--fg-muted)] mb-3 md:mb-4 leading-[1.625]">
+            <p className="text-xs md:text-sm text-[var(--fg-muted)] mb-4 md:mb-6 leading-[1.625]">
               {SITE_CONFIG.description}
             </p>
             <div className="flex gap-2">
@@ -55,7 +59,7 @@ export function Footer() {
                 href={CONTACTS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-[color,border-color,box-shadow] duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--accent-gold)] hover:shadow-[0_0_16px_oklch(0.82_0.10_88_/0.08)]"
                 aria-label="Instagram"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -68,7 +72,7 @@ export function Footer() {
                 href={CONTACTS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-[0.5rem] border border-[var(--border)] text-[var(--fg-muted)] transition-[color,border-color,box-shadow] duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] hover:shadow-[var(--shadow-sm)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--accent-gold)] hover:shadow-[0_0_16px_oklch(0.82_0.10_88_/0.08)]"
                 aria-label="TikTok"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -78,14 +82,14 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Subscription — dynamically loaded */}
+          {/* Subscription */}
           <SubscriptionForm />
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 gap-8 mb-10 md:grid-cols-3 md:gap-12">
+        <div className="grid grid-cols-2 gap-8 mb-12 md:grid-cols-3 md:gap-12">
           <div>
-            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
+            <span className="font-body font-semibold text-[10px] text-[var(--accent-gold)] uppercase tracking-[0.12em] block mb-5">
               {t("company")}
             </span>
             <div className="flex flex-col gap-3">
@@ -93,7 +97,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-primary)]"
+                  className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-gold)]"
                 >
                   {link.label}
                 </Link>
@@ -102,7 +106,7 @@ export function Footer() {
           </div>
 
           <div>
-            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
+            <span className="font-body font-semibold text-[10px] text-[var(--accent-gold)] uppercase tracking-[0.12em] block mb-5">
               {t("catalog")}
             </span>
             <div className="flex flex-col gap-3">
@@ -110,7 +114,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-primary)]"
+                  className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-gold)]"
                 >
                   {link.label}
                 </Link>
@@ -119,13 +123,13 @@ export function Footer() {
           </div>
 
           <div>
-            <span className="font-body font-semibold text-xs text-[var(--fg-primary)] uppercase tracking-[0.06em] block mb-4">
+            <span className="font-body font-semibold text-[10px] text-[var(--accent-gold)] uppercase tracking-[0.12em] block mb-5">
               {t("contacts")}
             </span>
             <div className="flex flex-col gap-3">
               <a
                 href={`mailto:${CONTACTS.email}`}
-                className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-primary)]"
+                className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-gold)]"
               >
                 {CONTACTS.email}
               </a>
@@ -133,7 +137,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-primary)]"
+                  className="text-sm text-[var(--fg-muted)] transition-colors duration-250 hover:text-[var(--accent-gold)]"
                 >
                   {link.label}
                 </Link>

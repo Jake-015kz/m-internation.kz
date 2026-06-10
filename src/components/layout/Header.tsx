@@ -10,7 +10,6 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useScroll, useNavLinks } from "@/hooks";
 import { cn } from "@/lib/utils";
 
-// Mobile menu state
 interface MobileMenuContextValue {
   isOpen: boolean;
   open: () => void;
@@ -80,17 +79,13 @@ export function MobileMenu() {
 
   useEffect(() => {
     if (!isOpen || !menuRef.current) return;
-
     const focusable = menuRef.current.querySelectorAll<HTMLElement>(
       'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
     );
     if (!focusable.length) return;
-
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
-
     const timer = setTimeout(() => first.focus(), 50);
-
     const handleTab = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
       if (e.shiftKey && document.activeElement === first) {
@@ -101,7 +96,6 @@ export function MobileMenu() {
         first.focus();
       }
     };
-
     window.addEventListener("keydown", handleTab);
     return () => {
       clearTimeout(timer);
@@ -122,20 +116,18 @@ export function MobileMenu() {
       id="mobile-menu"
     >
       <div className="absolute inset-0" onClick={close} aria-hidden="true" />
-
       <nav
         className="relative flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto overscroll-contain"
         style={{ touchAction: "auto" }}
         aria-label="Mobile navigation"
       >
         <button
-          className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] z-10"
+          className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg transition-colors duration-250 hover:text-[var(--accent-gold)] hover:bg-[var(--bg-surface)] z-10"
           onClick={close}
           aria-label="Close menu"
         >
           <X size={20} />
         </button>
-
         <div className="flex flex-col gap-1 flex-1">
           {navLinks.map((link, i) => (
             <Link
@@ -149,11 +141,10 @@ export function MobileMenu() {
             </Link>
           ))}
         </div>
-
         <div className="pt-6" style={{ transitionDelay: "300ms" }}>
           <Link
             href={`/${locale}/contacts`}
-            className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-semibold text-base px-6 py-3.5 rounded-xl w-full shadow-[var(--shadow-glow-subtle)]"
+            className="inline-flex items-center justify-center bg-[var(--accent-gold)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-xl w-full shadow-[var(--shadow-glow-subtle)]"
             onClick={close}
           >
             {t("contacts")}
@@ -175,27 +166,27 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-[300]",
-        "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
-        isScrolled ? [
-          "bg-[var(--bg-base)]/95 backdrop-blur-[16px] saturate-[150%]",
-          "border-b border-[var(--border-subtle)]",
-          "shadow-[var(--shadow-sm)]",
-        ] : "bg-transparent"
+        "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        isScrolled
+          ? [
+              "bg-[var(--bg-base)]/92 backdrop-blur-[20px] saturate-[160%]",
+              "border-b border-[var(--border-subtle)]",
+              "shadow-[var(--shadow-sm)]",
+            ]
+          : "bg-transparent"
       )}
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-14 md:h-16 flex items-center gap-2 md:gap-4">
         {/* Logo */}
         <Link
           href={`/${locale}`}
-          className="flex items-center gap-1 md:gap-1.5 no-underline z-[301] relative group shrink min-w-0"
+          className="flex items-center gap-1.5 md:gap-2 no-underline z-[301] relative group shrink min-w-0"
         >
           <div
-            className="flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300 shrink-0 group-hover:shadow-[0_0_12px_oklch(0.72_0.19_148_/0.3)]"
-            style={{
-              background: "var(--accent-primary)",
-            }}
+            className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 shrink-0 group-hover:shadow-[0_0_16px_oklch(0.82_0.10_88_/0.25)]"
+            style={{ background: "var(--accent-gold)" }}
           >
-            <Leaf size={14} className="text-white" strokeWidth={2.5} />
+            <Leaf size={15} className="text-[var(--bg-base)]" strokeWidth={2.5} />
           </div>
           <span className="font-heading font-bold text-[11px] sm:text-[13px] text-[var(--fg-primary)] tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis">
             {SITE_CONFIG.name}
@@ -212,7 +203,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[var(--accent-primary)] after:transition-[width] after:duration-300 after:rounded-full hover:text-[var(--fg-primary)] hover:after:w-full"
+              className="font-body font-medium text-sm text-[var(--fg-secondary)] tracking-[0.01em] transition-colors duration-250 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[var(--accent-gold)] after:transition-[width] after:duration-300 after:rounded-full hover:text-[var(--fg-primary)] hover:after:w-full"
             >
               {link.label}
             </Link>
@@ -224,7 +215,7 @@ export function Header() {
           {/* Desktop CTA */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md),0_0_16px_oklch(0.72_0.19_148_/0.15)] hover:scale-[1.02] active:scale-[0.98]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-gold)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-gold-hover)] hover:shadow-[var(--shadow-md),0_0_16px_oklch(0.82_0.10_88_/0.12)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("contacts")}
           </Link>
@@ -237,7 +228,7 @@ export function Header() {
 
           {/* Mobile menu button */}
           <button
-            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--border)]"
+            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-colors duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--border)]"
             onClick={mobileMenu.toggle}
             aria-label={mobileMenu.isOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenu.isOpen}

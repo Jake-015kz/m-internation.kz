@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { manrope, onest } from "@/lib/fonts";
+import { manrope, onest, dmSerif } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer, MobileMenuProvider, MobileMenu } from "@/components/layout";
 import { ClientProviders } from "./ClientProviders";
@@ -116,7 +116,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${manrope.variable} ${onest.variable}`}
+      className={`${manrope.variable} ${onest.variable} ${dmSerif.variable}`}
       suppressHydrationWarning
     >
       <head>
