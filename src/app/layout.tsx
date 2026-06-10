@@ -6,7 +6,6 @@ import { getLocale, getMessages } from "next-intl/server";
 import { manrope, onest } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Header, Footer, MobileMenuProvider, MobileMenu } from "@/components/layout";
-import { LenisProvider } from "@shared/LenisProvider";
 import { ClientProviders } from "./ClientProviders";
 
 function getThemeScript() {
@@ -141,24 +140,22 @@ export default async function RootLayout({
       <body className={`${onest.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <MobileMenuProvider>
-            <LenisProvider>
-              <ClientProviders>
-                <MobileMenu />
-                <div className="relative z-10 flex min-h-screen flex-col">
-                  <a
-                    href="#main-content"
-                    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:bg-[var(--accent-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded"
-                  >
-                    {locale === "ru" ? "Перейти к содержимому" : locale === "kk" ? "Мазмұнына өту" : "Skip to content"}
-                  </a>
-                  <Header />
-                  <main id="main-content" className="flex-[1_1_auto]">{children}</main>
-                  <Footer />
-                </div>
-              </ClientProviders>
-            </LenisProvider>
-          </MobileMenuProvider>
-        </NextIntlClientProvider>
+             <ClientProviders>
+               <MobileMenu />
+               <div className="relative z-10 flex min-h-screen flex-col">
+                 <a
+                   href="#main-content"
+                   className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:bg-[var(--accent-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded"
+                 >
+                     {locale === "ru" ? "Перейти к содержимому" : locale === "kk" ? "Мазмұнына өту" : "Skip to content"}
+                 </a>
+                 <Header />
+                 <main id="main-content" className="flex-[1_1_auto]">{children}</main>
+                 <Footer />
+               </div>
+             </ClientProviders>
+           </MobileMenuProvider>
+         </NextIntlClientProvider>
       </body>
     </html>
   );

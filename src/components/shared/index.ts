@@ -10,7 +10,6 @@ export { AboutSection } from "./AboutSection";
 // UI Effects
 export { ClickSpark } from "./ClickSpark";
 export { NoiseOverlay } from "./NoiseOverlay";
-export { LenisProvider } from "./LenisProvider";
 export { CursorGlow } from "./CursorGlow";
 export { AnimatedCounter } from "./AnimatedCounter";
 
