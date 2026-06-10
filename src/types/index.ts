@@ -8,11 +8,3 @@ export interface Product {
   certificates: string[];
   price?: string;
 }
-
-export interface Founder {
-  id: string;
-  name: string;
-  role: string;
-  image: string;
-  description: string;
-}

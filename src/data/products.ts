@@ -291,5 +291,3 @@ export const products: Product[] = [
   },
 ];
 
-// Re-export for backwards compatibility — prefer using services/productService.ts
-export { getProductBySlug, getProductsByCategory, getRelatedProducts } from "@/services/productService";

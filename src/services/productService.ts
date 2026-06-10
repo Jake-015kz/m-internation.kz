@@ -8,10 +8,6 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
   return products.find((product) => product.slug === slug);
 }
 
-export async function getProductsByCategory(category: string): Promise<Product[]> {
-  return products.filter((product) => product.category === category);
-}
-
 export async function getRelatedProducts(slug: string, limit: number = 4): Promise<Product[]> {
   const product = await getProductBySlug(slug);
   if (!product) return [];
@@ -19,12 +15,4 @@ export async function getRelatedProducts(slug: string, limit: number = 4): Promi
   return products
     .filter((p) => p.slug !== slug && p.category === product.category)
     .slice(0, limit);
-}
-
-export async function getAllProducts(): Promise<Product[]> {
-  return products;
-}
-
-export async function getProductsSlugs(): Promise<string[]> {
-  return products.map((p) => p.slug);
 }

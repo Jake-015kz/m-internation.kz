@@ -10,8 +10,6 @@ const contactSchema = z.object({
   message: z.string().min(10, "Сообщение должно содержать минимум 10 символов").max(1000),
 });
 
-export type ContactFormData = z.infer<typeof contactSchema>;
-
 export type ContactResult =
   | { success: true; message: string }
   | { success: false; error: string; fieldErrors?: Record<string, string> };

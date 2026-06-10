@@ -1,5 +1,5 @@
 // Shared product accent colors — single source of truth for product-specific colors
-export const PRODUCT_ACCENT_COLORS: Record<string, string> = {
+const PRODUCT_ACCENT_COLORS: Record<string, string> = {
   micrystal: "oklch(0.78 0.22 135)",
   greenmax: "oklch(0.55 0.16 155)",
   mimax: "oklch(0.55 0.2 25)",
