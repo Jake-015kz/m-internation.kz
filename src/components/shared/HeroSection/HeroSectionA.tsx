@@ -107,7 +107,7 @@ export function HeroSectionA() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full pt-20 pb-12 md:pt-28 md:pb-16 relative z-10">
+      <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 w-full pt-16 pb-12 md:pt-28 md:pb-16 relative z-10">
         <div className="grid grid-cols-1 gap-8 md:gap-10 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text content */}
           <div className="text-left order-1 lg:order-1">
@@ -146,7 +146,7 @@ export function HeroSectionA() {
               <span className="relative">{t("label")}</span>
             </span>
 
-            {/* H1 — two-line with color accent */}
+            {/* H1 — clear visual hierarchy */}
             <h1
               id="hero-title"
               className="font-heading font-bold tracking-[-0.03em] mb-5 md:mb-6 text-[clamp(2rem,5vw,3.75rem)] leading-[1.08] md:leading-[1.1] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -158,11 +158,18 @@ export function HeroSectionA() {
               }}
             >
               {t("title")}
-              <br />
-              <span style={{ color: "var(--accent-primary)" }}>
-                {t("titleHighlight")}
-              </span>
             </h1>
+            <p
+              className="font-heading font-semibold text-xl md:text-2xl lg:text-[1.75rem] leading-[1.2] mb-5 md:mb-6 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(24px)",
+                color: "var(--accent-primary)",
+                ...sectionStyles.subtitle,
+              }}
+            >
+              {t("titleHighlight")}
+            </p>
 
             {/* Description — concise, punchy */}
             <p
@@ -213,13 +220,13 @@ export function HeroSectionA() {
             >
               <Link
                 href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-bold text-sm md:text-base px-7 py-3.5 min-h-[52px] md:min-h-[56px] md:px-9 md:py-4 rounded-xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--hero-btn-shadow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--hero-btn-hover-shadow)] hover:translate-y-[-2px] active:translate-y-0 active:shadow-none focus-visible:outline-2 focus-visible:outline-[var(--accent-gold)] focus-visible:outline-offset-2"
+                className="inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-bold text-base md:text-lg px-8 py-4 min-h-[56px] md:min-h-[60px] md:px-10 md:py-4 rounded-2xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--hero-btn-shadow)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--hero-btn-hover-shadow)] hover:translate-y-[-2px] active:translate-y-0 active:shadow-none focus-visible:outline-2 focus-visible:outline-[var(--accent-gold)] focus-visible:outline-offset-2 w-full sm:w-auto"
               >
                 {t("cta")}
               </Link>
               <Link
                 href={`/${locale}/about`}
-                className="inline-flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border)] text-[var(--fg-primary)] font-body font-semibold text-sm md:text-base px-7 py-3.5 min-h-[52px] md:min-h-[56px] md:px-9 md:py-4 rounded-xl transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-md)] hover:translate-y-[-2px] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-[var(--accent-gold)] focus-visible:outline-offset-2"
+                className="inline-flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border)] text-[var(--fg-primary)] font-body font-semibold text-base md:text-lg px-8 py-4 min-h-[56px] md:min-h-[60px] md:px-10 md:py-4 rounded-2xl transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-md)] hover:translate-y-[-2px] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-[var(--accent-gold)] focus-visible:outline-offset-2 w-full sm:w-auto"
               >
                 {t("aboutLink")}
               </Link>

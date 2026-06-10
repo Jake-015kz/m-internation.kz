@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useCallback, useEffect, createContext, useContext } from "react";
+import { useState, useCallback, useEffect, createContext, useContext, useRef } from "react";
 import { Menu, X, Leaf } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { SITE_CONFIG } from "@/lib/constants";
@@ -80,16 +80,52 @@ export function MobileMenu() {
   const locale = useLocale();
   const t = useTranslations("nav");
   const navLinks = useNavLinks();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Focus trap: keep Tab/Shift+Tab inside the menu
+  useEffect(() => {
+    if (!isOpen || !menuRef.current) return;
+
+    const focusable = menuRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    // Focus first element when menu opens
+    const timer = setTimeout(() => first.focus(), 50);
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleTab);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("keydown", handleTab);
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
     <div
+      ref={menuRef}
       className="fixed inset-0 z-[9999] bg-[var(--bg-base)] md:hidden"
       style={{ position: "fixed", top: 0, right: 0, bottom: 0, left: 0 }}
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation"
+      id="mobile-menu"
     >
       {/* Close area — click outside to close */}
       <div className="absolute inset-0" onClick={close} aria-hidden="true" />
@@ -97,6 +133,7 @@ export function MobileMenu() {
       <nav
         className="relative flex flex-col h-full pt-20 px-6 pb-8 overflow-y-auto overscroll-contain"
         style={{ touchAction: "auto" }}
+        aria-label="Mobile navigation"
       >
         {/* Mobile menu close button */}
         <button
@@ -210,6 +247,7 @@ export function Header() {
             onClick={mobileMenu.toggle}
             aria-label={mobileMenu.isOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenu.isOpen}
+            aria-controls="mobile-menu"
           >
             {mobileMenu.isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
