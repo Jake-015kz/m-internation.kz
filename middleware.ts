@@ -11,6 +11,11 @@ export const config = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Redirect root "/" to default locale "/ru"
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/ru", request.url), 307);
+  }
+
   // Image negotiation: AVIF → WebP → original
   if (pathname.match(/\.(png|jpe?g)$/i)) {
     const accept = request.headers.get("accept") || "";
