@@ -14,7 +14,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--accent-primary)] text-[var(--bg-base)] font-semibold shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]",
+    "bg-[var(--accent-primary)] text-white font-semibold shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]",
   outline:
     "bg-transparent border border-[var(--border)] text-[var(--fg-primary)] hover:border-[var(--accent-primary)] hover:bg-[oklch(0.82_0.22_135/0.06)] hover:shadow-[var(--shadow-sm)]",
   ghost: "bg-transparent text-[var(--fg-primary)] hover:bg-[oklch(1_0_0/0.05)]",

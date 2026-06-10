@@ -228,12 +228,9 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Right side — unified icon style, never shrinks */}
-        <div className="flex items-center gap-1 md:gap-1.5 shrink-0">
-          <LanguageSwitcher />
-          <ThemeSwitcher />
-
-          {/* CTA — desktop only */}
+        {/* Right side — actions grouped, burger last */}
+        <div className="ml-auto flex items-center gap-1 shrink-0">
+          {/* Desktop CTA */}
           <Link
             href={`/${locale}/contacts`}
             className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
@@ -241,15 +238,21 @@ export function Header() {
             {t("contacts")}
           </Link>
 
-          {/* Mobile menu button */}
+          {/* Icon group — theme + lang */}
+          <div className="flex items-center gap-0.5">
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+          </div>
+
+          {/* Mobile menu button — visually distinct, always last */}
           <button
-            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)]"
+            className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--border)]"
             onClick={mobileMenu.toggle}
             aria-label={mobileMenu.isOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenu.isOpen}
             aria-controls="mobile-menu"
           >
-            {mobileMenu.isOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenu.isOpen ? <X size={20} /> : <Menu size={22} strokeWidth={2.2} />}
           </button>
         </div>
       </div>
