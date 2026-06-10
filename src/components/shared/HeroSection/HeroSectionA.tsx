@@ -11,16 +11,18 @@ const STATS = [
   { value: "15", key: "years" },
 ] as const;
 
-const CERTIFICATES = ["GMP", "ISO", "HALAL"] as const;
+const CERT_BADGES = [
+  { label: "GMP", color: "oklch(0.72 0.19 148 / 0.6)" },
+  { label: "ISO", color: "oklch(0.72 0.19 148 / 0.6)" },
+  { label: "HALAL", color: "oklch(0.72 0.19 148 / 0.6)" },
+] as const;
 
 const sectionStyles = {
-  label: { transitionDelay: "100ms" },
   title: { transitionDelay: "200ms" },
   subtitle: { transitionDelay: "350ms" },
   actions: { transitionDelay: "500ms" },
   product: { transitionDelay: "400ms" },
   stats: { transitionDelay: "700ms" },
-  certs: { transitionDelay: "600ms" },
 } as const;
 
 export function HeroSectionA() {
@@ -99,22 +101,30 @@ export function HeroSectionA() {
         <div className="grid grid-cols-1 gap-8 md:gap-12 items-center lg:grid-cols-2 lg:gap-16">
           {/* Left — Text content */}
           <div className="text-left order-1 lg:order-1">
-            {/* Trust badge — enhanced glassmorphism */}
-            <span
-              className="inline-flex items-center gap-2 mb-5 md:mb-7 px-5 py-2.5 rounded-full font-mono font-bold text-[10px] md:text-[11px] tracking-[0.03em] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            {/* Subtle cert badges — tiny, elegant, low opacity */}
+            <div
+              className="inline-flex items-center gap-1.5 mb-6 md:mb-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(16px)",
-                color: "var(--accent-primary)",
-                background: "oklch(0.72 0.19 148 / 0.10)",
-                border: "1px solid oklch(0.72 0.19 148 / 0.20)",
-                backdropFilter: "blur(20px) saturate(150%)",
-                WebkitBackdropFilter: "blur(20px) saturate(150%)",
-                ...sectionStyles.label,
+                opacity: visible ? 0.5 : 0,
+                transform: visible ? "translateY(0)" : "translateY(12px)",
               }}
             >
-              {CERTIFICATES.join(" • ")}
-            </span>
+              {CERT_BADGES.map((cert, i) => (
+                <span
+                  key={cert.label}
+                  className="inline-flex items-center px-2 py-0.5 rounded text-[8px] md:text-[9px] font-mono font-semibold tracking-widest uppercase"
+                  style={{
+                    color: "var(--accent-primary)",
+                    background: "oklch(0.72 0.19 148 / 0.06)",
+                    border: "1px solid oklch(0.72 0.19 148 / 0.12)",
+                    letterSpacing: "0.1em",
+                    transitionDelay: `${i * 60}ms`,
+                  }}
+                >
+                  {cert.label}
+                </span>
+              ))}
+            </div>
 
             {/* H1 — GIANT, gradient text, tight letter-spacing */}
             <h1

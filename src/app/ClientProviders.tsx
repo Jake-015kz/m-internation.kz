@@ -21,11 +21,13 @@ export function ClientProviders({ children }: ClientProvidersProps) {
     Promise.all([
       import("@shared/NoiseOverlay").then((m) => m.NoiseOverlay),
       import("@shared/ClickSpark").then((m) => m.ClickSpark),
-    ]).then(([NoiseOverlay, ClickSpark]) => {
+      import("@shared/LenisProvider").then((m) => m.LenisProvider),
+    ]).then(([NoiseOverlay, ClickSpark, LenisProvider]) => {
       setEffects(
         <>
           <NoiseOverlay />
           <ClickSpark />
+          <LenisProvider>{null}</LenisProvider>
         </>
       );
     }).catch((err) => {

@@ -80,7 +80,34 @@ export function CertificatesSection() {
       className="relative py-16 md:py-24 overflow-hidden"
       aria-labelledby="certificates-title"
     >
-      {/* ===== GIANT OUTLINE TEXT: TRUSTED QUALITY ===== */}
+      {/* ===== ANIMATED MESH GRADIENT BACKGROUND ===== */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-0 cert-mesh-gradient"
+          style={{
+            background: `
+              radial-gradient(ellipse 50% 40% at 10% 20%, oklch(0.72 0.19 148 / 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse 40% 35% at 85% 75%, oklch(0.82 0.12 82 / 0.06) 0%, transparent 45%),
+              radial-gradient(ellipse 35% 30% at 50% 50%, oklch(0.65 0.16 250 / 0.04) 0%, transparent 50%)
+            `,
+          }}
+        />
+        {/* Animated blobs */}
+        <div
+          className="absolute top-[10%] left-[5%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full opacity-[0.06] cert-blob-1"
+          style={{
+            background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
+            filter: "blur(60px)",
+          }}
+        />
+        <div
+          className="absolute bottom-[10%] right-[5%] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full opacity-[0.04] cert-blob-2"
+          style={{
+            background: "radial-gradient(circle, var(--accent-gold), transparent 70%)",
+            filter: "blur(50px)",
+          }}
+        />
+      </div>
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
         aria-hidden="true"
