@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useInView } from "framer-motion";
 import { MagneticButton } from "@shared/MagneticButton";
 
 const STATS = [
@@ -13,7 +13,103 @@ const STATS = [
   { value: "15", key: "years" },
 ] as const;
 
-/* ── Animated Particle Field ── */
+/* ═══════════════════════════════════════════
+   WORD-BY-WORD STAGGER REVEAL
+   ═══════════════════════════════════════════ */
+function StaggerWords({ text, className = "", delay = 0.3 }: { text: string; className?: string; delay?: number }) {
+  const words = text.split(/\s+/).filter(Boolean);
+
+  const container = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: delay } },
+  };
+
+  const child = {
+    hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+    },
+  };
+
+  return (
+    <motion.span
+      className={`inline-flex flex-wrap gap-x-[0.25em] ${className}`}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      {words.map((word, i) => (
+        <motion.span key={i} className="inline-block" variants={child}>
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED MESH GRADIENT (Framer Motion)
+   Smoother than CSS — GPU-accelerated
+   ═══════════════════════════════════════════ */
+function AnimatedMeshGradient() {
+  return (
+    <div className="absolute inset-0" aria-hidden="true">
+      {/* Base mesh layer — CSS for perf */}
+      <div
+        className="absolute inset-0 hero-mesh-gradient"
+        style={{
+          background: `
+            radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.62 0.16 152 / 0.12) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.82 0.10 88 / 0.10) 0%, transparent 45%),
+            radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.62 0.14 250 / 0.05) 0%, transparent 50%)
+          `,
+        }}
+      />
+
+      {/* Animated blob 1 — Gold, large, slow */}
+      <motion.div
+        className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.10]"
+        style={{ background: "radial-gradient(circle, var(--accent-gold), transparent 70%)", filter: "blur(80px)" }}
+        animate={{
+          x: [0, 40, -25, 10, 0],
+          y: [0, -30, 20, -10, 0],
+          scale: [1, 1.06, 0.96, 1.02, 1],
+        }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Animated blob 2 — Emerald, medium, medium speed */}
+      <motion.div
+        className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.08]"
+        style={{ background: "radial-gradient(circle, var(--accent-emerald), transparent 70%)", filter: "blur(70px)" }}
+        animate={{
+          x: [0, -35, 20, -10, 0],
+          y: [0, 25, -15, 8, 0],
+          scale: [1, 0.95, 1.04, 0.98, 1],
+        }}
+        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Animated blob 3 — Gold accent, small, fast */}
+      <motion.div
+        className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.05]"
+        style={{ background: "radial-gradient(circle, oklch(0.82 0.10 88), transparent 70%)", filter: "blur(60px)" }}
+        animate={{
+          x: [0, 20, -15, 5, 0],
+          y: [0, -15, 10, -5, 0],
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED PARTICLE FIELD (Canvas)
+   ═══════════════════════════════════════════ */
 function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -28,29 +124,24 @@ function ParticleField() {
     let height = (canvas.height = canvas.offsetHeight * 2);
 
     interface Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
+      x: number; y: number; vx: number; vy: number; size: number; opacity: number;
     }
 
     const particles: Particle[] = [];
-    const count = Math.min(60, Math.floor((width * height) / 30000));
+    const count = Math.min(50, Math.floor((width * height) / 40000));
 
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.3 + 0.1,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        size: Math.random() * 1.5 + 0.5,
+        opacity: Math.random() * 0.25 + 0.08,
       });
     }
 
-    const connectionDist = 200;
+    const connectionDist = 180;
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
@@ -73,7 +164,7 @@ function ParticleField() {
           const dy = p.y - q.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDist) {
-            const alpha = (1 - dist / connectionDist) * 0.08;
+            const alpha = (1 - dist / connectionDist) * 0.06;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
@@ -106,12 +197,70 @@ function ParticleField() {
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
       aria-hidden="true"
-      style={{ opacity: 0.6 }}
+      style={{ opacity: 0.5 }}
     />
   );
 }
 
-/* ── Main Hero Section ── */
+/* ═══════════════════════════════════════════
+   COUNTER ANIMATION (scroll-triggered)
+   ═══════════════════════════════════════════ */
+function AnimatedStat({ value, label, delay }: { value: string; label: string; delay: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      className="relative text-center md:text-left rounded-2xl px-2 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
+      style={{
+        background: "linear-gradient(135deg, oklch(1 0 0 / 0.03), oklch(1 0 0 / 0.01))",
+        borderColor: "var(--border-subtle)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+      }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+      whileHover={{ y: -6, borderColor: "var(--accent-gold)", boxShadow: "0 16px 48px oklch(0 0 0 / 0.15), 0 0 30px oklch(0.82 0.10 88 / 0.06)" }}
+    >
+      {/* Top accent line on hover */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "linear-gradient(90deg, transparent, var(--accent-gold), transparent)" }}
+        aria-hidden="true"
+      />
+      {/* Inner glow on hover */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{ background: "radial-gradient(circle at 50% 0%, oklch(0.82 0.10 88 / 0.06), transparent 70%)" }}
+        aria-hidden="true"
+      />
+
+      <motion.p
+        className="font-heading font-black text-base sm:text-xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap tabular-nums relative z-10"
+        style={{
+          background: "linear-gradient(135deg, var(--accent-gold), var(--accent-emerald))",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.5, delay: delay + 0.1, type: "spring", stiffness: 100 }}
+      >
+        {value}
+      </motion.p>
+      <p className="font-body text-[9px] sm:text-[10px] md:text-sm text-[var(--fg-muted)] mt-1 leading-tight relative z-10">
+        {label}
+      </p>
+    </motion.div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   MAIN HERO SECTION — ULTRA 2026
+   ═══════════════════════════════════════════ */
 export function HeroSectionA() {
   const locale = useLocale();
   const t = useTranslations("hero");
@@ -123,6 +272,7 @@ export function HeroSectionA() {
 
   const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.4], [0, -40]);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.05]);
 
   return (
     <section
@@ -132,38 +282,15 @@ export function HeroSectionA() {
       aria-labelledby="hero-title"
     >
       {/* ===== BACKGROUND LAYERS ===== */}
-      <div className="absolute inset-0" aria-hidden="true">
-        {/* Base */}
+      <motion.div className="absolute inset-0" style={{ scale: bgScale }} aria-hidden="true">
+        {/* Base color */}
         <div className="absolute inset-0" style={{ background: "var(--bg-base)" }} />
 
         {/* Noise texture overlay */}
         <div className="absolute inset-0 hero-noise-bg" />
 
-        {/* Premium mesh — enhanced */}
-        <div
-          className="absolute inset-0 hero-mesh-gradient"
-          style={{
-            background: `
-              radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.62 0.16 152 / 0.12) 0%, transparent 50%),
-              radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.82 0.10 88 / 0.10) 0%, transparent 45%),
-              radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.62 0.14 250 / 0.05) 0%, transparent 50%)
-            `,
-          }}
-        />
-
-        {/* Animated blobs — enhanced glow */}
-        <div
-          className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.10] hero-blob-1"
-          style={{ background: "radial-gradient(circle, var(--accent-gold), transparent 70%)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.08] hero-blob-2"
-          style={{ background: "radial-gradient(circle, var(--accent-emerald), transparent 70%)", filter: "blur(70px)" }}
-        />
-        <div
-          className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.05] hero-blob-3"
-          style={{ background: "radial-gradient(circle, oklch(0.82 0.10 88), transparent 70%)", filter: "blur(60px)" }}
-        />
+        {/* Animated mesh gradient blobs */}
+        <AnimatedMeshGradient />
 
         {/* Dot grid pattern */}
         <div
@@ -174,11 +301,11 @@ export function HeroSectionA() {
           }}
         />
 
-        {/* Particle field */}
+        {/* Particle field — desktop only */}
         <div className="absolute inset-0 hidden md:block">
           <ParticleField />
         </div>
-      </div>
+      </motion.div>
 
       {/* ===== CONTENT ===== */}
       <motion.div
@@ -186,7 +313,8 @@ export function HeroSectionA() {
         className="mx-auto max-w-[80rem] px-5 md:px-8 lg:px-10 w-full pt-8 pb-12 md:pt-12 md:pb-16 relative z-10"
       >
         <div className="grid grid-cols-1 gap-8 md:gap-12 items-center lg:grid-cols-2 lg:gap-16">
-          {/* Left — Text */}
+
+          {/* ── LEFT: Text ── */}
           <div className="text-left order-1 lg:order-1">
             {/* Cert badges */}
             <motion.div
@@ -210,39 +338,27 @@ export function HeroSectionA() {
               ))}
             </motion.div>
 
-            {/* H1 — staggered reveal */}
+            {/* H1 — Word-by-word stagger reveal */}
             <motion.h1
               id="hero-title"
-              className="font-heading font-extrabold mb-4 md:mb-5 overflow-hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-heading font-extrabold mb-4 md:mb-5"
               style={{
                 fontSize: "clamp(2.75rem, 7vw, 5rem)",
-                lineHeight: 1.02,
+                lineHeight: 1.05,
+                letterSpacing: "-0.03em",
               }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.1 }}
             >
               {t("title").split("\n").map((line, i) => (
-                <motion.span
-                  key={i}
-                  className="block"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 + i * 0.15 }}
-                  style={{
-                    background: i === 0
-                      ? "linear-gradient(135deg, var(--fg-primary) 0%, var(--accent-gold) 50%, var(--accent-emerald) 100%)"
-                      : "linear-gradient(135deg, var(--fg-primary) 0%, var(--accent-gold) 60%, var(--accent-emerald) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    backgroundSize: "200% 200%",
-                    animation: "gradient-shift 8s ease-in-out infinite",
-                    letterSpacing: "-0.04em",
-                  }}
-                >
-                  {line}
-                </motion.span>
+                <span key={i} className="block overflow-hidden">
+                  <StaggerWords
+                    text={line}
+                    delay={0.3 + i * 0.2}
+                    className="hero-gradient-text"
+                  />
+                </span>
               ))}
             </motion.h1>
 
@@ -274,7 +390,7 @@ export function HeroSectionA() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.9 }}
             >
-              <MagneticButton asChild>
+              <MagneticButton>
                 <Link href={`/${locale}/catalog`}>
                   {t("cta")}
                 </Link>
@@ -288,7 +404,7 @@ export function HeroSectionA() {
             </motion.div>
           </div>
 
-          {/* Right — Floating Product */}
+          {/* ── RIGHT: Floating Product ── */}
           <motion.div
             className="relative flex justify-center items-center order-2 lg:order-2"
             initial={{ opacity: 0, y: 40, scale: 0.96 }}
@@ -360,59 +476,21 @@ export function HeroSectionA() {
           </motion.div>
         </div>
 
-        {/* Stats row */}
+        {/* ── STATS ROW — scroll-triggered counters ── */}
         <motion.div
           className="mt-12 md:mt-16 pt-8 md:pt-10 border-t border-[var(--border-subtle)]"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.0 }}
         >
           <div className="grid grid-cols-3 gap-3 md:gap-6">
             {STATS.map((stat, i) => (
-              <motion.div
+              <AnimatedStat
                 key={stat.key}
-                className="relative text-center md:text-left rounded-2xl px-2 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
-                style={{
-                  background: "linear-gradient(135deg, oklch(1 0 0 / 0.03), oklch(1 0 0 / 0.01))",
-                  borderColor: "var(--border-subtle)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.2 + i * 0.1 }}
-                whileHover={{ y: -6, borderColor: "var(--accent-gold)", boxShadow: "0 16px 48px oklch(0 0 0 / 0.15), 0 0 30px oklch(0.82 0.10 88 / 0.06)" }}
-              >
-                {/* Top accent line */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "linear-gradient(90deg, transparent, var(--accent-gold), transparent)" }}
-                  aria-hidden="true"
-                />
-
-                {/* Inner glow */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ background: "radial-gradient(circle at 50% 0%, oklch(0.82 0.10 88 / 0.06), transparent 70%)" }}
-                  aria-hidden="true"
-                />
-
-                <p
-                  className="font-heading font-black text-base sm:text-xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap tabular-nums relative z-10"
-                  style={{
-                    background: "linear-gradient(135deg, var(--accent-gold), var(--accent-emerald))",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  {stat.value}
-                </p>
-                <p className="font-body text-[9px] sm:text-[10px] md:text-sm text-[var(--fg-muted)] mt-1 leading-tight relative z-10">
-                  {t(`stat.${stat.key}`)}
-                </p>
-              </motion.div>
+                value={stat.value}
+                label={t(`stat.${stat.key}`)}
+                delay={0.1 + i * 0.12}
+              />
             ))}
           </div>
         </motion.div>

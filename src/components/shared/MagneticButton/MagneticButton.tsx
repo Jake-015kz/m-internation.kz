@@ -1,13 +1,12 @@
 "use client";
 
-import { useMotionValue, useSpring } from "framer-motion";
+import { useMotionValue, useSpring, motion } from "framer-motion";
 import { useRef, type ReactNode, type CSSProperties } from "react";
 
 interface MagneticButtonProps {
   children: ReactNode;
   className?: string;
   strength?: number;
-  asChild?: boolean;
 }
 
 export function MagneticButton({
@@ -19,8 +18,8 @@ export function MagneticButton({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springX = useSpring(x, { stiffness: 150, damping: 15 });
-  const springY = useSpring(y, { stiffness: 150, damping: 15 });
+  const springX = useSpring(x, { stiffness: 200, damping: 20 });
+  const springY = useSpring(y, { stiffness: 200, damping: 20 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;

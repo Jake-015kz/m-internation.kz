@@ -42,7 +42,7 @@ export function HomeSections({ locale }: HomeSectionsProps) {
                 Свяжитесь с нами, чтобы узнать больше о продукции и возможностях M-International
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                <MagneticButton asChild>
+                <MagneticButton>
                   <Link href={`/${locale}/contacts`}>
                     Связаться с нами
                   </Link>
