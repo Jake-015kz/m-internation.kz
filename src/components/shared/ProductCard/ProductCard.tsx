@@ -17,7 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/${locale}/catalog/${product.slug}`}
-      className="card-premium group flex flex-col h-full no-underline text-inherit cursor-pointer"
+      className="card-premium-v2 group flex flex-col h-full no-underline text-inherit cursor-pointer"
     >
       {/* Shine accent line */}
       <div className="accent-line" />
@@ -29,13 +29,21 @@ export function ProductCard({ product }: ProductCardProps) {
           background: `linear-gradient(180deg, ${accent}06 0%, transparent 100%)`,
         }}
       >
+        {/* Inner glow on hover */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at 50% 50%, ${accent}10 0%, transparent 70%)`,
+          }}
+        />
+
         {product.images?.[0] ? (
           <Image
             src={product.images[0]}
             alt={product.name}
             width={200}
             height={200}
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] relative z-10"
           />
         ) : (
           <span

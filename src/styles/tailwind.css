@@ -629,4 +629,274 @@ input, textarea, select {
   .cursor-glow {
     display: none !important;
   }
+  .hero-blob-1,
+  .hero-blob-2,
+  .hero-blob-3 {
+    display: none !important;
+  }
+}
+
+/* ============================================
+ * PREMIUM UI V2 — Elite Design System
+ * ============================================ */
+
+/* --- Hero Mesh Gradient --- */
+.hero-mesh-gradient {
+  will-change: transform;
+  animation: mesh-float 20s ease-in-out infinite;
+}
+
+@keyframes mesh-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10px, -15px) scale(1.02); }
+  66% { transform: translate(-5px, 10px) scale(0.98); }
+}
+
+/* --- Hero Animated Blobs --- */
+.hero-blob-1 {
+  will-change: transform;
+  animation: blob-drift-1 18s ease-in-out infinite;
+}
+.hero-blob-2 {
+  will-change: transform;
+  animation: blob-drift-2 22s ease-in-out infinite;
+}
+.hero-blob-3 {
+  will-change: transform;
+  animation: blob-drift-3 15s ease-in-out infinite;
+}
+
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+  75% { transform: translate(15px, 15px) scale(1.02); }
+}
+
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(1.04); }
+  66% { transform: translate(20px, -25px) scale(0.96); }
+}
+
+@keyframes blob-drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -15px); }
+}
+
+/* --- Conic Glow Rotation --- */
+.hero-conic-glow {
+  will-change: transform;
+  animation: conic-rotate 8s linear infinite;
+}
+
+@keyframes conic-rotate {
+  from { transform: scale(1.1) rotate(0deg); }
+  to { transform: scale(1.1) rotate(360deg); }
+}
+
+/* --- Gradient Text --- */
+.hero-gradient-text {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* --- Glass Badge --- */
+.hero-glass-badge {
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+
+/* --- Glass Button (secondary CTA) --- */
+.hero-glass-btn {
+  background: oklch(1 0 0 / 0.03);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  color: var(--fg-primary);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-glass-btn:hover {
+  background: oklch(1 0 0 / 0.06);
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 32px oklch(0 0 0 / 0.15);
+}
+
+/* --- Premium Glass Card --- */
+.glass-card-premium {
+  position: relative;
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.04) 0%, oklch(1 0 0 / 0.01) 100%);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.glass-card-premium:hover {
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.06) 0%, oklch(1 0 0 / 0.02) 100%);
+  border-color: oklch(1 0 0 / 0.15);
+  box-shadow:
+    0 20px 60px oklch(0 0 0 / 0.25),
+    0 0 40px oklch(0.72 0.19 148 / 0.05);
+  transform: translateY(-2px);
+}
+
+/* --- Premium Card V2 (ProductCard) --- */
+.card-premium-v2 {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-premium-v2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-start: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.04), transparent);
+  transition: inset-inline-start 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.card-premium-v2:hover {
+  border-color: oklch(0.72 0.19 148 / 0.2);
+  box-shadow:
+    0 12px 40px oklch(0 0 0 / 0.12),
+    0 0 20px oklch(0.72 0.19 148 / 0.04);
+  transform: translateY(-6px);
+}
+.card-premium-v2:hover::before {
+  left: 100%;
+}
+
+/* --- Product Card Hover Glow --- */
+.product-card-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+}
+.product-card-hover:hover {
+  box-shadow:
+    0 16px 48px oklch(0 0 0 / 0.15),
+    0 0 30px oklch(0.72 0.19 148 / 0.06);
+}
+
+/* --- Stat Card Glow --- */
+.hero-stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.hero-stat-card:hover {
+  box-shadow:
+    0 8px 32px oklch(0 0 0 / 0.12),
+    0 0 20px oklch(0.72 0.19 148 / 0.08);
+}
+
+/* --- Premium Button Glow --- */
+.btn-premium-glow {
+  position: relative;
+  overflow: hidden;
+}
+.btn-premium-glow::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-gold));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: blur(8px);
+}
+.btn-premium-glow:hover::after {
+  opacity: 0.4;
+}
+
+/* --- Section Header Gradient Line --- */
+.gradient-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+  opacity: 0.4;
+}
+
+/* --- Floating Animation (CSS-only) --- */
+@keyframes float-premium {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-premium {
+  animation: float-premium 6s ease-in-out infinite;
+}
+
+/* --- Pulse Ring --- */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.3; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid var(--accent-primary);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* --- Shimmer Effect --- */
+@keyframes shimmer-premium {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-premium {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(1 0 0 / 0.05) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-premium 2s ease-in-out infinite;
+}
+
+/* ============================================
+ * MOBILE PERFORMANCE — disable expensive effects
+ * ============================================ */
+@media (max-width: 768px) {
+  .hero-conic-glow {
+    animation: none !important;
+  }
+  .hero-blob-1,
+  .hero-blob-2,
+  .hero-blob-3 {
+    display: none !important;
+  }
+  .hero-mesh-gradient {
+    animation: none !important;
+  }
+  .glass-card-premium {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .glass-card-premium::before {
+    display: none;
+  }
+  .hero-glass-btn {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }

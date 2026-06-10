@@ -58,11 +58,11 @@ function ProductCard({
   return (
     <div
       ref={cardRef}
-      className="group relative flex flex-col h-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden transition-all duration-300 hover:border-[var(--accent-primary)]/15 hover:shadow-[var(--shadow-md)] hover:-translate-y-1"
+      className="group relative flex flex-col h-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden transition-all duration-500 hover:border-[var(--accent-primary)]/20 hover:shadow-[var(--shadow-lg)] hover:-translate-y-2 product-card-hover"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.6s ease ${index * 0.08}s, transform 0.6s ease ${index * 0.08}s`,
+        transition: `opacity 0.6s ease ${index * 0.08}s, transform 0.6s ease ${index * 0.08}s, box-shadow 0.4s ease, border-color 0.4s ease`,
       }}
     >
       {/* Top accent line */}
@@ -72,14 +72,17 @@ function ProductCard({
         aria-hidden="true"
       />
 
+      {/* Inner glow on hover */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+        style={{
+          background: `radial-gradient(ellipse at 50% 30%, ${config.color}12 0%, transparent 70%)`,
+        }}
+        aria-hidden="true"
+      />
+
       {/* Product image area */}
       <div className="relative flex items-center justify-center p-5 md:p-7 pb-1" style={{ aspectRatio: "4 / 3" }}>
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 rounded-full blur-3xl"
-          style={{ background: config.color }}
-          aria-hidden="true"
-        />
-
         <div className="relative w-full max-w-[130px] md:max-w-[170px]" style={{ aspectRatio: "1 / 1" }}>
           <Image
             src={product.images[0] ?? ""}
@@ -92,7 +95,7 @@ function ProductCard({
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 px-4 md:px-5 pb-4 md:pb-5 pt-1">
+      <div className="flex flex-col flex-1 px-4 md:px-5 pb-4 md:pb-5 pt-1 relative z-10">
         <div className="flex items-center gap-1.5 mb-2">
           <span style={{ color: config.color }}>{config.icon}</span>
           <span
@@ -148,6 +151,16 @@ export function ProductShowcase() {
 
   return (
     <section className="relative py-14 md:py-22 overflow-hidden">
+      {/* Subtle background glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.03] pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
+          filter: "blur(80px)",
+        }}
+        aria-hidden="true"
+      />
+
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div
@@ -158,7 +171,7 @@ export function ProductShowcase() {
             transform: headerVisible ? "translateY(0)" : "translateY(20px)",
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4 hero-glass-badge">
             <Leaf className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
             <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
               Premium Products

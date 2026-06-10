@@ -10,7 +10,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useScroll, useNavLinks } from "@/hooks";
 import { cn } from "@/lib/utils";
 
-// ── Mobile menu state shared between Header and MobileMenu ──
+// Mobile menu state
 interface MobileMenuContextValue {
   isOpen: boolean;
   open: () => void;
@@ -29,7 +29,6 @@ export function useMobileMenu() {
 export function MobileMenuProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -44,7 +43,6 @@ export function MobileMenuProvider({ children }: { children: React.ReactNode }) 
     };
   }, [isOpen]);
 
-  // Close menu on Escape key
   useEffect(() => {
     if (!isOpen) return;
     const handleKey = (e: KeyboardEvent) => {
@@ -54,7 +52,6 @@ export function MobileMenuProvider({ children }: { children: React.ReactNode }) 
     return () => window.removeEventListener("keydown", handleKey);
   }, [isOpen]);
 
-  // Close menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) setIsOpen(false);
@@ -74,7 +71,6 @@ export function MobileMenuProvider({ children }: { children: React.ReactNode }) 
   );
 }
 
-// ── MobileMenu — rendered via Portal-like pattern OUTSIDE header stacking context ──
 export function MobileMenu() {
   const { isOpen, close } = useMobileMenu();
   const locale = useLocale();
@@ -82,7 +78,6 @@ export function MobileMenu() {
   const navLinks = useNavLinks();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Focus trap: keep Tab/Shift+Tab inside the menu
   useEffect(() => {
     if (!isOpen || !menuRef.current) return;
 
@@ -94,7 +89,6 @@ export function MobileMenu() {
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
 
-    // Focus first element when menu opens
     const timer = setTimeout(() => first.focus(), 50);
 
     const handleTab = (e: KeyboardEvent) => {
@@ -127,7 +121,6 @@ export function MobileMenu() {
       aria-label="Mobile navigation"
       id="mobile-menu"
     >
-      {/* Close area — click outside to close */}
       <div className="absolute inset-0" onClick={close} aria-hidden="true" />
 
       <nav
@@ -135,7 +128,6 @@ export function MobileMenu() {
         style={{ touchAction: "auto" }}
         aria-label="Mobile navigation"
       >
-        {/* Mobile menu close button */}
         <button
           className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg transition-colors duration-250 hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] z-10"
           onClick={close}
@@ -172,7 +164,6 @@ export function MobileMenu() {
   );
 }
 
-// ── Header — no longer renders MobileMenu inline ──
 export function Header() {
   const locale = useLocale();
   const t = useTranslations("nav");
@@ -186,20 +177,20 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-[300]",
         "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
         isScrolled ? [
-          "bg-[var(--bg-base)]/95 backdrop-blur-[12px] saturate-[140%]",
+          "bg-[var(--bg-base)]/95 backdrop-blur-[16px] saturate-[150%]",
           "border-b border-[var(--border-subtle)]",
           "shadow-[var(--shadow-sm)]",
-        ] : "bg-transparent",
+        ] : "bg-transparent"
       )}
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-14 md:h-16 flex items-center gap-2 md:gap-4">
-        {/* Logo — premium wordmark with leaf icon, never wraps */}
+        {/* Logo */}
         <Link
           href={`/${locale}`}
           className="flex items-center gap-1 md:gap-1.5 no-underline z-[301] relative group shrink min-w-0"
         >
           <div
-            className="flex items-center justify-center w-7 h-7 rounded-lg transition-colors duration-300 shrink-0"
+            className="flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300 shrink-0 group-hover:shadow-[0_0_12px_oklch(0.72_0.19_148_/0.3)]"
             style={{
               background: "var(--accent-primary)",
             }}
@@ -228,23 +219,23 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Right side — actions grouped, burger last */}
+        {/* Right side */}
         <div className="ml-auto flex items-center gap-1 shrink-0">
           {/* Desktop CTA */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-primary)] text-white font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md),0_0_16px_oklch(0.72_0.19_148_/0.15)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("contacts")}
           </Link>
 
-          {/* Icon group — theme + lang */}
+          {/* Icon group */}
           <div className="flex items-center gap-0.5">
             <LanguageSwitcher />
             <ThemeSwitcher />
           </div>
 
-          {/* Mobile menu button — visually distinct, always last */}
+          {/* Mobile menu button */}
           <button
             className="flex md:hidden items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-[var(--fg-primary)] rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-colors duration-250 hover:text-[var(--accent-primary)] hover:border-[var(--border)]"
             onClick={mobileMenu.toggle}
