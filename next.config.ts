@@ -20,6 +20,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Compress output
   compress: true,
+  // Skip ESLint during build (run separately via `npm run lint`)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default withNextIntl(nextConfig);
