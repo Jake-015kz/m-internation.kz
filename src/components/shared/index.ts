@@ -17,3 +17,7 @@ export { AnimatedCounter } from "./AnimatedCounter";
 export { ProductCard } from "./ProductCard";
 export { ProductGrid } from "./ProductGrid";
 export { ProductShowcase } from "./ProductShowcase";
+
+// Premium Patterns
+export { MagneticButton } from "./MagneticButton";
+export { ScrollReveal } from "./ScrollReveal";

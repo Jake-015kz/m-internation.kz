@@ -22,6 +22,15 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Shine accent line */}
       <div className="accent-line" />
 
+      {/* Glow effect on hover */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+        style={{
+          background: `radial-gradient(circle at 50% 30%, ${accent}12 0%, transparent 70%)`,
+        }}
+        aria-hidden="true"
+      />
+
       {/* Product Image */}
       <div
         className="aspect-square p-4 md:p-6 flex items-center justify-center relative overflow-hidden"

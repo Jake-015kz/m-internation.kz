@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight, ChevronLeft, ChevronRight, Droplets, Leaf, Shield, Heart, Zap, Apple } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { products } from "@/data/products";
+import { ScrollReveal } from "@shared/ScrollReveal";
 
 const SHOWCASE_CONFIG: Record<
   string,
@@ -63,9 +64,9 @@ function SoftGlassCard({ product, index }: { product: (typeof showcaseProducts)[
         WebkitBackdropFilter: "blur(24px) saturate(150%)",
         border: "1px solid oklch(1 0 0 / 0.10)",
         boxShadow: isHovered
-          ? `0 20px 60px oklch(0 0 0 / 0.18), 0 0 40px ${config.color}15, inset 0 0 60px oklch(1 0 0 / 0.03)`
+          ? `0 24px 80px oklch(0 0 0 / 0.22), 0 0 60px ${config.color}18, inset 0 0 80px oklch(1 0 0 / 0.04)`
           : "inset 0 0 30px oklch(1 0 0 / 0.01)",
-        ...(isHovered ? { borderColor: `${config.color}30`, transform: "translateY(-8px)" } : {}),
+        ...(isHovered ? { borderColor: `${config.color}30`, transform: "translateY(-10px)" } : {}),
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -81,7 +82,7 @@ function SoftGlassCard({ product, index }: { product: (typeof showcaseProducts)[
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
         style={{
-          background: `radial-gradient(ellipse at 50% 30%, ${config.color}10 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse at 50% 30%, ${config.color}12 0%, transparent 70%)`,
         }}
         aria-hidden="true"
       />
@@ -194,31 +195,29 @@ export function ProductShowcase() {
 
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div
-          ref={headerRef}
-          className="text-center mb-8 md:mb-12 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            opacity: headerVisible ? 1 : 0,
-            transform: headerVisible ? "translateY(0)" : "translateY(20px)",
-          }}
-        >
+        <ScrollReveal>
           <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] mb-4"
-            style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}
+            ref={headerRef}
+            className="text-center mb-8 md:mb-12"
           >
-            <Leaf className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
-            <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
-              Premium Products
-            </span>
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] mb-4"
+              style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}
+            >
+              <Leaf className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+              <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
+                Premium Products
+              </span>
+            </div>
+            <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-2 md:mb-3 md:text-3xl lg:text-4xl">
+              {t("title")}
+            </h2>
+            <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-secondary)] max-w-[32rem] mx-auto">
+              {t("description")}
+            </p>
+            <div className="mt-4 mx-auto h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-[var(--accent-primary)] to-transparent opacity-40" />
           </div>
-          <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-2 md:mb-3 md:text-3xl lg:text-4xl">
-            {t("title")}
-          </h2>
-          <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-secondary)] max-w-[32rem] mx-auto">
-            {t("description")}
-          </p>
-          <div className="mt-4 mx-auto h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-[var(--accent-primary)] to-transparent opacity-40" />
-        </div>
+        </ScrollReveal>
 
         {/* Embla Carousel */}
         <div className="relative">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { MagneticButton } from "@shared/MagneticButton";
 
 const STATS = [
   { value: "10 000+", key: "customers" },
@@ -135,41 +136,41 @@ export function HeroSectionA() {
         {/* Base */}
         <div className="absolute inset-0" style={{ background: "var(--bg-base)" }} />
 
-        {/* Premium mesh */}
+        {/* Noise texture overlay */}
+        <div className="absolute inset-0 hero-noise-bg" />
+
+        {/* Premium mesh — enhanced */}
         <div
           className="absolute inset-0 hero-mesh-gradient"
           style={{
             background: `
-              radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.62 0.16 152 / 0.10) 0%, transparent 50%),
-              radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.82 0.10 88 / 0.08) 0%, transparent 45%),
-              radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.62 0.14 250 / 0.04) 0%, transparent 50%)
+              radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.62 0.16 152 / 0.12) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.82 0.10 88 / 0.10) 0%, transparent 45%),
+              radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.62 0.14 250 / 0.05) 0%, transparent 50%)
             `,
           }}
         />
 
-        {/* Animated blobs */}
+        {/* Animated blobs — enhanced glow */}
         <div
-          className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.08] hero-blob-1"
+          className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.10] hero-blob-1"
           style={{ background: "radial-gradient(circle, var(--accent-gold), transparent 70%)", filter: "blur(80px)" }}
         />
         <div
-          className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.06] hero-blob-2"
+          className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.08] hero-blob-2"
           style={{ background: "radial-gradient(circle, var(--accent-emerald), transparent 70%)", filter: "blur(70px)" }}
         />
         <div
-          className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.04] hero-blob-3"
+          className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.05] hero-blob-3"
           style={{ background: "radial-gradient(circle, oklch(0.82 0.10 88), transparent 70%)", filter: "blur(60px)" }}
         />
 
-        {/* Subtle grid */}
+        {/* Dot grid pattern */}
         <div
-          className="absolute inset-0 opacity-[0.015]"
+          className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: `
-              linear-gradient(oklch(1 0 0 / 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, oklch(1 0 0 / 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "80px 80px",
+            backgroundImage: "radial-gradient(circle, oklch(1 0 0 / 0.15) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
           }}
         />
 
@@ -273,12 +274,11 @@ export function HeroSectionA() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.9 }}
             >
-              <Link
-                href={`/${locale}/catalog`}
-                className="inline-flex items-center justify-center bg-[var(--accent-gold)] text-[var(--bg-base)] font-body font-bold text-base md:text-lg px-8 py-4 min-h-[56px] md:min-h-[60px] md:px-10 rounded-2xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--hero-btn-shadow)] hover:bg-[var(--accent-gold-hover)] hover:shadow-[var(--hero-btn-hover-shadow)] hover:translate-y-[-2px] active:translate-y-0 active:shadow-none focus-visible:outline-2 focus-visible:outline-[var(--accent-gold)] focus-visible:outline-offset-2 w-full sm:w-auto"
-              >
-                {t("cta")}
-              </Link>
+              <MagneticButton asChild>
+                <Link href={`/${locale}/catalog`}>
+                  {t("cta")}
+                </Link>
+              </MagneticButton>
               <Link
                 href={`/${locale}/about`}
                 className="inline-flex items-center justify-center hero-glass-btn font-body font-semibold text-base md:text-lg px-8 py-4 min-h-[56px] md:min-h-[60px] md:px-10 rounded-2xl transition-all duration-300 hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)] hover:shadow-[var(--shadow-md)] hover:translate-y-[-2px] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-[var(--accent-gold)] focus-visible:outline-offset-2 w-full sm:w-auto"

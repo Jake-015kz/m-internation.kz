@@ -611,9 +611,10 @@ body::before {
 .card-premium-v2:hover {
   border-color: oklch(0.82 0.10 88 / 0.15);
   box-shadow:
-    0 16px 48px oklch(0 0 0 / 0.15),
-    0 0 30px oklch(0.82 0.10 88 / 0.04);
-  transform: translateY(-8px);
+    0 20px 60px oklch(0 0 0 / 0.18),
+    0 0 40px oklch(0.82 0.10 88 / 0.06),
+    inset 0 0 30px oklch(1 0 0 / 0.02);
+  transform: translateY(-10px);
 }
 .card-premium-v2:hover::before {
   left: 100%;
@@ -753,6 +754,15 @@ body::before {
     0 20px 60px oklch(0 0 0 / 0.25),
     0 0 40px oklch(0.82 0.10 88 / 0.03);
   transform: translateY(-2px);
+}
+
+/* ── Hero Noise Background ── */
+.hero-noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  opacity: 0.018;
+  pointer-events: none;
 }
 
 /* ── Hero Mesh Gradient ── */
@@ -914,6 +924,51 @@ body::before {
 .cert-blob-2 {
   will-change: transform;
   animation: blob-drift-2 22s ease-in-out infinite;
+}
+
+/* ============================================
+ * NATIVE SCROLL-DRIVEN ANIMATIONS (CSS-only, 2024+)
+ * Fallback for browsers with animation-timeline support
+ * ============================================ */
+@supports (animation-timeline: scroll()) {
+  .scroll-fade-in {
+    animation: fade-in-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  .scroll-scale-in {
+    animation: scale-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+
+  .scroll-slide-left {
+    animation: slide-in-left linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+
+  .scroll-slide-right {
+    animation: slide-in-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
 }
 
 /* ============================================
