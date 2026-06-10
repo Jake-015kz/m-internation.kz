@@ -39,7 +39,7 @@ function MarqueeRow({
             key={`${cert.id}-${i}`}
             className="flex-shrink-0 flex items-center gap-2.5 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-all duration-300 hover:border-[var(--accent-primary)]/25 hover:shadow-[var(--shadow-sm)] group cursor-default"
             style={{
-              background: "oklch(1 0 0 / 0.04)",
+              background: "oklch(1 0 0 / 0.60)",
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
             }}
@@ -86,22 +86,22 @@ export function CertificatesSection() {
           className="absolute inset-0 cert-mesh-gradient"
           style={{
             background: `
-              radial-gradient(ellipse 50% 40% at 10% 20%, oklch(0.72 0.19 148 / 0.08) 0%, transparent 50%),
-              radial-gradient(ellipse 40% 35% at 85% 75%, oklch(0.82 0.12 82 / 0.06) 0%, transparent 45%),
-              radial-gradient(ellipse 35% 30% at 50% 50%, oklch(0.65 0.16 250 / 0.04) 0%, transparent 50%)
+              radial-gradient(ellipse 50% 40% at 10% 20%, oklch(0.38 0.14 152 / 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 40% 35% at 85% 75%, oklch(0.55 0.14 88 / 0.04) 0%, transparent 45%),
+              radial-gradient(ellipse 35% 30% at 50% 50%, oklch(0.38 0.14 250 / 0.02) 0%, transparent 50%)
             `,
           }}
         />
         {/* Animated blobs */}
         <div
-          className="absolute top-[10%] left-[5%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full opacity-[0.06] cert-blob-1"
+          className="absolute top-[10%] left-[5%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full opacity-[0.04] cert-blob-1"
           style={{
             background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
             filter: "blur(60px)",
           }}
         />
         <div
-          className="absolute bottom-[10%] right-[5%] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full opacity-[0.04] cert-blob-2"
+          className="absolute bottom-[10%] right-[5%] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full opacity-[0.03] cert-blob-2"
           style={{
             background: "radial-gradient(circle, var(--accent-gold), transparent 70%)",
             filter: "blur(50px)",
@@ -116,7 +116,7 @@ export function CertificatesSection() {
           className="font-heading font-black text-[8rem] md:text-[14rem] lg:text-[18rem] whitespace-nowrap select-none"
           style={{
             color: "transparent",
-            WebkitTextStroke: "1px oklch(0.72 0.19 148 / 0.04)",
+            WebkitTextStroke: "1px oklch(0.38 0.14 152 / 0.04)",
             opacity: 1,
             letterSpacing: "-0.02em",
             lineHeight: 1,
@@ -131,14 +131,14 @@ export function CertificatesSection() {
       <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
 
       {/* Side fades for marquee */}
-      <div className="absolute top-0 left-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
-      <div className="absolute top-0 right-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 left-0 bottom:0 w-16 md:w-32 bg-gradient-to-r from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
+      <div className="absolute top-0 right-0 bottom:0 w-16 md:w-32 bg-gradient-to-l from-[var(--bg-base)] to-transparent z-[5] pointer-events-none" />
 
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4 md:mb-6"
-               style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
+               style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}>
             <Shield className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
             <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
               Certified Quality

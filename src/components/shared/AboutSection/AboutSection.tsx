@@ -20,7 +20,7 @@ export function AboutSection() {
         <ScrollReveal>
           <div className="mb-10 md:mb-16 text-left max-w-[36rem]">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4"
-                 style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
+                 style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}>
               <Sparkles className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
               <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
                 Our Story
@@ -52,7 +52,7 @@ export function AboutSection() {
                 <div className="relative">
                   {/* Dot */}
                   <div
-                    className="absolute -left-8 top-1 w-3 h-3 md:absolute md:-left-12 md:w-3.5 md:h-3.5 rounded-full border-2 border-[var(--accent-primary)] bg-[var(--bg-base)] shadow-[0_0_8px_var(--accent-primary)] md:top-1.5"
+                    className="absolute -left-8 top-1 w-3 h-3 md:absolute md:-left-12 md:w-3.5 md:h-3.5 rounded-full border-2 border-[var(--accent-primary)] bg-[var(--bg-base)] md:top-1.5"
                     style={{ boxShadow: "0 0 12px var(--accent-primary)" }}
                   />
 

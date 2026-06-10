@@ -18,14 +18,13 @@ export function ClientProviders({ children }: ClientProvidersProps) {
     if (!isMounted) return;
 
     // Dynamically import effects only on client after mount
+    // NOTE: NoiseOverlay removed — grain looks dirty on light backgrounds
     Promise.all([
-      import("@shared/NoiseOverlay").then((m) => m.NoiseOverlay),
       import("@shared/ClickSpark").then((m) => m.ClickSpark),
       import("@shared/LenisProvider").then((m) => m.LenisProvider),
-    ]).then(([NoiseOverlay, ClickSpark, LenisProvider]) => {
+    ]).then(([ClickSpark, LenisProvider]) => {
       setEffects(
         <>
-          <NoiseOverlay />
           <ClickSpark />
           <LenisProvider>{null}</LenisProvider>
         </>

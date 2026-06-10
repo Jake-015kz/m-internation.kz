@@ -23,8 +23,8 @@ function getThemeScript() {
           document.documentElement.style.colorScheme = t;
         }
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.documentElement.style.colorScheme = 'dark';
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.style.colorScheme = 'light';
       }
     })();
   `;

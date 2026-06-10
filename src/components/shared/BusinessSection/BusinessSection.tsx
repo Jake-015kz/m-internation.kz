@@ -47,7 +47,7 @@ export function BusinessSection() {
         <ScrollReveal>
           <div className="mb-8 md:mb-14 text-left max-w-[36rem]">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4"
-                 style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}>
+                 style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}>
               <TrendingUp className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
               <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
                 Business Opportunity
@@ -84,7 +84,7 @@ export function BusinessSection() {
                   style={
                     !isFeatured
                       ? {
-                          background: "oklch(1 0 0 / 0.03)",
+                          background: "oklch(1 0 0 / 0.50)",
                           backdropFilter: "blur(20px)",
                           WebkitBackdropFilter: "blur(20px)",
                         }

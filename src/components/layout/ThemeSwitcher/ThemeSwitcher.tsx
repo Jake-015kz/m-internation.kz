@@ -14,7 +14,7 @@ function getStoredTheme(): Theme | null {
 }
 
 function getSystemTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
@@ -23,12 +23,11 @@ function getSystemTheme(): Theme {
 function applyTheme(t: Theme) {
   const root = document.documentElement;
   root.setAttribute("data-theme", t);
-  // Update color-scheme for native form controls / scrollbar
   root.style.colorScheme = t;
 }
 
 function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   // DOM already has data-theme from inline <script> in layout
   const attr = document.documentElement.getAttribute("data-theme");
   if (attr === "dark" || attr === "light") return attr;

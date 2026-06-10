@@ -52,7 +52,6 @@ function StaggerWords({ text, className = "", delay = 0.3 }: { text: string; cla
 
 /* ═══════════════════════════════════════════
    ANIMATED MESH GRADIENT (Framer Motion)
-   Smoother than CSS — GPU-accelerated
    ═══════════════════════════════════════════ */
 function AnimatedMeshGradient() {
   return (
@@ -62,16 +61,16 @@ function AnimatedMeshGradient() {
         className="absolute inset-0 hero-mesh-gradient"
         style={{
           background: `
-            radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.62 0.16 152 / 0.12) 0%, transparent 50%),
-            radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.82 0.10 88 / 0.10) 0%, transparent 45%),
-            radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.62 0.14 250 / 0.05) 0%, transparent 50%)
+            radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.38 0.14 152 / 0.10) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.55 0.14 88 / 0.08) 0%, transparent 45%),
+            radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.38 0.14 250 / 0.03) 0%, transparent 50%)
           `,
         }}
       />
 
       {/* Animated blob 1 — Gold, large, slow */}
       <motion.div
-        className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.10]"
+        className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.08]"
         style={{ background: "radial-gradient(circle, var(--accent-gold), transparent 70%)", filter: "blur(80px)" }}
         animate={{
           x: [0, 40, -25, 10, 0],
@@ -83,7 +82,7 @@ function AnimatedMeshGradient() {
 
       {/* Animated blob 2 — Emerald, medium, medium speed */}
       <motion.div
-        className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.08]"
+        className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.06]"
         style={{ background: "radial-gradient(circle, var(--accent-emerald), transparent 70%)", filter: "blur(70px)" }}
         animate={{
           x: [0, -35, 20, -10, 0],
@@ -95,8 +94,8 @@ function AnimatedMeshGradient() {
 
       {/* Animated blob 3 — Gold accent, small, fast */}
       <motion.div
-        className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.05]"
-        style={{ background: "radial-gradient(circle, oklch(0.82 0.10 88), transparent 70%)", filter: "blur(60px)" }}
+        className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.04]"
+        style={{ background: "radial-gradient(circle, oklch(0.55 0.14 88), transparent 70%)", filter: "blur(60px)" }}
         animate={{
           x: [0, 20, -15, 5, 0],
           y: [0, -15, 10, -5, 0],
@@ -155,7 +154,7 @@ function ParticleField() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `oklch(0.82 0.10 88 / ${p.opacity})`;
+        ctx.fillStyle = `oklch(0.55 0.14 88 / ${p.opacity})`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -168,7 +167,7 @@ function ParticleField() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `oklch(0.82 0.10 88 / ${alpha})`;
+            ctx.strokeStyle = `oklch(0.55 0.14 88 / ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -214,7 +213,7 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
       ref={ref}
       className="relative text-center md:text-left rounded-2xl px-2 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
       style={{
-        background: "linear-gradient(135deg, oklch(1 0 0 / 0.03), oklch(1 0 0 / 0.01))",
+        background: "oklch(1 0 0 / 0.60)",
         borderColor: "var(--border-subtle)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
@@ -222,7 +221,7 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
       initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -6, borderColor: "var(--accent-gold)", boxShadow: "0 16px 48px oklch(0 0 0 / 0.15), 0 0 30px oklch(0.82 0.10 88 / 0.06)" }}
+      whileHover={{ y: -6, borderColor: "var(--accent-gold)", boxShadow: "0 16px 48px oklch(0 0 0 / 0.06), 0 0 30px oklch(0.55 0.14 88 / 0.04)" }}
     >
       {/* Top accent line on hover */}
       <div
@@ -233,14 +232,14 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
       {/* Inner glow on hover */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ background: "radial-gradient(circle at 50% 0%, oklch(0.82 0.10 88 / 0.06), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle at 50% 0%, oklch(0.55 0.14 88 / 0.06), transparent 70%)" }}
         aria-hidden="true"
       />
 
       <motion.p
         className="font-heading font-black text-base sm:text-xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap tabular-nums relative z-10"
         style={{
-          background: "linear-gradient(135deg, var(--accent-gold), var(--accent-emerald))",
+          background: "linear-gradient(135deg, var(--accent-emerald), oklch(0.32 0.16 152))",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -259,7 +258,7 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
 }
 
 /* ═══════════════════════════════════════════
-   MAIN HERO SECTION — ULTRA 2026
+   MAIN HERO SECTION — PREMIUM LIGHT 2026
    ═══════════════════════════════════════════ */
 export function HeroSectionA() {
   const locale = useLocale();
@@ -286,17 +285,14 @@ export function HeroSectionA() {
         {/* Base color */}
         <div className="absolute inset-0" style={{ background: "var(--bg-base)" }} />
 
-        {/* Noise texture overlay */}
-        <div className="absolute inset-0 hero-noise-bg" />
-
         {/* Animated mesh gradient blobs */}
         <AnimatedMeshGradient />
 
         {/* Dot grid pattern */}
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.015]"
           style={{
-            backgroundImage: "radial-gradient(circle, oklch(1 0 0 / 0.15) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(circle, oklch(0 0 0 / 0.10) 1px, transparent 1px)",
             backgroundSize: "32px 32px",
           }}
         />
@@ -319,7 +315,7 @@ export function HeroSectionA() {
             {/* Cert badges */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 0.5, y: 0 }}
+              animate={{ opacity: 0.7, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="inline-flex items-center gap-1.5 mb-6 md:mb-8"
             >
@@ -329,8 +325,8 @@ export function HeroSectionA() {
                   className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[8px] md:text-[9px] font-bold tracking-[0.12em] uppercase"
                   style={{
                     color: "var(--accent-gold)",
-                    background: "oklch(0.82 0.10 88 / 0.05)",
-                    border: "1px solid oklch(0.82 0.10 88 / 0.10)",
+                    background: "oklch(0.55 0.14 88 / 0.08)",
+                    border: "1px solid oklch(0.55 0.14 88 / 0.15)",
                   }}
                 >
                   {label}
@@ -346,6 +342,7 @@ export function HeroSectionA() {
                 fontSize: "clamp(2.75rem, 7vw, 5rem)",
                 lineHeight: 1.05,
                 letterSpacing: "-0.03em",
+                color: "var(--fg-primary)",
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -368,7 +365,7 @@ export function HeroSectionA() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6 }}
-              style={{ color: "var(--accent-gold)" }}
+              style={{ color: "var(--accent-emerald)" }}
             >
               {t("lead")}
             </motion.p>
@@ -420,23 +417,23 @@ export function HeroSectionA() {
                 className="absolute inset-0 rounded-3xl hero-conic-glow"
                 style={{
                   background: "conic-gradient(from 0deg, var(--accent-gold), var(--accent-emerald), var(--accent-gold))",
-                  opacity: 0.08,
+                  opacity: 0.06,
                   filter: "blur(30px)",
                   transform: "scale(1.15)",
                 }}
                 aria-hidden="true"
               />
 
-              {/* Glass card */}
+              {/* Glass card — white cloud */}
               <div className="relative glass-card-premium rounded-3xl p-6 md:p-10 h-full flex items-center justify-center overflow-hidden">
                 {/* Inner glow spots */}
                 <div
-                  className="absolute top-0 left-0 w-40 h-40 opacity-30"
+                  className="absolute top-0 left-0 w-40 h-40 opacity-20"
                   style={{ background: "radial-gradient(circle at 0% 0%, var(--accent-gold), transparent 70%)" }}
                   aria-hidden="true"
                 />
                 <div
-                  className="absolute bottom-0 right-0 w-48 h-48 opacity-20"
+                  className="absolute bottom-0 right-0 w-48 h-48 opacity-15"
                   style={{ background: "radial-gradient(circle at 100% 100%, var(--accent-emerald), transparent 70%)" }}
                   aria-hidden="true"
                 />
@@ -448,15 +445,15 @@ export function HeroSectionA() {
                   height={420}
                   priority
                   sizes="(max-width: 640px) 220px, (max-width: 1024px) 280px, 400px"
-                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-[0_12px_40px_oklch(0.55_0.14_88_/0.15)]"
+                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-[0_8px_32px_oklch(0.38_0.14_152_/0.12)]"
                 />
 
                 {/* Floating badge */}
                 <motion.div
                   className="absolute -top-2 -right-2 md:-top-3 md:-right-3 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono font-bold text-[9px] md:text-[10px] uppercase tracking-[0.06em] shadow-[var(--shadow-lg)]"
                   style={{
-                    background: "linear-gradient(135deg, var(--accent-gold), oklch(0.88 0.14 88))",
-                    color: "var(--bg-base)",
+                    background: "linear-gradient(135deg, var(--accent-emerald), oklch(0.32 0.16 152))",
+                    color: "white",
                   }}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -466,10 +463,10 @@ export function HeroSectionA() {
                 </motion.div>
               </div>
 
-              {/* Deep glow */}
+              {/* Soft natural shadow under product */}
               <div
                 className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/4 h-12 rounded-full z-0"
-                style={{ background: "var(--accent-gold)", opacity: 0.08, filter: "blur(30px)" }}
+                style={{ background: "oklch(0.38 0.14 152 / 0.06)", filter: "blur(24px)" }}
                 aria-hidden="true"
               />
             </div>

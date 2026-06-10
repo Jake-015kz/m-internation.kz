@@ -144,7 +144,7 @@ export function MobileMenu() {
         <div className="pt-6" style={{ transitionDelay: "300ms" }}>
           <Link
             href={`/${locale}/contacts`}
-            className="inline-flex items-center justify-center bg-[var(--accent-gold)] text-[var(--bg-base)] font-body font-semibold text-base px-6 py-3.5 rounded-xl w-full shadow-[var(--shadow-glow-subtle)]"
+            className="inline-flex items-center justify-center bg-[var(--accent-emerald)] text-white font-body font-semibold text-base px-6 py-3.5 rounded-xl w-full shadow-[var(--shadow-glow-subtle)]"
             onClick={close}
           >
             {t("contacts")}
@@ -183,10 +183,10 @@ export function Header() {
           className="flex items-center gap-1.5 md:gap-2 no-underline z-[301] relative group shrink min-w-0"
         >
           <div
-            className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 shrink-0 group-hover:shadow-[0_0_16px_oklch(0.82_0.10_88_/0.25)]"
-            style={{ background: "var(--accent-gold)" }}
+            className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 shrink-0 group-hover:shadow-[0_0_16px_oklch(0.38_0.14_152_/0.20)]"
+            style={{ background: "var(--accent-emerald)" }}
           >
-            <Leaf size={15} className="text-[var(--bg-base)]" strokeWidth={2.5} />
+            <Leaf size={15} className="text-white" strokeWidth={2.5} />
           </div>
           <span className="font-heading font-bold text-[11px] sm:text-[13px] text-[var(--fg-primary)] tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis">
             {SITE_CONFIG.name}
@@ -215,7 +215,7 @@ export function Header() {
           {/* Desktop CTA */}
           <Link
             href={`/${locale}/contacts`}
-            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-gold)] text-[var(--bg-base)] font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-gold-hover)] hover:shadow-[var(--shadow-md),0_0_16px_oklch(0.82_0.10_88_/0.12)] hover:scale-[1.02] active:scale-[0.98]"
+            className="hidden md:inline-flex items-center justify-center bg-[var(--accent-emerald)] text-white font-body font-medium text-sm px-4 py-2 min-h-[44px] rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-emerald-hover)] hover:shadow-[var(--shadow-md),0_0_16px_oklch(0.38_0.14_152_/0.12)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {t("contacts")}
           </Link>

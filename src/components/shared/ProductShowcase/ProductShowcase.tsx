@@ -59,12 +59,12 @@ function SoftGlassCard({ product, index }: { product: (typeof showcaseProducts)[
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transition: `opacity 0.7s ease ${index * 0.1}s, transform 0.7s ease ${index * 0.1}s, box-shadow 0.4s ease, border-color 0.4s ease`,
         borderRadius: "1.25rem",
-        background: "oklch(1 0 0 / 0.05)",
+        background: "oklch(1 0 0 / 0.60)",
         backdropFilter: "blur(24px) saturate(150%)",
         WebkitBackdropFilter: "blur(24px) saturate(150%)",
-        border: "1px solid oklch(1 0 0 / 0.10)",
+        border: "1px solid oklch(0 0 0 / 0.06)",
         boxShadow: isHovered
-          ? `0 24px 80px oklch(0 0 0 / 0.22), 0 0 60px ${config.color}18, inset 0 0 80px oklch(1 0 0 / 0.04)`
+          ? `0 24px 80px oklch(0 0 0 / 0.08), 0 0 60px ${config.color}18, inset 0 0 80px oklch(1 0 0 / 0.04)`
           : "inset 0 0 30px oklch(1 0 0 / 0.01)",
         ...(isHovered ? { borderColor: `${config.color}30`, transform: "translateY(-10px)" } : {}),
       }}
@@ -185,7 +185,7 @@ export function ProductShowcase() {
     <section className="relative py-16 md:py-24 overflow-hidden">
       {/* Subtle background glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.04] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.03] pointer-events-none"
         style={{
           background: "radial-gradient(circle, var(--accent-primary), transparent 70%)",
           filter: "blur(100px)",
@@ -202,7 +202,7 @@ export function ProductShowcase() {
           >
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] mb-4"
-              style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}
+              style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}
             >
               <Leaf className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
               <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
@@ -226,7 +226,7 @@ export function ProductShowcase() {
             onClick={scrollPrev}
             aria-label="Previous slide"
             className="hidden lg:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--fg-secondary)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-md)] embla-arrow-prev"
-            style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}
+            style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -234,7 +234,7 @@ export function ProductShowcase() {
             onClick={scrollNext}
             aria-label="Next slide"
             className="hidden lg:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--fg-secondary)] transition-all duration-300 hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:shadow-[var(--shadow-md)] embla-arrow-next"
-            style={{ background: "oklch(1 0 0 / 0.04)", backdropFilter: "blur(12px)" }}
+            style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -262,9 +262,9 @@ export function ProductShowcase() {
                 aria-label={`Go to slide ${i + 1}`}
                 className="w-2 h-2 rounded-full transition-all duration-300"
                 style={{
-                  background: i === selectedIndex ? "var(--accent-primary)" : "oklch(1 0 0 / 0.15)",
+                  background: i === selectedIndex ? "var(--accent-primary)" : "oklch(0 0 0 / 0.10)",
                   transform: i === selectedIndex ? "scale(1.3)" : "scale(1)",
-                  boxShadow: i === selectedIndex ? "0 0 8px oklch(0.72 0.19 148 / 0.4)" : "none",
+                  boxShadow: i === selectedIndex ? "0 0 8px oklch(0.38 0.14 152 / 0.3)" : "none",
                 }}
               />
             ))}
@@ -276,7 +276,7 @@ export function ProductShowcase() {
               onClick={scrollPrev}
               aria-label="Previous slide"
               className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--fg-secondary)] transition-all duration-300 active:scale-90"
-              style={{ background: "oklch(1 0 0 / 0.04)" }}
+              style={{ background: "oklch(1 0 0 / 0.60)" }}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -287,7 +287,7 @@ export function ProductShowcase() {
               onClick={scrollNext}
               aria-label="Next slide"
               className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--fg-secondary)] transition-all duration-300 active:scale-90"
-              style={{ background: "oklch(1 0 0 / 0.04)" }}
+              style={{ background: "oklch(1 0 0 / 0.60)" }}
             >
               <ChevronRight className="w-5 h-5" />
             </button>

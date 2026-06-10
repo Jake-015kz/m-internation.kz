@@ -59,7 +59,7 @@ export function Footer() {
                 href={CONTACTS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--accent-gold)] hover:shadow-[0_0_16px_oklch(0.82_0.10_88_/0.08)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--accent-gold)] hover:shadow-[0_0_16px_oklch(0.55_0.14_88_/0.08)]"
                 aria-label="Instagram"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -72,7 +72,7 @@ export function Footer() {
                 href={CONTACTS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--accent-gold)] hover:shadow-[0_0_16px_oklch(0.82_0.10_88_/0.08)]"
+                className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg border border-[var(--border)] text-[var(--fg-muted)] transition-all duration-250 hover:text-[var(--accent-gold)] hover:border-[var(--accent-gold)] hover:shadow-[0_0_16px_oklch(0.55_0.14_88_/0.08)]"
                 aria-label="TikTok"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
