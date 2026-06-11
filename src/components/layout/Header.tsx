@@ -158,22 +158,27 @@ export function MobileMenu() {
 export function Header() {
   const locale = useLocale();
   const t = useTranslations("nav");
-  const { isScrolled } = useScroll({ threshold: 50 });
+  const { isScrolled, scrollDirection } = useScroll({ threshold: 20 });
   const navLinks = useNavLinks();
   const mobileMenu = useMobileMenu();
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    if (!isScrolled) {
+      setIsVisible(true);
+      return;
+    }
+    setIsVisible(scrollDirection === "up");
+  }, [isScrolled, scrollDirection]);
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-[300]",
-        "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-        isScrolled
-          ? [
-              "bg-[var(--bg-base)]/92 backdrop-blur-[20px] saturate-[160%]",
-              "border-b border-[var(--border-subtle)]",
-              "shadow-[var(--shadow-sm)]",
-            ]
-          : "bg-transparent"
+        "bg-[var(--bg-base)]/90 backdrop-blur-[20px] saturate-[160%]",
+        "border-b border-[var(--border-subtle)]",
+        "transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        isVisible ? "translate-y-0" : "-translate-y-full"
       )}
     >
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 h-14 md:h-16 flex items-center gap-2 md:gap-4">

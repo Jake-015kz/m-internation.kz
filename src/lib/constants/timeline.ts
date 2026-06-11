@@ -16,6 +16,11 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     descriptionKey: "timeline.2020.description",
   },
   {
+    year: "2021",
+    titleKey: "timeline.2021.title",
+    descriptionKey: "timeline.2021.description",
+  },
+  {
     year: "2022",
     titleKey: "timeline.2022.title",
     descriptionKey: "timeline.2022.description",
@@ -24,6 +29,11 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
     year: "2023",
     titleKey: "timeline.2023.title",
     descriptionKey: "timeline.2023.description",
+  },
+  {
+    year: "2024",
+    titleKey: "timeline.2024.title",
+    descriptionKey: "timeline.2024.description",
   },
   {
     year: "2025",

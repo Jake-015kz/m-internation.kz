@@ -35,6 +35,12 @@ export function HomeSections({ locale }: HomeSectionsProps) {
         <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8 relative z-10">
           <ScrollReveal>
             <div className="max-w-[36rem] mx-auto text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] mb-4"
+                   style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}>
+                <span className="font-mono text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--accent-primary)]">
+                  Start Today
+                </span>
+              </div>
               <h2 className="font-heading font-semibold text-xl leading-[1.1] text-[var(--fg-primary)] tracking-normal mb-3 md:mb-4 md:text-3xl lg:text-4xl">
                 Готовы к переменам?
               </h2>

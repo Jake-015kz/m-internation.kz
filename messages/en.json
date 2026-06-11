@@ -28,9 +28,9 @@
   },
   "hero": {
     "label": "International company",
-    "title": "Plant-Based Formulas for Health",
-    "lead": "Certified natural supplements by M-International.",
-    "subtitle": "For immunity, detox, and longevity. Available in 50+ countries.",
+    "title": "Nature's Intelligence.\nYour Longevity.",
+    "lead": "Health biotech in 50+ countries.",
+    "subtitle": "Immunity. Detox. Longevity. 50+ countries.",
     "cta": "View catalog",
     "aboutLink": "About us",
     "stat": {
@@ -149,7 +149,8 @@
       "natural": "Natural ingredients",
       "certified": "International certificates",
       "tested": "Clinically tested"
-    }
+    },
+    "learnMore": "Learn more"
   },
   "about": {
     "title": "ABOUT THE COMPANY",

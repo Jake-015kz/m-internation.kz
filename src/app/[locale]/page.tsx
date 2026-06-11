@@ -14,10 +14,10 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
   const t = await getTranslations({ locale, namespace: "hero" });
   return {
     title: {
-      default: t("title"),
+      default: "Интеллект природы. Твое долголетие.",
       template: `%s | ${SITE_CONFIG.name}`,
     },
-    description: t("subtitle"),
+    description: "Биотехнологии здоровья в 50+ странах. Иммунитет. Детокс. Долголетие.",
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: {

@@ -45,7 +45,7 @@ export function BusinessSection() {
       <div className="mx-auto max-w-[80rem] px-4 md:px-6 lg:px-8">
         {/* Header */}
         <ScrollReveal>
-          <div className="mb-8 md:mb-14 text-left max-w-[36rem]">
+          <div className="mb-8 md:mb-14 text-center max-w-[36rem] mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] mb-4"
                  style={{ background: "oklch(1 0 0 / 0.60)", backdropFilter: "blur(12px)" }}>
               <TrendingUp className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
@@ -62,6 +62,7 @@ export function BusinessSection() {
             <p className="font-body text-sm md:text-base leading-[1.5] text-[var(--fg-muted)]">
               {t("description")}
             </p>
+            <div className="mt-4 mx-auto h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-[var(--accent-primary)] to-transparent opacity-40" />
           </div>
         </ScrollReveal>
 
@@ -135,7 +136,7 @@ export function BusinessSection() {
 
         {/* CTA */}
         <ScrollReveal delay={0.4}>
-          <div className="mt-8 md:mt-12 flex justify-start">
+          <div className="mt-8 md:mt-12 flex justify-center">
             <Link
               href={`/${locale}/business`}
               className="inline-flex items-center gap-2 bg-[var(--accent-primary)] text-white font-body font-semibold text-sm px-6 py-3 min-h-[44px] rounded-xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[var(--shadow-glow-subtle)] hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-md)] hover:scale-[1.02] active:scale-[0.98] group"

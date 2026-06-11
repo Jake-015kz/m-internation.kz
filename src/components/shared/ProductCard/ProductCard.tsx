@@ -88,7 +88,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </p>
 
         {/* Certificates + arrow */}
-        <div className="flex items-center justify-between pt-3 border-t border-[var(--border-subtle)]">
+        <div className="flex items-center justify-between pt-3 border-t border-[var(--border-subtle)] mt-auto">
           <div className="flex gap-1.5 flex-wrap">
             {product.certificates.slice(0, 2).map((cert) => (
               <span

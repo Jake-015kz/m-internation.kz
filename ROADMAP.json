@@ -1,0 +1,121 @@
+{
+  "project": "m-internation.kz",
+  "date": "2026-06-11",
+  "mission": "Финальная подготовка сайта к продаже — уровень AWWWARDS",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "ФИКС ПРОКРУТКИ: убрать overflow:hidden и проверить высоту контейнеров",
+      "status": "pending",
+      "severity": "blocker",
+      "phase": 1,
+      "files": [
+        "src/styles/tailwind.css",
+        "src/app/layout.tsx",
+        "src/app/[locale]/page.tsx"
+      ],
+      "detail": "Проверить html/body на overflow:hidden. Убедиться что .flex.min-h-screen.flex-col не ограничивает контент. Footer должен быть виден до самого конца. Проверить что нет двойного overflow."
+    },
+    {
+      "id": 2,
+      "title": "ФИКС ПЕРЕВОДОВ: удалить мусорные ключи, создать недостающие в json",
+      "status": "pending",
+      "severity": "blocker",
+      "phase": 1,
+      "files": [
+        "messages/ru.json",
+        "messages/en.json",
+        "messages/kk.json"
+      ],
+      "detail": "Проверить все t() вызовы в компонентах. Ключи типа about.visionText, aboutPage.hero.stat.countries и т.д. — заменить на реальные существующие ключи из json. Если ключа нет — добавить во все 3 файла (ru/en/kk)."
+    },
+    {
+      "id": 3,
+      "title": "HERO SECTION: новый заголовок + подзаголовок",
+      "status": "pending",
+      "severity": "major",
+      "phase": 2,
+      "files": [
+        "messages/ru.json",
+        "messages/en.json",
+        "messages/kk.json"
+      ],
+      "title": "Интеллект природы. Твое долголетие.",
+      "subtitle": "Биотехнологии здоровья в 50+ странах.",
+      "detail": "Заменить hero.title и hero.subtitle в 3 json файлах. Новый title: 'Интеллект природы. Твое долголетие.' (одна строка, без \\n). Новый subtitle: 'Биотехнологии здоровья в 50+ странах.' Добавить ключ hero.newSubtitle или заменить subtitle."
+    },
+    {
+      "id": 4,
+      "title": "PRODUCT SHOWCASE: уменьшить dots + кнопка внизу карточки",
+      "status": "pending",
+      "severity": "major",
+      "phase": 2,
+      "files": [
+        "src/components/shared/ProductShowcase/ProductShowcase.tsx"
+      ],
+      "detail": "1) Точки пагинации: 6px→4px, активная точка 24px→20px, gap 1.5→1. 2) Кнопка 'Подробнее' в карточке: убрать из центра (mt-auto уже есть), но добавить стиль — полная ширина внизу, с hover-эффектом фона. Сделать кнопку более заметной: border + hover bg."
+    },
+    {
+      "id": 5,
+      "title": "NAVBAR: bg-base/90 при загрузке + hide/show при скролле",
+      "status": "pending",
+      "severity": "major",
+      "phase": 2,
+      "files": [
+        "src/components/layout/Header.tsx",
+        "src/hooks/useScroll.ts"
+      ],
+      "detail": "1) При загрузке: убрать bg-transparent, сделать bg-[var(--bg-base)]/90 backdrop-blur-[20px] по умолчанию. 2) Добавить логику: при скролле вниз >100px — скрыть (translate-y: -100%, opacity: 0), при скролле вверх — показать (translate-y: 0, opacity: 1). Использовать useScroll хук с direction tracking."
+    },
+    {
+      "id": 6,
+      "title": "TIMELINE: центрированная вертикальная линия + чередование лево/право",
+      "status": "pending",
+      "severity": "major",
+      "phase": 3,
+      "files": [
+        "src/components/shared/AboutSection/AboutSection.tsx"
+      ],
+      "detail": "Переделать Timeline: вертикальная линия по центру (left: 50%), события чередуются — чётные слева, нечётные справа. Каждый элемент — карточка с годом и описанием. Добавить красивые точки на линии (glow-эффект). Мобильная версия — всё слева как сейчас."
+    },
+    {
+      "id": 7,
+      "title": "BADGES: добавить подзаголовки-бейджи для каждой секции",
+      "status": "pending",
+      "severity": "major",
+      "phase": 3,
+      "files": [
+        "src/components/shared/AboutSection/AboutSection.tsx",
+        "src/components/shared/BusinessSection/BusinessSection.tsx",
+        "src/components/shared/CertificatesSection/CertificatesSection.tsx",
+        "src/components/shared/ProductShowcase/ProductShowcase.tsx"
+      ],
+      "detail": "Каждая секция должна иметь бейдж-плашку над заголовком (как 'Premium Products' в ProductShowcase). Стиль: inline-flex, rounded-full, border, маленький uppercase текст. Для Certificates — 'Certificates', Business — 'Business', About — уже есть 'Our Story'."
+    },
+    {
+      "id": 8,
+      "title": "BUILD CHECK: npm run build + фикс импортов",
+      "status": "pending",
+      "severity": "blocker",
+      "phase": 4,
+      "files": [],
+      "detail": "Запустить npm run build. Если упал — исправить ошибки импортов, неиспользуемые переменные, отсутствующие модули. Повторять до успешного билда."
+    },
+    {
+      "id": 9,
+      "title": "PUSH в main + deploy",
+      "status": "pending",
+      "severity": "blocker",
+      "phase": 4,
+      "files": [],
+      "detail": "git add -A, git commit -m 'feat: final AWWWARDS-ready polish — hero, navbar, timeline, products, i18n', git push origin main. Vercel автоматически деплоит."
+    }
+  ],
+  "summary": {
+    "blockers": 3,
+    "major": 4,
+    "minor": 0,
+    "total_files_touched": 12,
+    "estimated_total_time": "3-5 часов"
+  }
+}

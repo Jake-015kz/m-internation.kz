@@ -8,9 +8,9 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring, useInView }
 import { MagneticButton } from "@shared/MagneticButton";
 
 const STATS = [
-  { value: "10 000+", key: "customers" },
+  { value: "10K+", key: "customers" },
   { value: "50+", key: "countries" },
-  { value: "15", key: "years" },
+  { value: "6", key: "years" },
 ] as const;
 
 /* ═══════════════════════════════════════════
@@ -339,7 +339,7 @@ export function HeroSectionA() {
               id="hero-title"
               className="font-heading font-extrabold mb-4 md:mb-5"
               style={{
-                fontSize: "clamp(2.75rem, 7vw, 5rem)",
+                fontSize: "clamp(3rem, 8vw, 5.5rem)",
                 lineHeight: 1.05,
                 letterSpacing: "-0.03em",
                 color: "var(--fg-primary)",
@@ -359,9 +359,9 @@ export function HeroSectionA() {
               ))}
             </motion.h1>
 
-            {/* Lead */}
+            {/* Lead — punchy subtitle */}
             <motion.p
-              className="font-heading font-semibold text-lg md:text-xl lg:text-2xl leading-[1.25] mb-4 md:mb-5"
+              className="font-heading font-semibold text-base md:text-lg lg:text-xl leading-[1.3] mb-3 md:mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6 }}

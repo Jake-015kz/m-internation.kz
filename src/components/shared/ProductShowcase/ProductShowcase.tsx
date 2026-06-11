@@ -122,10 +122,10 @@ function SoftGlassCard({ product, index }: { product: (typeof showcaseProducts)[
 
         <Link
           href={`/${locale}/catalog/${product.slug}`}
-          className="inline-flex items-center gap-1.5 font-body font-medium text-xs md:text-sm text-[var(--accent-primary)] transition-all duration-300 hover:gap-2.5 group/link"
+          className="inline-flex items-center justify-center gap-2 font-body font-semibold text-xs md:text-sm text-white bg-[var(--accent-primary)] px-5 py-2.5 rounded-xl transition-all duration-300 hover:bg-[var(--accent-primary-hover)] hover:shadow-[var(--shadow-glow-subtle)] hover:scale-[1.02] active:scale-[0.98] mt-auto w-full"
         >
           {t("learnMore")}
-          <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/link:translate-x-0.5" />
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </div>
@@ -254,17 +254,18 @@ export function ProductShowcase() {
           </div>
 
           {/* Dot indicators */}
-          <div className="flex items-center justify-center gap-2 mt-6 md:mt-8">
+          <div className="flex items-center justify-center gap-1.5 mt-6 md:mt-8">
             {scrollSnaps.map((_, i) => (
               <button
                 key={i}
                 onClick={() => scrollTo(i)}
                 aria-label={`Go to slide ${i + 1}`}
-                className="w-2 h-2 rounded-full transition-all duration-300"
+                className="rounded-full transition-all duration-300"
                 style={{
-                  background: i === selectedIndex ? "var(--accent-primary)" : "oklch(0 0 0 / 0.10)",
-                  transform: i === selectedIndex ? "scale(1.3)" : "scale(1)",
-                  boxShadow: i === selectedIndex ? "0 0 8px oklch(0.38 0.14 152 / 0.3)" : "none",
+                  width: i === selectedIndex ? "20px" : "4px",
+                  height: "4px",
+                  background: i === selectedIndex ? "var(--accent-primary)" : "oklch(0 0 0 / 0.12)",
+                  boxShadow: i === selectedIndex ? "0 0 8px oklch(0.38 0.14 152 / 0.25)" : "none",
                 }}
               />
             ))}
