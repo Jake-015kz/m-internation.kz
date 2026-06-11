@@ -14,100 +14,95 @@ const STATS = [
 ] as const;
 
 /* ═══════════════════════════════════════════
-   WORD-BY-WORD STAGGER REVEAL
+   APPLE-STYLE LINE REVEAL
+   Each line slides up from below with blur
    ═══════════════════════════════════════════ */
-function StaggerWords({ text, className = "", delay = 0.3 }: { text: string; className?: string; delay?: number }) {
-  const words = text.split(/\s+/).filter(Boolean);
-
-  const container = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: delay } },
-  };
-
-  const child = {
-    hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
-    },
-  };
-
+function LineReveal({ 
+  children, 
+  className = "", 
+  delay = 0,
+  duration = 0.8,
+}: { 
+  children: ReactNode; 
+  className?: string; 
+  delay?: number;
+  duration?: number;
+}) {
   return (
-    <motion.span
-      className={`inline-flex flex-wrap gap-x-[0.25em] ${className}`}
-      variants={container}
-      initial="hidden"
-      animate="visible"
-    >
-      {words.map((word, i) => (
-        <motion.span key={i} className="inline-block" variants={child}>
-          {word}
-        </motion.span>
-      ))}
-    </motion.span>
+    <div className={`overflow-hidden ${className}`}>
+      <motion.div
+        initial={{ y: "110%", filter: "blur(6px)" }}
+        animate={{ y: "0%", filter: "blur(0px)" }}
+        transition={{ 
+          delay, 
+          duration, 
+          ease: [0.16, 1, 0.3, 1] as const,
+        }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }
 
 /* ═══════════════════════════════════════════
-   ANIMATED MESH GRADIENT (Framer Motion)
+   LINEAR-STYLE ANIMATED MESH (CSS-first)
+   Pure CSS blobs for performance
    ═══════════════════════════════════════════ */
-function AnimatedMeshGradient() {
+function LinearMeshGradient() {
   return (
     <div className="absolute inset-0" aria-hidden="true">
-      {/* Base mesh layer — CSS for perf */}
+      {/* Base mesh layer */}
       <div
         className="absolute inset-0 hero-mesh-gradient"
         style={{
           background: `
-            radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.38 0.14 152 / 0.10) 0%, transparent 50%),
-            radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.55 0.14 88 / 0.08) 0%, transparent 45%),
-            radial-gradient(ellipse 40% 35% at 45% 50%, oklch(0.38 0.14 250 / 0.03) 0%, transparent 50%)
+            radial-gradient(ellipse 60% 50% at 8% 15%, oklch(0.38 0.14 152 / 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 40% at 88% 78%, oklch(0.55 0.14 88 / 0.06) 0%, transparent 45%)
           `,
         }}
       />
 
-      {/* Animated blob 1 — Gold, large, slow */}
-      <motion.div
-        className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.08]"
-        style={{ background: "radial-gradient(circle, var(--accent-gold), transparent 70%)", filter: "blur(80px)" }}
-        animate={{
-          x: [0, 40, -25, 10, 0],
-          y: [0, -30, 20, -10, 0],
-          scale: [1, 1.06, 0.96, 1.02, 1],
+      {/* CSS-animated blob 1 — Gold, large, slow */}
+      <div
+        className="absolute top-[5%] left-[0%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-[0.07] hero-blob-1"
+        style={{ 
+          background: "radial-gradient(circle, var(--accent-gold), transparent 70%)", 
+          filter: "blur(80px)",
         }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Animated blob 2 — Emerald, medium, medium speed */}
-      <motion.div
-        className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.06]"
-        style={{ background: "radial-gradient(circle, var(--accent-emerald), transparent 70%)", filter: "blur(70px)" }}
-        animate={{
-          x: [0, -35, 20, -10, 0],
-          y: [0, 25, -15, 8, 0],
-          scale: [1, 0.95, 1.04, 0.98, 1],
+      {/* CSS-animated blob 2 — Emerald, medium */}
+      <div
+        className="absolute bottom-[5%] right-[0%] w-[450px] h-[450px] md:w-[600px] md:h-[600px] rounded-full opacity-[0.05] hero-blob-2"
+        style={{ 
+          background: "radial-gradient(circle, var(--accent-emerald), transparent 70%)", 
+          filter: "blur(70px)",
         }}
-        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Animated blob 3 — Gold accent, small, fast */}
-      <motion.div
-        className="absolute top-[35%] right-[15%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] rounded-full opacity-[0.04]"
-        style={{ background: "radial-gradient(circle, oklch(0.55 0.14 88), transparent 70%)", filter: "blur(60px)" }}
-        animate={{
-          x: [0, 20, -15, 5, 0],
-          y: [0, -15, 10, -5, 0],
+      {/* Linear-style dot grid — 24px, subtle */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: "radial-gradient(circle, oklch(0 0 0 / 0.12) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Noise texture overlay for depth */}
+      <div
+        className="absolute inset-0 opacity-[0.015] mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }}
       />
     </div>
   );
 }
 
 /* ═══════════════════════════════════════════
-   ANIMATED PARTICLE FIELD (Canvas)
+   PARTICLE FIELD (Canvas) — desktop only
    ═══════════════════════════════════════════ */
 function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -127,20 +122,20 @@ function ParticleField() {
     }
 
     const particles: Particle[] = [];
-    const count = Math.min(50, Math.floor((width * height) / 40000));
+    const count = Math.min(40, Math.floor((width * height) / 50000));
 
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        size: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.25 + 0.08,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 1.2 + 0.4,
+        opacity: Math.random() * 0.2 + 0.06,
       });
     }
 
-    const connectionDist = 180;
+    const connectionDist = 160;
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
@@ -163,7 +158,7 @@ function ParticleField() {
           const dy = p.y - q.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDist) {
-            const alpha = (1 - dist / connectionDist) * 0.06;
+            const alpha = (1 - dist / connectionDist) * 0.05;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
@@ -196,32 +191,52 @@ function ParticleField() {
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
       aria-hidden="true"
-      style={{ opacity: 0.5 }}
+      style={{ opacity: 0.4 }}
     />
   );
 }
 
 /* ═══════════════════════════════════════════
-   COUNTER ANIMATION (scroll-triggered)
+   REDUCED MOTION GUARD
+   ═══════════════════════════════════════════ */
+function useReducedMotion() {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return prefersReduced;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED STAT CARD — Linear dashboard style
    ═══════════════════════════════════════════ */
 function AnimatedStat({ value, label, delay }: { value: string; label: string; delay: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const reduced = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
-      className="relative text-center md:text-left rounded-2xl px-2 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
+      className="relative text-center md:text-left rounded-2xl px-3 py-4 md:px-6 md:py-5 border overflow-hidden group hero-stat-card"
       style={{
-        background: "oklch(1 0 0 / 0.60)",
+        background: "oklch(1 0 0 / 0.65)",
         borderColor: "var(--border-subtle)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
       }}
-      initial={{ opacity: 0, y: 24 }}
+      initial={reduced ? {} : { opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -6, borderColor: "var(--accent-gold)", boxShadow: "0 16px 48px oklch(0 0 0 / 0.06), 0 0 30px oklch(0.55 0.14 88 / 0.04)" }}
+      whileHover={reduced ? {} : { 
+        y: -4, 
+        borderColor: "var(--accent-gold)", 
+        boxShadow: "0 12px 40px oklch(0 0 0 / 0.06), 0 0 24px oklch(0.55 0.14 88 / 0.03)" 
+      }}
     >
       {/* Top accent line on hover */}
       <div
@@ -232,7 +247,7 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
       {/* Inner glow on hover */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ background: "radial-gradient(circle at 50% 0%, oklch(0.55 0.14 88 / 0.06), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle at 50% 0%, oklch(0.55 0.14 88 / 0.05), transparent 70%)" }}
         aria-hidden="true"
       />
 
@@ -244,7 +259,7 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
         }}
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={reduced ? {} : { opacity: 0, scale: 0.8 }}
         animate={isInView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.5, delay: delay + 0.1, type: "spring", stiffness: 100 }}
       >
@@ -258,20 +273,21 @@ function AnimatedStat({ value, label, delay }: { value: string; label: string; d
 }
 
 /* ═══════════════════════════════════════════
-   MAIN HERO SECTION — PREMIUM LIGHT 2026
+   MAIN HERO — LINEAR GRID + APPLE REVEAL
    ═══════════════════════════════════════════ */
 export function HeroSectionA() {
   const locale = useLocale();
   const t = useTranslations("hero");
   const heroRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
   const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.4], [0, -40]);
-  const bgScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.05]);
+  const textY = useTransform(scrollYProgress, [0, 0.4], [0, -60]);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.04]);
 
   return (
     <section
@@ -281,22 +297,9 @@ export function HeroSectionA() {
       aria-labelledby="hero-title"
     >
       {/* ===== BACKGROUND LAYERS ===== */}
-      <motion.div className="absolute inset-0" style={{ scale: bgScale }} aria-hidden="true">
-        {/* Base color */}
+      <motion.div className="absolute inset-0" style={{ scale: reduced ? 1 : bgScale }} aria-hidden="true">
         <div className="absolute inset-0" style={{ background: "var(--bg-base)" }} />
-
-        {/* Animated mesh gradient blobs */}
-        <AnimatedMeshGradient />
-
-        {/* Dot grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: "radial-gradient(circle, oklch(0 0 0 / 0.10) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
-        />
-
+        <LinearMeshGradient />
         {/* Particle field — desktop only */}
         <div className="absolute inset-0 hidden md:block">
           <ParticleField />
@@ -305,24 +308,33 @@ export function HeroSectionA() {
 
       {/* ===== CONTENT ===== */}
       <motion.div
-        style={{ opacity: textOpacity, y: textY }}
+        style={reduced ? {} : { opacity: textOpacity, y: textY }}
         className="mx-auto max-w-[80rem] px-5 md:px-8 lg:px-10 w-full pt-8 pb-12 md:pt-12 md:pb-16 relative z-10"
       >
-        <div className="grid grid-cols-1 gap-8 md:gap-12 items-center lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 gap-8 md:gap-12 items-center lg:grid-cols-2 lg:gap-20">
 
           {/* ── LEFT: Text ── */}
           <div className="text-left order-1 lg:order-1">
-            {/* Cert badges */}
+            {/* Cert badges — staggered spring entrance */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 0.7, y: 0 }}
+              initial={reduced ? {} : { opacity: 0 }}
+              animate={{ opacity: 0.7 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="inline-flex items-center gap-1.5 mb-6 md:mb-8"
             >
-              {["GMP", "ISO", "HALAL"].map((label) => (
-                <span
+              {["GMP", "ISO", "HALAL"].map((label, i) => (
+                <motion.span
                   key={label}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[8px] md:text-[9px] font-bold tracking-[0.12em] uppercase"
+                  initial={reduced ? {} : { opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ 
+                    delay: 0.3 + i * 0.08, 
+                    type: "spring", 
+                    stiffness: 200, 
+                    damping: 15 
+                  }}
+                  whileHover={reduced ? {} : { scale: 1.08 }}
+                  className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[8px] md:text-[9px] font-bold tracking-[0.12em] uppercase cursor-default"
                   style={{
                     color: "var(--accent-gold)",
                     background: "oklch(0.55 0.14 88 / 0.08)",
@@ -330,62 +342,53 @@ export function HeroSectionA() {
                   }}
                 >
                   {label}
-                </span>
+                </motion.span>
               ))}
             </motion.div>
 
-            {/* H1 — Word-by-word stagger reveal */}
-            <motion.h1
+            {/* H1 — Apple-style line-by-line reveal */}
+            <h1
               id="hero-title"
               className="font-heading font-extrabold mb-4 md:mb-5"
               style={{
-                fontSize: "clamp(3rem, 8vw, 5.5rem)",
-                lineHeight: 1.05,
-                letterSpacing: "-0.03em",
+                fontSize: "clamp(2rem, 3.5vw, 3.5rem)",
+                lineHeight: 1.1,
+                letterSpacing: "normal",
                 color: "var(--fg-primary)",
               }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.1 }}
             >
               {t("title").split("\n").map((line, i) => (
-                <span key={i} className="block overflow-hidden">
-                  <StaggerWords
-                    text={line}
-                    delay={0.3 + i * 0.2}
-                    className="hero-gradient-text"
-                  />
-                </span>
+                <LineReveal key={i} delay={0.3 + i * 0.2} duration={0.8}>
+                  <span className="hero-gradient-text">{line}</span>
+                </LineReveal>
               ))}
-            </motion.h1>
+            </h1>
 
             {/* Lead — punchy subtitle */}
-            <motion.p
-              className="font-heading font-semibold text-base md:text-lg lg:text-xl leading-[1.3] mb-3 md:mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.6 }}
-              style={{ color: "var(--accent-emerald)" }}
-            >
-              {t("lead")}
-            </motion.p>
+            <LineReveal delay={0.7} duration={0.6}>
+              <p
+                className="font-heading font-semibold text-base md:text-lg lg:text-xl leading-[1.3] mb-3 md:mb-4"
+                style={{ color: "var(--accent-emerald)" }}
+              >
+                {t("lead")}
+              </p>
+            </LineReveal>
 
             {/* Body */}
-            <motion.p
-              className="font-body text-sm md:text-base leading-[1.6] md:leading-[1.65] max-w-[28rem] mb-8 md:mb-10 text-[var(--fg-secondary)]"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.75 }}
-            >
-              {t("subtitle")}
-            </motion.p>
+            <LineReveal delay={0.85} duration={0.6}>
+              <p
+                className="font-body text-sm md:text-base leading-[1.6] md:leading-[1.65] max-w-[28rem] mb-8 md:mb-10 text-[var(--fg-secondary)]"
+              >
+                {t("subtitle")}
+              </p>
+            </LineReveal>
 
             {/* CTA buttons */}
             <motion.div
               className="flex flex-col sm:flex-row gap-3 md:gap-4"
-              initial={{ opacity: 0, y: 16 }}
+              initial={reduced ? {} : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.9 }}
+              transition={{ duration: 0.7, delay: 1.0 }}
             >
               <MagneticButton>
                 <Link href={`/${locale}/catalog`}>
@@ -404,36 +407,36 @@ export function HeroSectionA() {
           {/* ── RIGHT: Floating Product ── */}
           <motion.div
             className="relative flex justify-center items-center order-2 lg:order-2"
-            initial={{ opacity: 0, y: 40, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            initial={reduced ? {} : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={reduced ? {} : { duration: 1.2, delay: 0.5, type: "spring", stiffness: 80, damping: 20 }}
           >
             <div
               className="relative floating-product w-full"
-              style={{ maxWidth: "420px", aspectRatio: "1 / 1", ["--float-duration" as string]: "7s", ["--float-distance" as string]: "18px" }}
+              style={{ maxWidth: "400px", aspectRatio: "1 / 1", ["--float-duration" as string]: "6s", ["--float-distance" as string]: "14px" }}
             >
               {/* Conic glow ring */}
               <div
                 className="absolute inset-0 rounded-3xl hero-conic-glow"
                 style={{
                   background: "conic-gradient(from 0deg, var(--accent-gold), var(--accent-emerald), var(--accent-gold))",
-                  opacity: 0.06,
-                  filter: "blur(30px)",
-                  transform: "scale(1.15)",
+                  opacity: 0.05,
+                  filter: "blur(24px)",
+                  transform: "scale(1.12)",
                 }}
                 aria-hidden="true"
               />
 
-              {/* Glass card — white cloud */}
+              {/* Glass card */}
               <div className="relative glass-card-premium rounded-3xl p-6 md:p-10 h-full flex items-center justify-center overflow-hidden">
                 {/* Inner glow spots */}
                 <div
-                  className="absolute top-0 left-0 w-40 h-40 opacity-20"
+                  className="absolute top-0 left-0 w-36 h-36 opacity-15"
                   style={{ background: "radial-gradient(circle at 0% 0%, var(--accent-gold), transparent 70%)" }}
                   aria-hidden="true"
                 />
                 <div
-                  className="absolute bottom-0 right-0 w-48 h-48 opacity-15"
+                  className="absolute bottom-0 right-0 w-40 h-40 opacity-10"
                   style={{ background: "radial-gradient(circle at 100% 100%, var(--accent-emerald), transparent 70%)" }}
                   aria-hidden="true"
                 />
@@ -441,11 +444,11 @@ export function HeroSectionA() {
                 <Image
                   src="/products/greenmax/main.png"
                   alt="GreenMAX — premium detox supplement by M-International"
-                  width={420}
-                  height={420}
+                  width={400}
+                  height={400}
                   priority
-                  sizes="(max-width: 640px) 220px, (max-width: 1024px) 280px, 400px"
-                  className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[400px] h-auto object-contain relative z-10 drop-shadow-[0_8px_32px_oklch(0.38_0.14_152_/0.12)]"
+                  sizes="(max-width: 640px) 200px, (max-width: 1024px) 260px, 360px"
+                  className="w-full max-w-[200px] sm:max-w-[260px] md:max-w-[340px] lg:max-w-[360px] h-auto object-contain relative z-10 drop-shadow-[0_8px_32px_oklch(0.38_0.14_152_/0.10)]"
                 />
 
                 {/* Floating badge */}
@@ -455,7 +458,7 @@ export function HeroSectionA() {
                     background: "linear-gradient(135deg, var(--accent-emerald), oklch(0.32 0.16 152))",
                     color: "white",
                   }}
-                  initial={{ scale: 0 }}
+                  initial={reduced ? {} : { scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.2, type: "spring", stiffness: 200 }}
                 >
@@ -463,22 +466,22 @@ export function HeroSectionA() {
                 </motion.div>
               </div>
 
-              {/* Soft natural shadow under product */}
+              {/* Soft natural shadow */}
               <div
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/4 h-12 rounded-full z-0"
-                style={{ background: "oklch(0.38 0.14 152 / 0.06)", filter: "blur(24px)" }}
+                className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-3/4 h-10 rounded-full z-0"
+                style={{ background: "oklch(0.38 0.14 152 / 0.05)", filter: "blur(20px)" }}
                 aria-hidden="true"
               />
             </div>
           </motion.div>
         </div>
 
-        {/* ── STATS ROW — scroll-triggered counters ── */}
+        {/* ── STATS ROW ── */}
         <motion.div
           className="mt-12 md:mt-16 pt-8 md:pt-10 border-t border-[var(--border-subtle)]"
-          initial={{ opacity: 0 }}
+          initial={reduced ? {} : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.0 }}
+          transition={{ duration: 0.5, delay: 1.1 }}
         >
           <div className="grid grid-cols-3 gap-3 md:gap-6">
             {STATS.map((stat, i) => (
